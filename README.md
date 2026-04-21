@@ -42,9 +42,15 @@ Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 ```
 Marseille Saint-Etienne PSG
 ```
+![Footao ligues](/doc/images/ligues.png "Footao ligue").
+![Footao clubs](/doc/images/clubs.png "Footao clubs").
 
 Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 ## Rafraîchissement
 
 Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
+
+## Cartes
+
+une carte est disponible https://github.com/developpeurbox/footao-game-card
