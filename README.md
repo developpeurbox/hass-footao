@@ -37,14 +37,14 @@ Copier le dossier `custom_components/footao/` dans ton dossier `config/custom_co
 
 ## Configuration
 
-Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration, séparées par des virgules :
+Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
 ```
-Marseille, Saint-Etienne, PSG
+Marseille Saint-Etienne PSG
 ```
 
 Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 ## Rafraîchissement
 
-Les données sont mises à jour automatiquement **toutes les 6 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
+Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
