@@ -26,9 +26,10 @@ Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foo
 
 1. Dans HACS → **Intégrations** → menu ⋮ → **Dépôts personnalisés**
 2. Ajouter l'URL de ce dépôt GitHub, catégorie **Integration**
-3. Installer **Footao TV**
-4. Redémarrer Home Assistant
-5. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
+   https://github.com/developpeurbox/hass-footao.git
+4. Installer **Footao TV**
+5. Redémarrer Home Assistant
+6. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
 
 ## Installation manuelle
 
