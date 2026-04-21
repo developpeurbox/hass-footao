@@ -7,6 +7,7 @@ Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foo
 | Attribut | Description |
 |---|---|
 | `team` | Nom de l'équipe suivie |
+| `team logo` | Logo de l'équipe suivie |
 | `domicile` | Équipe à domicile |
 | `logoDomicile` | URL du logo de l'équipe à domicile |
 | `exterieur` | Équipe à l'extérieur |
