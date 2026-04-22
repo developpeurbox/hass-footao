@@ -11,7 +11,18 @@
 
 # Footao TV — Intégration HACS pour Home Assistant
 
-Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foot diffusés sur [Footao.tv](https://www.footao.tv), pour les équipes de ton choix.
+Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv.
+
+## ✨ Caractéristiques
+
+📅 Suivi multi-équipes : Créez un capteur (sensor) par équipe.
+
+📺 Infos complètes : Chaîne de diffusion, logos des clubs, date et heure précises.
+
+⚙️ Configuration simple : Tout se passe via l'interface utilisateur de Home Assistant.
+
+🔔 Prêt pour les automatisations : Idéal pour créer des notifications avant les matchs.
+
 
 ## 🔧 Attributs disponibles par sensor
 
@@ -44,7 +55,10 @@ Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foo
 
 ## 🏗️ Installation manuelle
 
-Copier le dossier `custom_components/footao/` dans ton dossier `config/custom_components/`.
+1. Téléchargez le dossier `custom_components/footao/` de ce dépôt.
+2. Copiez-le dans le dossier `custom_components/footao/`  de votre instance Home Assistant.
+3. Redémarrez Home Assistant
+
 
 ## 🌟 Configuration
 
@@ -64,14 +78,17 @@ Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
 
-## 🎟️ Cartes
+## 🎨 Affichage & Notifications
 
-une carte est disponible https://github.com/developpeurbox/footao-game-card
+### Carte dédiée
 
-## Notification 
+Pour un rendu visuel optimal, utilisez la carte compagnon :
+👉 [**Footao Game Card**](https://github.com/developpeurbox/footao-game-card)
 
-Voici un exemple de notification simple pour un sensors.
-A 8h00, le jour du match.
+
+### Notification 
+
+Voici une automatisation pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
 ```yaml
 alias: Notification Match Angers Aujourd'hui
@@ -88,6 +105,7 @@ conditions:
       now().strftime('%Y-%m-%d') }}
 actions:
   - data:
+      title: "⚽ Jour de match !"
       message: >
         Le match {{ state_attr('sensor.footao_angers', 'event_name') }} est
         diffusé aujourd'hui à {{ state_attr('sensor.footao_angers',
