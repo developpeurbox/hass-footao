@@ -1,3 +1,6 @@
+
+
+
 # Footao TV — Intégration HACS pour Home Assistant
 
 Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foot diffusés sur [Footao.tv](https://www.footao.tv), pour les équipes de ton choix.
@@ -85,3 +88,14 @@ actions:
     action: notify.mobile_xxxx
 mode: single
 ```
+[readme]: https://github.com/developpeurbox/footao-game-card/readme
+[commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
+[commits]: https://github.com/developpeurbox/footao-game-card/readme/commits/main
+[hacs]: https://github.com/hacs/integration
+[hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
+[exampleimg]: example.png
+[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
+[forum]: https://community.home-assistant.io/
+[releases-shield]: https://img.shields.io/github/v/release/developpeurbox/footao-game-card?style=for-the-badge
+[releases]: https://github.com/developpeurbox/footao-game-card/readme/releases
+
