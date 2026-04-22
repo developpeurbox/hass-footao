@@ -56,3 +56,32 @@ Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peu
 ## 🎟️ Cartes
 
 une carte est disponible https://github.com/developpeurbox/footao-game-card
+
+## Notification 
+
+Voici un exemple de notification simple pour un sensors.
+A 8h00, le jour du match.
+
+```yaml
+alias: Notification Match Angers Aujourd'hui
+description: >-
+  Envoie une notification si le match d'Angers a lieu aujourd'hui (comparaison
+  date uniquement)
+triggers:
+  - at: "08:00:00"
+    trigger: time
+conditions:
+  - condition: template
+    value_template: >
+      {{ state_attr('sensor.footao_angers', 'datetime').split(' ')[0] ==
+      now().strftime('%Y-%m-%d') }}
+actions:
+  - data:
+      message: >
+        Le match {{ state_attr('sensor.footao_angers', 'event_name') }} est
+        diffusé aujourd'hui à {{ state_attr('sensor.footao_angers',
+        'datetime').split(' ')[1] }} sur {{ state_attr('sensor.footao_angers',
+        'chaine') }}.
+    action: notify.mobile_xxxx
+mode: single
+```
