@@ -1,4 +1,10 @@
 
+[![GitHub Release][releases-shield]][releases]
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+
+
+[![Community Forum][forum-shield]][forum
+]
 
 
 # Footao TV — Intégration HACS pour Home Assistant
@@ -88,14 +94,14 @@ actions:
     action: notify.mobile_xxxx
 mode: single
 ```
-[readme]: https://github.com/developpeurbox/footao-game-card/readme
+
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
-[commits]: https://github.com/developpeurbox/footao-game-card/readme/commits/main
+[commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
 [hacs]: https://github.com/hacs/integration
 [hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
 [exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[releases-shield]: https://img.shields.io/github/v/release/developpeurbox/footao-game-card?style=for-the-badge
-[releases]: https://github.com/developpeurbox/footao-game-card/readme/releases
+[releases-shield]: https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge
+[releases]: https://github.com/developpeurbox/hass-ootao/readme/releases
 
