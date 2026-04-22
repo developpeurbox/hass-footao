@@ -103,5 +103,5 @@ mode: single
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [releases-shield]: https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge
-[releases]: https://github.com/developpeurbox/hass-ootao/readme/releases
+[releases]: https://github.com/developpeurbox/hass-footao/readme/releases
 
