@@ -2,7 +2,7 @@
 
 Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foot diffusés sur [Footao.tv](https://www.footao.tv), pour les équipes de ton choix.
 
-## Attributs disponibles par sensor
+## 🔧 Attributs disponibles par sensor
 
 | Attribut | Description |
 |---|---|
@@ -22,7 +22,7 @@ Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foo
 | `logo` | Style CSS du sprite chaîne (footao.tv) |
 | `game` | Texte brut du match (ex: Marseille · Lyon) |
 
-## Installation via HACS
+## 🏗️ Installation via HACS
 
 1. Dans HACS → **Intégrations** → menu ⋮ → **Dépôts personnalisés**
 2. Ajouter l'URL de ce dépôt GitHub, catégorie **Integration**
@@ -31,11 +31,11 @@ Crée des entités `sensor` dans Home Assistant avec les prochains matchs de foo
 5. Redémarrer Home Assistant
 6. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
 
-## Installation manuelle
+## 🏗️ Installation manuelle
 
 Copier le dossier `custom_components/footao/` dans ton dossier `config/custom_components/`.
 
-## Configuration
+## 🌟 Configuration
 
 Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
@@ -49,10 +49,10 @@ Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 ![Footao resultat](/doc/images/resultat.png "Footao resultat").
 
-## Rafraîchissement
+## 🔁 Rafraîchissement
 
 Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
 
-## Cartes
+## 🎟️ Cartes
 
 une carte est disponible https://github.com/developpeurbox/footao-game-card
