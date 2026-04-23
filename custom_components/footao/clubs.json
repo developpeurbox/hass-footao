@@ -122,7 +122,7 @@
     "Stuttgart":       { "eq": "Stuttgart",        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wqvyrs1473504819.png/small" },
     "St. Pauli":       { "eq": "St-Pauli",         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/5qupxa1608237013.png/small" },
     "Union Berlin":    { "eq": "Union B.|Union Berlin",         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rqswts1594572584.png/small" },
-    "Werder Brême":    { "eq": "Werder%7CWerder%20Br%2526ecirc%253Bme",           "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swxuur1473504836.png/small" },
+    "Werder Brême":    { "eq": "Werder|Werder Br&ecirc;me",           "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swxuur1473504836.png/small" },
     "Wolfsbourg":      { "eq": "Wolfsbourg",       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/qvwxuu1473504853.png/small" }
   }
 
