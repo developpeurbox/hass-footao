@@ -12,14 +12,13 @@
         "title": "Footao TV — Clubs",
         "description": "Sélectionnez les clubs à suivre.",
         "data": {
-          "select_all": "Tout sélectionner",
           "clubs": "Clubs"
         }
       }
     },
     "error": {
       "no_league": "Sélectionnez au moins une ligue.",
-      "no_club":   "Sélectionnez au moins un club (ou cochez Tout sélectionner)."
+      "no_club":   "Sélectionnez au moins un club."
     },
     "abort": {
       "already_configured": "Cette configuration existe déjà."
@@ -38,14 +37,13 @@
         "title": "Footao TV — Modifier les clubs",
         "description": "Choisissez les clubs à suivre.",
         "data": {
-          "select_all": "Tout sélectionner",
           "clubs": "Clubs"
         }
       }
     },
     "error": {
       "no_league": "Sélectionnez au moins une ligue.",
-      "no_club":   "Sélectionnez au moins un club (ou cochez Tout sélectionner)."
+      "no_club":   "Sélectionnez au moins un club."
     }
   }
 }

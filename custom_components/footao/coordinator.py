@@ -36,12 +36,7 @@ def load_clubs() -> dict:
 
 
 def build_logo_index(clubs: dict) -> dict[str, str]:
-    """
-    Construit un index { eq_name_lower → logo_url } depuis clubs.json.
-    Permet de retrouver le logo d'un adversaire à partir de son nom footao.tv.
-    Ex: "nice" → "https://r2.thesportsdb.com/..."
-        "lyon ol" → "https://..."
-    """
+    """Construit un index { eq_name_lower → logo_url } depuis clubs.json."""
     index: dict[str, str] = {}
     for league_clubs in clubs.values():
         for cfg in league_clubs.values():
@@ -57,10 +52,8 @@ def logo_for(name: str, index: dict[str, str]) -> str:
     if not name:
         return ""
     nl = name.lower()
-    # Recherche exacte
     if nl in index:
         return index[nl]
-    # Recherche partielle : on vérifie si un mot-clé de l'index est contenu dans le nom
     for key, url in index.items():
         if key in nl or nl in key:
             return url
@@ -68,9 +61,30 @@ def logo_for(name: str, index: dict[str, str]) -> str:
 
 
 def get_sprite_style(css_class: str) -> str:
-    parts    = css_class.split() if css_class else []
-    key      = parts[1] if len(parts) > 1 else ""
+    parts = css_class.split() if css_class else []
+    key   = parts[1] if len(parts) > 1 else ""
     return SPRITE_BASE_STYLE.format(pos=SPRITE_POSITIONS.get(key, SPRITE_DEFAULT))
+
+
+def _empty_attrs(club_name: str, logo_team: str) -> dict:
+    """Attributs retournés quand aucun match n'est trouvé."""
+    return {
+        "team":                club_name,
+        "team_logo":           logo_team,
+        "team_domicile":       "",
+        "team_domicile_logo":  "",
+        "team_exterieur":      "",
+        "team_exterieur_logo": "",
+        "team_dom_ext":        "",
+        "competition":         "",
+        "date":                "",
+        "datetime":            "",
+        "display":             False,
+        "heure":               "",
+        "logo":                "",
+        "chaine":              "",
+        "event_name":          "",
+    }
 
 
 # ─── Parser HTML ─────────────────────────────────────────────────────────────
@@ -115,8 +129,8 @@ class FootaoCalParser(HTMLParser):
                 self._in_link = True
 
     def handle_endtag(self, tag):
-        if tag == "h2":   self._in_h2 = self._cap_h2 = False
-        if tag == "a":    self._in_link = self._cap_h2 = False
+        if tag == "h2": self._in_h2 = self._cap_h2 = False
+        if tag == "a":  self._in_link = self._cap_h2 = False
 
     def handle_data(self, data):
         text = data.strip()
@@ -138,7 +152,7 @@ class FootaoCalParser(HTMLParser):
                 "date": self._cur_date, "date_iso": self._cur_iso,
                 "datetime": dt_str, "display": display, "heure": self._heure,
                 "chaine": self._img_alt, "img_class": self._img_class, "game": text,
-                "domicile": parts[0] if parts else text,
+                "domicile":  parts[0] if parts else text,
                 "exterieur": parts[1] if len(parts) >= 2 else "",
             })
 
@@ -154,7 +168,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
     """
 
     def __init__(self, hass: HomeAssistant, selected: dict) -> None:
-        self.selected   = selected
+        self.selected    = selected
         self._logo_index = build_logo_index(load_clubs())
         super().__init__(hass, _LOGGER, name=DOMAIN,
                          update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
@@ -178,10 +192,19 @@ class FootaoCoordinator(DataUpdateCoordinator):
                                                timeout=aiohttp.ClientTimeout(total=15)) as resp:
                             if resp.status != 200:
                                 _LOGGER.warning("footao %s → HTTP %s", url, resp.status)
+                                # Aucun match : on publie quand même le sensor avec team_logo
+                                data[club_name] = {
+                                    "state": "Aucun match",
+                                    "attributes": _empty_attrs(club_name, logo_team),
+                                }
                                 continue
                             html = await resp.text()
                     except aiohttp.ClientError as err:
                         _LOGGER.warning("Erreur footao %s : %s", url, err)
+                        data[club_name] = {
+                            "state": "Aucun match",
+                            "attributes": _empty_attrs(club_name, logo_team),
+                        }
                         continue
 
                     parser = FootaoCalParser()
@@ -189,22 +212,24 @@ class FootaoCoordinator(DataUpdateCoordinator):
 
                     if not parser.matches:
                         _LOGGER.debug("Aucun match pour %s", club_name)
+                        data[club_name] = {
+                            "state": "Aucun match",
+                            "attributes": _empty_attrs(club_name, logo_team),
+                        }
                         continue
 
                     match     = next((m for m in parser.matches if m["display"]), parser.matches[-1])
                     sprite    = get_sprite_style(match["img_class"])
                     eq_lower  = eq.lower()
                     dom_lower = match["domicile"].lower()
-                    situation = "dom" if any(w in dom_lower for w in eq_lower.split()) else "ext"
+                    situation = "domicile" if any(w in dom_lower for w in eq_lower.split()) else "exterieur"
 
-                    # Logos : l'équipe suivie a son logo depuis clubs.json,
-                    # l'adversaire est résolu via l'index eq→logo
                     logo_adv = logo_for(
-                        match["exterieur"] if situation == "dom" else match["domicile"],
+                        match["exterieur"] if situation == "domicile" else match["domicile"],
                         self._logo_index
                     )
 
-                    if situation == "dom":
+                    if situation == "domicile":
                         logo_dom = logo_team
                         logo_ext = logo_adv
                     else:
@@ -214,20 +239,21 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     data[club_name] = {
                         "state": match["chaine"] or "Inconnu",
                         "attributes": {
-                            "team":          club_name,
-                            "domicile":      match["domicile"],
-                            "logoDomicile":  logo_dom,
-                            "exterieur":     match["exterieur"],
-                            "logoExterieur": logo_ext,
-                            "situation":     situation,
-                            "competition":   comp,
-                            "date":          match["date"],
-                            "datetime":      match["datetime"],
-                            "display":       match["display"],
-                            "heure":         match["heure"],
-                            "logo":          sprite,
-                            "chaine":        match["chaine"],
-                            "game":          match["game"],
+                            "team":                club_name,
+                            "team_logo":           logo_team,   # toujours le logo de l'équipe suivie
+                            "team_domicile":       match["domicile"],
+                            "team_domicile_logo":  logo_dom,
+                            "team_exterieur":      match["exterieur"],
+                            "team_exterieur_logo": logo_ext,
+                            "team_dom_ext":        situation,
+                            "competition":         comp,
+                            "date":                match["date"],
+                            "datetime":            match["datetime"],
+                            "display":             match["display"],
+                            "heure":               match["heure"],
+                            "logo":                sprite,
+                            "chaine":              match["chaine"],
+                            "event_name":          match["game"],
                         },
                     }
 
@@ -235,3 +261,4 @@ class FootaoCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(f"Erreur scraping Footao : {err}") from err
 
         return data
+        
