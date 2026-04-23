@@ -6,7 +6,7 @@
   "issue_tracker": "https://github.com/developpeurbox/ha-footaod/issues",
   "requirements": [],
   "dependencies": [],
-  "codeowners": ["@habox"],
+  "codeowners": ["@developpeurbox"],
   "iot_class": "cloud_polling",
   "config_flow": true
 }
