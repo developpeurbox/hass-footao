@@ -29,11 +29,9 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 F
 FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
 FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U19", " U17", " U21", "-19", "-17"]
 
-
 def load_clubs() -> dict:
     with open(Path(__file__).parent / "clubs.json", encoding="utf-8") as f:
         return json.load(f)
-
 
 def build_logo_index(clubs: dict) -> dict[str, str]:
     """
@@ -51,7 +49,6 @@ def build_logo_index(clubs: dict) -> dict[str, str]:
                 index[eq.lower()] = logo
     return index
 
-
 def logo_for(name: str, index: dict[str, str]) -> str:
     """Cherche le logo d'une équipe par son nom footao.tv (insensible à la casse)."""
     if not name:
@@ -66,12 +63,10 @@ def logo_for(name: str, index: dict[str, str]) -> str:
             return url
     return ""
 
-
 def get_sprite_style(css_class: str) -> str:
     parts    = css_class.split() if css_class else []
     key      = parts[1] if len(parts) > 1 else ""
     return SPRITE_BASE_STYLE.format(pos=SPRITE_POSITIONS.get(key, SPRITE_DEFAULT))
-
 
 # ─── Parser HTML ─────────────────────────────────────────────────────────────
 
@@ -87,6 +82,19 @@ class FootaoCalParser(HTMLParser):
         self._h2_href = ""
 
     def _parse_url(self, href):
+        # MODIF : Gestion des cas "Aujourd’hui" et "Demain"
+        if "Aujourd’hui" in self._cur_date:
+            today = datetime.now()
+            iso = today.strftime("%Y-%m-%d")
+            label = "Aujourd’hui"
+            return iso, label
+        if "Demain" in self._cur_date:
+            tomorrow = datetime.now() + timedelta(days=1)
+            iso = tomorrow.strftime("%Y-%m-%d")
+            label = "Demain"
+            return iso, label
+
+        # Cas normal : date dans l'URL
         jr = re.search(r"jr=(\d+)", href)
         ms = re.search(r"ms=(\d+)", href)
         an = re.search(r"an=(\d+)", href)
@@ -122,6 +130,7 @@ class FootaoCalParser(HTMLParser):
         text = data.strip()
         if not text: return
         if self._in_h2 and self._cap_h2 and self._h2_href:
+            self._cur_date = text  # MODIF : On stocke le texte brut du h2 avant de parser
             iso, label = self._parse_url(self._h2_href)
             if iso:
                 self._cur_iso = iso; self._cur_date = label; self._heure = ""
@@ -141,7 +150,6 @@ class FootaoCalParser(HTMLParser):
                 "domicile": parts[0] if parts else text,
                 "exterieur": parts[1] if len(parts) >= 2 else "",
             })
-
 
 # ─── Coordinator ─────────────────────────────────────────────────────────────
 
