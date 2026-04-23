@@ -28,19 +28,19 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 |---|---|
 | `team` | Nom de l'équipe suivie |
 | `team logo` | Logo de l'équipe suivie |
-| `domicile` | Équipe à domicile |
-| `logoDomicile` | URL du logo de l'équipe à domicile |
-| `exterieur` | Équipe à l'extérieur |
-| `logoExterieur` | URL du logo de l'équipe à l'extérieur |
-| `opponent` | Adversaire |
-| `situation` | `dom` ou `ext` |
+| `team_dom_ext` | `domicile` ou `extérieur` |
+| `team_domicile` | Équipe à domicile |
+| `team_domicile_logo` | URL du logo de l'équipe à domicile |
+| `team_exterieur` | Équipe à l'extérieur |
+| `team_exterieur_logo` | URL du logo de l'équipe à l'extérieur |
+| `competition` | Quelle ligue? |
 | `date` | Date du match (ex: Samedi 19 Avril 2026) |
 | `datetime` | Date/heure ISO (ex: 2026-04-19 20:45:00) |
 | `display` | `true` si le match est dans le futur |
 | `heure` | Heure de diffusion (ex: 20:45) |
 | `chaine` | Nom de la chaîne TV |
 | `logo` | Style CSS du sprite chaîne (footao.tv) |
-| `game` | Texte brut du match (ex: Marseille · Lyon) |
+| `event_name` | Texte brut du match (ex: Marseille · Lyon) |
 
 ## 🏗️ Installation via HACS
 
@@ -62,9 +62,6 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 
 Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
-```
-Marseille Saint-Etienne PSG
-```
 ![Footao ligues](/doc/images/ligues.png "Footao ligue").
 ![Footao clubs](/doc/images/clubs.png "Footao clubs").
 
@@ -78,13 +75,13 @@ Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peu
 
 ## 🎨 Affichage & Notifications
 
-### Carte dédiée
+### 🎴Carte dédiée
 
 Pour un rendu visuel optimal, utilisez la carte compagnon :
 👉 [**Footao Game Card**](https://github.com/developpeurbox/footao-game-card)
 
 
-### Notification 
+### 🔔Notification 
 
 Voici une automatisation pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
