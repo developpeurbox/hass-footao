@@ -4,9 +4,7 @@
 [![GitHub Release][releases-shield]][releases]
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-
-[![Community Forum][forum-shield]][forum
-]
+[![Community Forum][forum-shield]][forum]
 
 
 # Footao TV — Intégration HACS pour Home Assistant
