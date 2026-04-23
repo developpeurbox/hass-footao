@@ -9,7 +9,6 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
-    BooleanSelector,
     SelectSelector,
     SelectSelectorConfig,
     SelectSelectorMode,
@@ -24,34 +23,35 @@ def _load_clubs() -> dict:
         return json.load(f)
 
 
-def _league_selector(leagues: list[str]) -> SelectSelector:
-    return SelectSelector(SelectSelectorConfig(
-        options=leagues,
-        multiple=True,
-        mode=SelectSelectorMode.LIST,
-    ))
+def _multi_select(options: list[str], default: list[str] | None = None) -> vol.Schema:
+    """Champ liste déroulante multi-choix natif HA."""
+    selector = SelectSelector(
+        SelectSelectorConfig(
+            options=options,
+            multiple=True,
+            mode=SelectSelectorMode.LIST,
+        )
+    )
+    if default is not None:
+        return vol.Required("__placeholder__", default=default), selector
+    return selector
 
-
-def _club_selector(club_names: list[str]) -> SelectSelector:
-    return SelectSelector(SelectSelectorConfig(
-        options=club_names,
-        multiple=True,
-        mode=SelectSelectorMode.LIST,
-    ))
-
-
-# ─── Config flow (nouvelle installation) ─────────────────────────────────────
 
 class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Config flow en 2 étapes : ligues → clubs."""
+    """
+    Config flow en 2 étapes :
+      1. Choisir une ou plusieurs ligues (liste déroulante multi-choix)
+      2. Choisir les clubs dans ces ligues (liste déroulante multi-choix)
+    Plusieurs instances peuvent coexister (plusieurs groupes de sensors).
+    """
 
     VERSION = 1
 
     def __init__(self):
-        self._clubs: dict       = _load_clubs()
-        self._sel_leagues: list = []
+        self._clubs: dict        = _load_clubs()
+        self._sel_leagues: list  = []
 
-    # ── Étape 1 : ligues (aucune sélection par défaut) ───────────────────────
+    # ── Étape 1 : ligues ─────────────────────────────────────────────────────
 
     async def async_step_user(self, user_input=None):
         errors  = {}
@@ -68,12 +68,18 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema({
-                vol.Required("leagues"): _league_selector(leagues),
+                vol.Required("leagues"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=leagues,
+                        multiple=True,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
             }),
             errors=errors,
         )
 
-    # ── Étape 2 : clubs + case "Tout sélectionner" ───────────────────────────
+    # ── Étape 2 : clubs ──────────────────────────────────────────────────────
 
     async def async_step_clubs(self, user_input=None):
         errors = {}
@@ -84,12 +90,7 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         club_names = sorted(available.keys())
 
         if user_input is not None:
-            # Si "Tout sélectionner" est coché → on prend tous les clubs
-            if user_input.get("select_all", False):
-                chosen_names = club_names
-            else:
-                chosen_names = user_input.get("clubs", [])
-
+            chosen_names = user_input.get("clubs", [])
             if not chosen_names:
                 errors["clubs"] = "no_club"
             else:
@@ -100,8 +101,13 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="clubs",
             data_schema=vol.Schema({
-                vol.Optional("select_all", default=False): BooleanSelector(),
-                vol.Optional("clubs"):                     _club_selector(club_names),
+                vol.Required("clubs"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=club_names,
+                        multiple=True,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
             }),
             errors=errors,
         )
@@ -112,17 +118,15 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return FootaoOptionsFlow(config_entry)
 
 
-# ─── Options flow (modifier une installation existante) ──────────────────────
-
 class FootaoOptionsFlow(config_entries.OptionsFlow):
     """Modifier les clubs d'une entrée existante."""
 
     def __init__(self, config_entry):
-        self.config_entry       = config_entry
-        self._clubs: dict       = _load_clubs()
+        self._config_entry  = config_entry
+        self._clubs: dict  = _load_clubs()
         self._sel_leagues: list = []
 
-    # ── Étape 1 : ligues (aucune sélection par défaut) ───────────────────────
+    # ── Étape 1 : re-choisir les ligues ──────────────────────────────────────
 
     async def async_step_init(self, user_input=None):
         errors  = {}
@@ -139,12 +143,18 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema({
-                vol.Required("leagues"): _league_selector(leagues),
+                vol.Required("leagues"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=leagues,
+                        multiple=True,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
             }),
             errors=errors,
         )
 
-    # ── Étape 2 : clubs + case "Tout sélectionner" (pré-sélection courante) ──
+    # ── Étape 2 : re-choisir les clubs (pré-sélection des clubs actuels) ─────
 
     async def async_step_clubs(self, user_input=None):
         errors  = {}
@@ -157,11 +167,7 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
         default_chosen = [n for n in club_names if n in current]
 
         if user_input is not None:
-            if user_input.get("select_all", False):
-                chosen_names = club_names
-            else:
-                chosen_names = user_input.get("clubs", [])
-
+            chosen_names = user_input.get("clubs", [])
             if not chosen_names:
                 errors["clubs"] = "no_club"
             else:
@@ -175,8 +181,13 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="clubs",
             data_schema=vol.Schema({
-                vol.Optional("select_all", default=False): BooleanSelector(),
-                vol.Optional("clubs", default=default_chosen): _club_selector(club_names),
+                vol.Required("clubs", default=default_chosen): SelectSelector(
+                    SelectSelectorConfig(
+                        options=club_names,
+                        multiple=True,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
             }),
             errors=errors,
         )
