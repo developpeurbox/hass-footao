@@ -54,7 +54,7 @@ trigger:
     at: !input notify_time
 
 variables:
-  notify_targets: !input notify_targets
+  notifytargets: !input notify_targets
   matches: >
     {{
       expand(match_sensors)
@@ -70,7 +70,7 @@ condition:
       {{ matches | length > 0 }}
 
  - repeat:
-       for_each: "{{ notify_targets }}"
+       for_each: "{{ notifytargets }}"
       sequence:
         - service: 'notify.mobile_app_{{ device_attr(repeat.item, "name") | slugify }}'
           data:
