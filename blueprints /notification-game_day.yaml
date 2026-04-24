@@ -1,17 +1,19 @@
+
 blueprint:
-  name: Notification jour de match (football – attribut date)
+  name: Notification jour de match (football – multi-clubs)
   description: >
-    Envoie une notification si l'attribut "date" du capteur de match
-    est égal à "Aujourd'hui".
+    Envoie une notification si au moins un des capteurs de match indique
+    un match "Aujourd'hui". Le titre et le message sont personnalisables.
   domain: automation
 
   input:
-    match_sensor:
-      name: Capteur de match
-      description: Capteur contenant les informations du match
+    match_sensors:
+      name: Capteurs de matchs
+      description: Liste des capteurs de matchs (un par club)
       selector:
         entity:
           domain: sensor
+          multiple: true
 
     notification_service:
       name: Service de notification
@@ -21,30 +23,52 @@ blueprint:
 
     notify_time:
       name: Heure de vérification
-      description: Heure à laquelle vérifier si le match a lieu aujourd'hui
+      description: Heure quotidienne de contrôle
       default: "08:00:00"
       selector:
         time:
+
+    title_template:
+      name: Titre de la notification
+      description: Template Jinja pour le titre
+      default: "⚽ Jour de match !"
+      selector:
+        text:
+
+    message_template:
+      name: Message de la notification
+      description: >
+        Template Jinja pour le message.
+        La variable `matches` contient la liste des capteurs ayant un match aujourd'hui.
+      default: >
+        {% for s in matches %}
+        • {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }} sur {{ state_attr(s, 'chaine') }}
+        {% endfor %}
+      selector:
+        text:
 
 trigger:
   - platform: time
     at: !input notify_time
 
+variables:
+  matches: >
+    {{ expand(!input match_sensors)
+       | selectattr('attributes.date', 'eq', "Aujourd'hui")
+       | map(attribute='entity_id')
+       | list }}
+
 condition:
   - condition: template
     value_template: >
-      {{ state_attr(!input match_sensor, 'date') == "Aujourd'hui" }}
+      {{ matches | length > 0 }}
 
 action:
   - service: !input notification_service
     data:
-      title: "⚽ Jour de match !"
+      title: >
+        {{ title_template }}
       message: >
-        Le match {{ state_attr(!input match_sensor, 'event_name') }}
-        est diffusé aujourd'hui à
-        {{ state_attr(!input match_sensor, 'heure')
-           if state_attr(!input match_sensor, 'heure') is not none
-           else state_attr(!input match_sensor, 'datetime').split(' ')[1] }}
-        sur {{ state_attr(!input match_sensor, 'chaine') }}.
+        {{ message_template }}
 
 mode: single
