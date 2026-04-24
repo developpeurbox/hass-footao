@@ -83,32 +83,10 @@ Pour un rendu visuel optimal, utilisez la carte compagnon :
 
 ### 🔔Notification 
 
-Voici une automatisation pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
+Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
-```yaml
-alias: Notification Match Angers Aujourd'hui
-description: >-
-  Envoie une notification si le match d'Angers a lieu aujourd'hui (comparaison
-  date uniquement)
-triggers:
-  - at: "08:00:00"
-    trigger: time
-conditions:
-  - condition: template
-    value_template: >
-      {{ state_attr('sensor.footao_angers', 'datetime').split(' ')[0] ==
-      now().strftime('%Y-%m-%d') }}
-actions:
-  - data:
-      title: "⚽ Jour de match !"
-      message: >
-        Le match {{ state_attr('sensor.footao_angers', 'event_name') }} est
-        diffusé aujourd'hui à {{ state_attr('sensor.footao_angers',
-        'datetime').split(' ')[1] }} sur {{ state_attr('sensor.footao_angers',
-        'chaine') }}.
-    action: notify.mobile_xxxx
-mode: single
-```
+
+
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
 [commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
