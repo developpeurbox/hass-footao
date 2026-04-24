@@ -1,7 +1,7 @@
 # Quelques blueprint pour Home Assistant
 
 ## ⚽ Notification jour de match – Football (multi-clubs)
-[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https://github.com/developpeurbox/hass-footao/blob/main/blueprints%20/notification-game_day.yaml)
+[![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https://github.com/developpeurbox/hass-footao/blob/main/blueprints%20/notification-game-day.yaml)
 
 
 ### 📌 Description
