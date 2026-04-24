@@ -1,6 +1,5 @@
-
 blueprint:
-  name: Notification jour de match (football – multi-clubs)
+  name: Footao - Notification jour de match
   description: >
     Envoie une notification si au moins un des capteurs de match indique
     un match "Aujourd'hui". Le titre et le message sont personnalisables.
@@ -9,24 +8,28 @@ blueprint:
   input:
     match_sensors:
       name: Capteurs de matchs
-      description: "Liste des capteurs de matchs (un par club)"
+      description: "Liste des capteurs FOOTAO"
       selector:
         entity:
           domain: sensor
           multiple: true
+          filter:
+            include:
+              - entity_id: "sensor.footao*"
 
     notification_service:
-      name: Mobile App devices to target
-      description: >-
-        Choose one or more Home Assistant mobile app devices to notify.
+      name: Groupe de notification
+      description: "Groupe notify (ex: notify.mobiles_famille)"
       selector:
-        device:
-          integration: mobile_app
-          multiple: true
+        entity:
+          domain: notify
+          filter:
+            include:
+              - entity_id: "notify.mobiles_*"
 
     notify_time:
       name: Heure de vérification
-      description: "Heure quotidienne de contrôle"
+      description: Heure quotidienne de contrôle
       default: "08:00:00"
       selector:
         time:
@@ -45,7 +48,9 @@ blueprint:
         La variable `matches` contient la liste des capteurs ayant un match aujourd'hui.
       default: >
         {% for s in matches %}
-        • {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }} sur {{ state_attr(s, 'chaine') }}
+        ⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
+        📺 {{ state_attr(s, 'chaine') }}
+
         {% endfor %}
       selector:
         text:
@@ -56,7 +61,7 @@ trigger:
 
 variables:
   matches: >
-    {{ expand(!input match_sensors)
+    {{ expand(match_sensors)
        | selectattr('attributes.date', 'eq', "Aujourd'hui")
        | map(attribute='entity_id')
        | list }}
