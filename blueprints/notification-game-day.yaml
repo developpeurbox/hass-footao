@@ -54,7 +54,7 @@ trigger:
     at: !input notify_time
 
 variables:
-  matches: >
+  matches: |
     {{
       expand(match_sensors)
       | selectattr('entity_id', 'match', '^sensor\\.footao')
