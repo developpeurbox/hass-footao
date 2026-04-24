@@ -15,7 +15,7 @@ blueprint:
           domain: sensor
           multiple: true
 
-    notification_service:
+    notification_targets:
       name: Groupe de notifications
       description: >
         Service notify (ex: notify.mobiles_famille)
@@ -54,6 +54,7 @@ trigger:
     at: !input notify_time
 
 variables:
+ notify_targets: !input notify_targets
   matches: >
     {{
       expand(match_sensors)
@@ -68,10 +69,13 @@ condition:
     value_template: >
       {{ matches | length > 0 }}
 
-action:
-  - service: !input notification_service
-    data:
-      title: "{{ title_template }}"
-      message: "{{ message_template }}"
+ - repeat:
+       for_each: "{{ notify_targets }}"
+      sequence:
+        - service: 'notify.mobile_app_{{ device_attr(repeat.item, "name") | slugify }}'
+          data:
+            title: "{{ title_template }}"
+            message: "{{ message_template }}"
+
 
 mode: single
