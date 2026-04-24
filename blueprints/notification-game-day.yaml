@@ -8,20 +8,18 @@ blueprint:
   input:
     match_sensors:
       name: Capteurs de matchs FOOTAO
-      description: >
-        Sélectionner uniquement des capteurs sensor.footao*
+      description: Sélectionner uniquement des capteurs sensor.footao*
       selector:
         entity:
           domain: sensor
           multiple: true
 
     notification_service:
-      name: Groupe de notifications
-      description: >
-        Service notify (ex: notify.mobiles_famille)
+      name: Service de notification
+      description: "Ex: notify.mobiles_famille"
+      default: notify.notify
       selector:
-        entity:
-          domain: notify
+        text:
 
     notify_time:
       name: Heure de vérification
@@ -37,41 +35,50 @@ blueprint:
 
     message_template:
       name: Message de la notification
-      description: >
-        Variable disponible : matches (liste des capteurs du jour)
-      default: >
-        {% for s in matches %}
-        ⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
+      description: "Variable disponible : matches (liste des entity_id du jour)"
+      default: >-
+        {% for s in matches %}⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
         📺 {{ state_attr(s, 'chaine') }}
-
         {% endfor %}
       selector:
         text:
+          multiline: true
 
 trigger:
   - platform: time
     at: !input notify_time
 
 variables:
+  # ⚠️ Les inputs doivent être capturés dans des variables
+  # avant d'être utilisables dans d'autres templates
+  input_sensors: !input match_sensors
+  input_title: !input title_template
+  input_message: !input message_template
+  notify_svc: !input notification_service
+
   matches: >
-    {{
-      expand(match_sensors)
-      | selectattr('entity_id', 'match', '^sensor\\.footao')
-      | selectattr('attributes.date', 'eq', "Aujourd'hui")
-      | map(attribute='entity_id')
-      | list
-    }}
+    {{ expand(input_sensors)
+       | selectattr('entity_id', 'match', '^sensor\.footao')
+       | selectattr('attributes.date', 'eq', "Aujourd'hui")
+       | map(attribute='entity_id')
+       | list }}
+
+  # Évaluation des templates personnalisés avec la variable 'matches' disponible
+  title_rendered: "{{ input_title }}"
+  message_rendered: >
+    {% for s in matches %}
+    ⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
+    📺 {{ state_attr(s, 'chaine') }}
+    {% endfor %}
 
 condition:
   - condition: template
-    value_template: >
-      {{ matches | length > 0 }}
+    value_template: "{{ matches | length > 0 }}"
 
 action:
-  - service: !input notification_service
+  - action: "{{ notify_svc }}"  
     data:
-      title: "{{ title_template }}"
-      message: "{{ message_template }}"
+      title: "{{ title_rendered }}"
+      message: "{{ message_rendered }}"
 
 mode: single
-``
