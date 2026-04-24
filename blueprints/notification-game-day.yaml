@@ -1,5 +1,5 @@
 blueprint:
-  name: "Footao - Notification jour de match"
+  name: Footao Notification jour de match
   description: >
     Envoie une notification si au moins un capteur FOOTAO indique
     un match "Aujourd'hui".
@@ -17,7 +17,7 @@ blueprint:
     notification_service:
       name: Service de notification
       description: "Ex: notify.mobiles_famille"
-      default: notify.notify
+      default: notify.mobile
       selector:
         text:
 
@@ -33,13 +33,6 @@ blueprint:
       selector:
         text:
 
-    message_template:
-      name: Message de la notification
-      default: "Match aujourd'hui !"
-      selector:
-        text:
-          multiline: true
-
 trigger:
   - platform: time
     at: !input notify_time
@@ -48,17 +41,29 @@ variables:
   input_sensors: !input match_sensors
   notify_svc: !input notification_service
   title_rendered: !input title_template
-  message_rendered: !input message_template
 
-  # Filtrage par attribut date == "Aujourd'hui"
   matches: >
     {% set ns = namespace(result=[]) %}
     {% for entity_id in input_sensors %}
-      {% if state_attr(entity_id, 'date') == "Aujourd’hui" %}
+      {% if state_attr(entity_id, 'date') in ["Aujourd'hui", "Aujourd\u2019hui"] %}
         {% set ns.result = ns.result + [entity_id] %}
       {% endif %}
     {% endfor %}
     {{ ns.result }}
+
+  message_rendered: >
+    {% set ns = namespace(result=[]) %}
+    {% for entity_id in input_sensors %}
+      {% if state_attr(entity_id, 'date') in ["Aujourd'hui", "Aujourd\u2019hui"] %}
+        {% set ns.result = ns.result + [entity_id] %}
+      {% endif %}
+    {% endfor %}
+    {% for s in ns.result %}
+    ⚽ {{ state_attr(s, 'game') }}
+    🕐 {{ state_attr(s, 'heure') }}
+    📺 {{ state_attr(s, 'chaine') }}
+    {% if not loop.last %}———————————————{% endif %}
+    {% endfor %}
 
 condition:
   - condition: template
