@@ -54,7 +54,7 @@ trigger:
     at: !input notify_time
 
 variables:
- notify_targets: !input notify_targets
+  notify_targets: !input notify_targets
   matches: >
     {{
       expand(match_sensors)
