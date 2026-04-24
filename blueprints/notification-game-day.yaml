@@ -20,8 +20,9 @@ blueprint:
       description: >
         Service notify (ex: notify.mobiles_famille)
       selector:
-        entity:
-          domain: notify
+        device:
+          integration: mobile_app
+          multiple: true
 
     notify_time:
       name: Heure de vérification
