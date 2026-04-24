@@ -74,3 +74,4 @@ action:
       message: "{{ message_template }}"
 
 mode: single
+
