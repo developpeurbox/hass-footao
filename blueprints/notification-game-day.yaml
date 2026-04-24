@@ -54,7 +54,7 @@ variables:
   matches: >
     {% set ns = namespace(result=[]) %}
     {% for entity_id in input_sensors %}
-      {% if state_attr(entity_id, 'date') == "Aujourd'hui" %}
+      {% if state_attr(entity_id, 'date') == "Aujourd’hui" %}
         {% set ns.result = ns.result + [entity_id] %}
       {% endif %}
     {% endfor %}
