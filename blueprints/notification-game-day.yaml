@@ -68,7 +68,7 @@ condition:
       {{ matches | length > 0 }}
 
 action:
-  - service: !input notification_service
+  - action: !input notification_service
     data:
       title: "{{ title_template }}"
       message: "{{ message_template }}"
