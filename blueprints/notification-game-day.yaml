@@ -2,13 +2,13 @@ blueprint:
   name: Notification jour de match (football – multi-clubs)
   description: >
     Envoie une notification si au moins un capteur FOOTAO indique
-    un match "Aujourd'hui". Le titre et le message sont personnalisables.
+    un match "Aujourd'hui".
   domain: automation
 
   input:
     match_sensors:
       name: Capteurs de matchs FOOTAO
-      description: Sélectionner uniquement des capteurs sensor.footao*
+      description: Sélectionner les capteurs sensor.footao*
       selector:
         entity:
           domain: sensor
@@ -35,11 +35,7 @@ blueprint:
 
     message_template:
       name: Message de la notification
-      description: "Variable disponible : matches (liste des entity_id du jour)"
-      default: >-
-        {% for s in matches %}⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
-        📺 {{ state_attr(s, 'chaine') }}
-        {% endfor %}
+      default: "Match aujourd'hui !"
       selector:
         text:
           multiline: true
@@ -49,34 +45,27 @@ trigger:
     at: !input notify_time
 
 variables:
-  # ⚠️ Les inputs doivent être capturés dans des variables
-  # avant d'être utilisables dans d'autres templates
   input_sensors: !input match_sensors
-  input_title: !input title_template
-  input_message: !input message_template
   notify_svc: !input notification_service
+  title_rendered: !input title_template
+  message_rendered: !input message_template
 
+  # Filtrage par attribut date == "Aujourd'hui"
   matches: >
-    {{ expand(input_sensors)
-       | selectattr('entity_id', 'match', '^sensor\.footao')
-       | selectattr('attributes.date', 'eq', "Aujourd'hui")
-       | map(attribute='entity_id')
-       | list }}
-
-  # Évaluation des templates personnalisés avec la variable 'matches' disponible
-  title_rendered: "{{ input_title }}"
-  message_rendered: >
-    {% for s in matches %}
-    ⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
-    📺 {{ state_attr(s, 'chaine') }}
+    {% set ns = namespace(result=[]) %}
+    {% for entity_id in input_sensors %}
+      {% if state_attr(entity_id, 'date') == "Aujourd'hui" %}
+        {% set ns.result = ns.result + [entity_id] %}
+      {% endif %}
     {% endfor %}
+    {{ ns.result }}
 
 condition:
   - condition: template
     value_template: "{{ matches | length > 0 }}"
 
 action:
-  - action: "{{ notify_svc }}"  
+  - action: "{{ notify_svc }}"
     data:
       title: "{{ title_rendered }}"
       message: "{{ message_rendered }}"
