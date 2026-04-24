@@ -1,5 +1,5 @@
 blueprint:
-  name: Footao - Notification jour de match
+  name: Notification jour de match (football – multi-clubs)
   description: >
     Envoie une notification si au moins un capteur FOOTAO indique
     un match "Aujourd'hui". Le titre et le message sont personnalisables.
@@ -68,9 +68,10 @@ condition:
       {{ matches | length > 0 }}
 
 action:
-  - action: !input notification_service
+  - service: !input notification_service
     data:
       title: "{{ title_template }}"
       message: "{{ message_template }}"
 
 mode: single
+``
