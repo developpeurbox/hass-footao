@@ -1,0 +1,50 @@
+blueprint:
+  name: Notification jour de match (football – attribut date)
+  description: >
+    Envoie une notification si l'attribut "date" du capteur de match
+    est égal à "Aujourd'hui".
+  domain: automation
+
+  input:
+    match_sensor:
+      name: Capteur de match
+      description: Capteur contenant les informations du match
+      selector:
+        entity:
+          domain: sensor
+
+    notification_service:
+      name: Service de notification
+      description: Service de notification à utiliser (ex: notify.mobile_xxxx)
+      selector:
+        text:
+
+    notify_time:
+      name: Heure de vérification
+      description: Heure à laquelle vérifier si le match a lieu aujourd'hui
+      default: "08:00:00"
+      selector:
+        time:
+
+trigger:
+  - platform: time
+    at: !input notify_time
+
+condition:
+  - condition: template
+    value_template: >
+      {{ state_attr(!input match_sensor, 'date') == "Aujourd'hui" }}
+
+action:
+  - service: !input notification_service
+    data:
+      title: "⚽ Jour de match !"
+      message: >
+        Le match {{ state_attr(!input match_sensor, 'event_name') }}
+        est diffusé aujourd'hui à
+        {{ state_attr(!input match_sensor, 'heure')
+           if state_attr(!input match_sensor, 'heure') is not none
+           else state_attr(!input match_sensor, 'datetime').split(' ')[1] }}
+        sur {{ state_attr(!input match_sensor, 'chaine') }}.
+
+mode: single
