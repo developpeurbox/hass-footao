@@ -1,5 +1,5 @@
 blueprint:
-  name: Footao - Notification jour de match
+  name: "Footao - Notification jour de match"
   description: >
     Envoie une notification si au moins un capteur FOOTAO indique
     un match "Aujourd'hui".
