@@ -9,7 +9,7 @@ blueprint:
   input:
     match_sensors:
       name: Capteurs de matchs
-      description: Liste des capteurs de matchs (un par club)
+      description: "Liste des capteurs de matchs (un par club)"
       selector:
         entity:
           domain: sensor
@@ -26,7 +26,7 @@ blueprint:
 
     notify_time:
       name: Heure de vérification
-      description: Heure quotidienne de contrôle
+      description: "Heure quotidienne de contrôle"
       default: "08:00:00"
       selector:
         time:
