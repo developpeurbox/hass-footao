@@ -16,10 +16,13 @@ blueprint:
           multiple: true
 
     notification_service:
-      name: Service de notification
-      description: Service de notification à utiliser (ex: notify.mobile_xxxx)
+      name: Mobile App devices to target
+      description: >-
+        Choose one or more Home Assistant mobile app devices to notify.
       selector:
-        text:
+        device:
+          integration: mobile_app
+          multiple: true
 
     notify_time:
       name: Heure de vérification
