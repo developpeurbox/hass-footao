@@ -1,3 +1,4 @@
+
 blueprint:
   name: Footao - Notification jour de match
   description: >
@@ -20,9 +21,8 @@ blueprint:
       description: >
         Service notify (ex: notify.mobiles_famille)
       selector:
-        device:
-          integration: mobile_app
-          multiple: true
+        entity:
+          domain: notify
 
     notify_time:
       name: Heure de vérification
