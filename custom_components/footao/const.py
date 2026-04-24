@@ -1,7 +1,7 @@
 """Constantes pour l'intégration Footao TV."""
 
 DOMAIN              = "footao"
-SCAN_INTERVAL_HOURS = 24
+SCAN_INTERVAL_HOURS = 8
 
 SPRITE_POSITIONS = {
     "b2":"0 -15px","b3":"0 -30px","b4":"0 -45px","b5":"0 -60px",
