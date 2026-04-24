@@ -1,0 +1,77 @@
+blueprint:
+  name: Footao - Notification jour de match 
+  description: >
+    Envoie une notification si au moins un capteur FOOTAO indique
+    un match "Aujourd'hui". Le titre et le message sont personnalisables.
+  domain: automation
+
+  input:
+    match_sensors:
+      name: Capteurs de matchs FOOTAO
+      description: >
+        Sélectionner uniquement des capteurs sensor.footao*
+      selector:
+        entity:
+          domain: sensor
+          multiple: true
+
+    notification_service:
+      name: Groupe de notifications
+      description: >
+        Service notify (ex: notify.mobiles_famille)
+      selector:
+        entity:
+          domain: notify
+
+    notify_time:
+      name: Heure de vérification
+      default: "08:00:00"
+      selector:
+        time:
+
+    title_template:
+      name: Titre de la notification
+      default: "⚽ Jour de match !"
+      selector:
+        text:
+
+    message_template:
+      name: Message de la notification
+      description: >
+        Variable disponible : matches (liste des capteurs du jour)
+      default: >
+        {% for s in matches %}
+        ⚽ {{ state_attr(s, 'event_name') }} à {{ state_attr(s, 'heure') }}
+        📺 {{ state_attr(s, 'chaine') }}
+
+        {% endfor %}
+      selector:
+        text:
+
+trigger:
+  - platform: time
+    at: !input notify_time
+
+variables:
+  matches: >
+    {{
+      expand(match_sensors)
+      | selectattr('entity_id', 'match', '^sensor\\.footao')
+      | selectattr('attributes.date', 'eq', "Aujourd'hui")
+      | map(attribute='entity_id')
+      | list
+    }}
+
+condition:
+  - condition: template
+    value_template: >
+      {{ matches | length > 0 }}
+
+action:
+  - service: !input notification_service
+    data:
+      title: "{{ title_template }}"
+      message: "{{ message_template }}"
+
+mode: single
+``
