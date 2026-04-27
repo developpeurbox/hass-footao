@@ -138,11 +138,21 @@ class FootaoCalParser(HTMLParser):
         if re.match(r"^\d{2}:\d{2}$", text) and not self._in_link:
             self._heure = text; return
         if self._in_link and text and self._cur_iso and self._heure:
-            if any(f in text for f in FILTRES_EXCLUS): return
+             # 🔍 DEBUG : match candidat détecté
+            _LOGGER.debug( "Footao parser: match détecté → '%s' (%s %s)", text,  self._cur_iso,  self._heure, )
+            # ❌ Filtrage (U19, Féminin, etc.)
+            if any(f in text for f in FILTRES_EXCLUS): 
+                _LOGGER.debug( "Footao parser: match ignoré par filtre → '%s'",  text, )
+                return
+                
             dt_str = f"{self._cur_iso} {self._heure}:00"
             try:    display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") > datetime.now()
             except: display = True
             parts = [p.strip() for p in text.split("·")]
+            
+            # ✅ DEBUG : match ajouté
+            _LOGGER.debug(   "Footao parser: match ajouté → '%s' | display=%s",  match["game"],    match["display"],  )
+
             self.matches.append({
                 "date": self._cur_date, "date_iso": self._cur_iso,
                 "datetime": dt_str, "display": display, "heure": self._heure,
@@ -202,6 +212,8 @@ class FootaoCoordinator(DataUpdateCoordinator):
 
                     parser = FootaoCalParser()
                     parser.feed(html)
+                    
+                    _LOGGER.debug("Footao: %s (%s) → %d matches parsés", club_name, comp,len(parser.matches),)
 
                     if not parser.matches:
                         _LOGGER.debug("Aucun match pour %s", club_name)
