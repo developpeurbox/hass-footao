@@ -151,7 +151,7 @@ class FootaoCalParser(HTMLParser):
             parts = [p.strip() for p in text.split("·")]
             
             # ✅ DEBUG : match ajouté
-            _LOGGER.debug(   "Footao parser: match ajouté → '%s' | display=%s",  match["game"],    match["display"],  )
+            #_LOGGER.debug(   "Footao parser: match ajouté → '%s' | display=%s",  match["game"],    match["display"],  )
 
             self.matches.append({
                 "date": self._cur_date, "date_iso": self._cur_iso,
