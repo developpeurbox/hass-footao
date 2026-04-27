@@ -26,8 +26,8 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 Firefox/19.0"}
-#FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
-FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}"
+FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
+#FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}"
 
 FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U19", " U17", " U21", "-19", "-17"]
 
@@ -151,10 +151,7 @@ class FootaoCalParser(HTMLParser):
             try:    display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") > datetime.now()
             except: display = True
             parts = [p.strip() for p in text.split("·")]
-            
-            # ✅ DEBUG : match ajouté
-            #_LOGGER.debug(   "Footao parser: match ajouté → '%s' | display=%s",  match["game"],    match["display"],  )
-
+                     
             self.matches.append({
                 "date": self._cur_date, "date_iso": self._cur_iso,
                 "datetime": dt_str, "display": display, "heure": self._heure,
