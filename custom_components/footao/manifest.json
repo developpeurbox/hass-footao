@@ -3,7 +3,7 @@
   "name": "Footao TV",
   "version": "0.0.3",
   "documentation": "https://github.com/developpeurbox/ha-footao",
-  "issue_tracker": "https://github.com/developpeurbox/ha-footaod/issues",
+  "issue_tracker": "https://github.com/developpeurbox/ha-footao/issues",
   "requirements": [],
   "dependencies": [],
   "codeowners": ["@developpeurbox"],
