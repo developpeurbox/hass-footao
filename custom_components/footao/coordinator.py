@@ -187,6 +187,8 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     logo_team = cfg.get("logo", "")
                     url = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
 
+                    _LOGGER.debug( "Footao: récupération calendrier pour %s (%s) → %s", club_name, comp, url, )
+
                     try:
                         async with session.get(url, ssl=ssl_ctx,
                                                timeout=aiohttp.ClientTimeout(total=15)) as resp:
