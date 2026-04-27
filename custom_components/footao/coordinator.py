@@ -163,9 +163,15 @@ class FootaoCoordinator(DataUpdateCoordinator):
 
     def __init__(self, hass: HomeAssistant, selected: dict) -> None:
         self.selected   = selected
-        self._logo_index = build_logo_index(load_clubs())
+        self._logo_index: dict[str, str] = {}
         super().__init__(hass, _LOGGER, name=DOMAIN,
                          update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
+
+    
+    async def async_initialize(self) -> None:
+        """Chargement non bloquant de clubs.json + index logos."""
+        clubs = await self.hass.async_add_executor_job(load_clubs)
+        self._logo_index = build_logo_index(clubs)
 
     async def _async_update_data(self) -> dict:
         data: dict = {}
