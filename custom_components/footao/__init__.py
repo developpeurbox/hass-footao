@@ -15,6 +15,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     selected: dict[str, str] = entry.data.get("selected", {})
 
     coordinator = FootaoCoordinator(hass, selected)
+    
+    # ✅ NOUVEAU : chargement non bloquant de clubs.json
+    await coordinator.async_initialize()
+    # ✅ Premier rafraîchissement
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
