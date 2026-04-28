@@ -5,7 +5,10 @@
   "documentation": "https://github.com/developpeurbox/ha-footao",
   "issue_tracker": "https://github.com/developpeurbox/ha-footao/issues",
   "requirements": [],
-  "dependencies": [],
+  "dependencies": [
+    "frontend",
+    "http"
+  ],
   "codeowners": ["@developpeurbox"],
   "iot_class": "cloud_polling",
   "config_flow": true
