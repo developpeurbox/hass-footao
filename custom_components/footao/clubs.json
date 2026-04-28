@@ -152,13 +152,13 @@
     "Maroc":           { "eq": "Maroc",         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/hbmwkj1731791275.png/small" },
     "Mexique":         { "eq": "Mexique",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3rmosi1748525208.png/small" },
     "Norvège":         { "eq": "Norvege",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/gyfn811591973155.png/small" },
-    "PaysBas":         { "eq": "PaysBas",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1p0hr41593787110.png/small" },
+    "Pays-Bas":         { "eq": "Pays-Bas%7C%7CHollande",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1p0hr41593787110.png/small" },
     "Sénégal":         { "eq": "Senegal",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wh8dya1526727459.png/small" },
     "Suisse":          { "eq": "Suisse",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/mb7yqe1717365808.png/small" },
     "Tunisie":         { "eq": "Tunisie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/7r89rg1526727277.png/small" },
     "Turquie":         { "eq": "Turquie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/70c4oo1591982459.png/small" },
     "Uruguay":         { "eq": "Uruguay",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/6vjbr11726167756.png/small" },
-    "États-Unis":      { "eq": "USA",           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/21f0oi1597948195.png/small" }
+    "États-Unis":      { "eq": "Etats-Unis%7C%7CUSA%20Am%26eacute%3Brique",           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/21f0oi1597948195.png/small" }
 }
 
 }
