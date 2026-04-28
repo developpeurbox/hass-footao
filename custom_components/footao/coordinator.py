@@ -52,6 +52,7 @@ COMPETITIONS_FALLBACK = [
     "Ligue des Champions",
     "Ligue Europa",
     "Ligue Conference",
+    "Coupe du Monde 2026",
     "Amical",
 ]
 
