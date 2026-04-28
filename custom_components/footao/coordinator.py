@@ -61,7 +61,7 @@ COMPETITIONS_FALLBACK = [
 
 COMPETITIONS_AUTORISEES = [
     "amical",
-    "Bundesliga",
+    "bundesliga",
     "champions league",
     "conference league",
     "coupe du monde",
@@ -76,7 +76,7 @@ COMPETITIONS_AUTORISEES = [
     "ligue europa",
     "nations league",
     "Premier League",
-    "Serie A",
+    "serie a",
 ]
 
 FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U19", " U17", " U21", "-19", "-17"]
