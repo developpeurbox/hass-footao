@@ -106,8 +106,8 @@
     "Wolverhampton":   { "eq": "Wolverhampton", "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/stsvxw1473504849.png/small" }
   },
   "Bundesliga": {
-    "Augsbourg":       { "eq": "Augsbourg",                        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sqwryx1473504667.png/small" },
-    "Bayern Munich":   { "eq": "Bayern",                           "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/tsxwpk1473504807.png/small" },
+    "Augsbourg":       { "eq": "Augsbourg",                        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xqyyvq1473453233.png/small" },
+    "Bayern Munich":   { "eq": "Bayern",                           "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/01ogkh1716960412.png/small" },
     "Cologne":         { "eq": "Cologne",                          "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2j1sc91566049407.png/small" },
     "Dortmund":        { "eq": "Dortmund",                         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/puhrhl1473504966.png/small" },
     "Francfort":       { "eq": "Francfort E.|Eintracht Francfort", "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sqywry1473504700.png/small" },
