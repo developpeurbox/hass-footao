@@ -1,7 +1,7 @@
 {
   "domain": "footao",
   "name": "Footao TV",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "documentation": "https://github.com/developpeurbox/ha-footao",
   "issue_tracker": "https://github.com/developpeurbox/ha-footao/issues",
   "requirements": [],
@@ -11,5 +11,6 @@
   ],
   "codeowners": ["@developpeurbox"],
   "iot_class": "cloud_polling",
+  "loggers": ["footao"],
   "config_flow": true
 }
