@@ -96,14 +96,23 @@ def load_clubs() -> dict:
         return json.load(f)
 
 
+def _normalize(s: str) -> str:
+    """Minuscules + suppression des accents pour comparaison insensible aux diacritiques."""
+    import unicodedata
+    return unicodedata.normalize("NFD", s.lower()).encode("ascii", "ignore").decode("ascii")
+
+
 def build_logo_index(clubs: dict) -> dict[str, str]:
+    """Index normalisé : on indexe le champ 'eq' ET la clé du club pour maximiser les correspondances."""
     index: dict[str, str] = {}
     for league_clubs in clubs.values():
-        for cfg in league_clubs.values():
+        for club_key, cfg in league_clubs.items():
             eq   = cfg.get("eq", "")
             logo = cfg.get("logo", "")
-            if eq and logo:
-                index[eq.lower()] = logo
+            if logo:
+                if eq:
+                    index[_normalize(eq)] = logo
+                index[_normalize(club_key)] = logo
     return index
 
 LOGO_DEFAULT = "https://r2.thesportsdb.com/images/media/team/badge/rd725i1560082919.png/small"
@@ -111,7 +120,7 @@ LOGO_DEFAULT = "https://r2.thesportsdb.com/images/media/team/badge/rd725i1560082
 def logo_for(name: str, index: dict[str, str]) -> str:
     if not name:
         return LOGO_DEFAULT
-    nl = name.lower()
+    nl = _normalize(name)
     if nl in index:
         return index[nl]
     for key, url in index.items():
@@ -561,8 +570,8 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     )
 
                     sprite    = get_sprite_style(match["img_class"])
-                    eq_lower  = eq.lower()
-                    dom_lower = match["domicile"].lower()
+                    eq_lower  = _normalize(eq)
+                    dom_lower = _normalize(match["domicile"])
                     situation = "dom" if any(w in dom_lower for w in eq_lower.split()) else "ext"
 
                     logo_adv = logo_for(
