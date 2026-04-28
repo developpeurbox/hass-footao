@@ -106,17 +106,18 @@ def build_logo_index(clubs: dict) -> dict[str, str]:
                 index[eq.lower()] = logo
     return index
 
+LOGO_DEFAULT = "https://r2.thesportsdb.com/images/media/team/badge/rd725i1560082919.png/small"
 
 def logo_for(name: str, index: dict[str, str]) -> str:
     if not name:
-        return ""
+        return LOGO_DEFAULT
     nl = name.lower()
     if nl in index:
         return index[nl]
     for key, url in index.items():
         if key in nl or nl in key:
             return url
-    return ""
+    return LOGO_DEFAULT
 
 
 def get_sprite_style(css_class: str) -> str:
