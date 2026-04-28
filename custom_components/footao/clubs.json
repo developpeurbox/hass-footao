@@ -133,7 +133,7 @@
     "Allemagne":       { "eq": "Allemagne",                        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1xysi51726167152.png/small" },
     "Belgique":        { "eq": "Belgique",                         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/8xlvxv1592062265.png/small" },
     "Argentine":       { "eq": "Argentine",                        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3zplhu1726167477.png/small" },
-    "Portugal":          { "eq": "Portugal",                       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swqvpy1455466083.png/small" },
-    "Angleterre":          { "eq": "Angleterre",                   "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vf5ttc1726166739.png/small" }
+    "Portugal":        { "eq": "Portugal",                         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swqvpy1455466083.png/small" },
+    "Angleterre":      { "eq": "Angleterre",                       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vf5ttc1726166739.png/small" }
   }
 }
