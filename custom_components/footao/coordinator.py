@@ -58,20 +58,25 @@ COMPETITIONS_FALLBACK = [
 
 # Mots-clés acceptés pour filtrer les compétitions (programmetv / pages dédiées)
 # On accepte aussi "amical" pour les matchs amicaux des équipes nationales
+
 COMPETITIONS_AUTORISEES = [
+    "amical",
+    "Bundesliga",
+    "champions league",
+    "conference league",
+    "coupe du monde",
+    "europa league",
+    "liga",
     "ligue 1",
     "ligue 2",
-    "champions league",
-    "ligue des champions",
-    "europa league",
-    "ligue europa",
-    "conference league",
-    "ligue conference",
     "ligue conférence",
-    "amical",
-    "coupe du monde",      # pour les équipes nationales
-    "nations league",
+    "ligue conference",
+    "ligue des champions",
     "ligue des nations",
+    "ligue europa",
+    "nations league",
+    "Premier League",
+    "Serie A",
 ]
 
 FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U19", " U17", " U21", "-19", "-17"]
