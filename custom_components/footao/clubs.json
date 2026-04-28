@@ -125,5 +125,15 @@
     "Werder Brême":    { "eq": "Werder|Werder Br&ecirc;me",        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swxuur1473504836.png/small" },
     "Wolfsbourg":      { "eq": "Wolfsbourg",                       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/qvwxuu1473504853.png/small" }
   }
-
+  "Equipe Nationale": {
+    "France":          { "eq": "France",                           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/p3n0z51726166851.png/small" },
+    "Italie":          { "eq": "Italie",                           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/fxijcp1726167035.png/small" },
+    "Espagne":         { "eq": "Espagne",                          "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ncgqyr1726166942.png/small" },
+    "Brésil":          { "eq": "Bresil",                           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jl6dip1726167280.png/small" },
+    "Allemagne":       { "eq": "Allemagne",                        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1xysi51726167152.png/small" },
+    "Belgique":        { "eq": "Belgique",                         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/8xlvxv1592062265.png/small" },
+    "Argentine":       { "eq": "Argentine",                        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3zplhu1726167477.png/small" },
+    "Portugal":          { "eq": "Portugal",                       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swqvpy1455466083.png/small" },
+    "Angleterre":          { "eq": "Angleterre",                   "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vf5ttc1726166739.png/small" }
+  }
 }
