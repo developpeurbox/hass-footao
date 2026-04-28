@@ -54,7 +54,7 @@ COMPETITIONS_FALLBACK = [
     "Ligue Conference",
     "Coupe du Monde 2026",
     "Amical",
-    "Bundesliga,
+    "Bundesliga",
     "Premier League",
     "Serie A"
     "Liga",
