@@ -54,6 +54,10 @@ COMPETITIONS_FALLBACK = [
     "Ligue Conference",
     "Coupe du Monde 2026",
     "Amical",
+    "Bundesliga,
+    "Premier League",
+    "Serie A"
+    "Liga",
 ]
 
 # Mots-clés acceptés pour filtrer les compétitions (programmetv / pages dédiées)
