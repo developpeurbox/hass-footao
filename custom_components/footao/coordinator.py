@@ -53,6 +53,11 @@ COMPETITIONS_FALLBACK = [
 COMPETITIONS_AUTORISEES = [
     "ligue 1",
     "ligue 2",
+    "liga",
+    "Bundesliga",
+    "Serie A",
+    "Premier League",
+    "champions league",
     "champions league",
     "ligue des champions",
     "europa league",
