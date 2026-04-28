@@ -124,7 +124,7 @@
     "Union Berlin":    { "eq": "Union B.|Union Berlin",            "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rqswts1594572584.png/small" },
     "Werder Brême":    { "eq": "Werder|Werder Br&ecirc;me",        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swxuur1473504836.png/small" },
     "Wolfsbourg":      { "eq": "Wolfsbourg",                       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/qvwxuu1473504853.png/small" }
-  }
+  },
   "Equipe Nationale": {
     "France":          { "eq": "France",                           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/p3n0z51726166851.png/small" },
     "Italie":          { "eq": "Italie",                           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/fxijcp1726167035.png/small" },
