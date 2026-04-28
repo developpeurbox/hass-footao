@@ -148,8 +148,8 @@ class JSModuleRegistration:
 
     def remove_gzip_files(self) -> None:
         """Remove cached gzip files."""
-        # Corrected path for marees_france
-        path = self.hass.config.path("custom_components/marees_france/frontend")
+        # Corrected path for footao
+        path = self.hass.config.path("custom_components/footao/frontend")
 
         gzip_files = [
             filename for filename in os.listdir(path) if filename.endswith(".gz")
