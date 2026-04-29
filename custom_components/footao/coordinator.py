@@ -103,15 +103,17 @@ def _normalize(s: str) -> str:
 
 
 def build_logo_index(clubs: dict) -> dict[str, str]:
-    """Index normalisé : on indexe le champ 'eq' ET la clé du club pour maximiser les correspondances."""
+    """Index normalisé : on indexe chaque alias de 'eq' (séparés par |) + la clé du club."""
     index: dict[str, str] = {}
     for league_clubs in clubs.values():
         for club_key, cfg in league_clubs.items():
             eq   = cfg.get("eq", "")
             logo = cfg.get("logo", "")
             if logo:
-                if eq:
-                    index[_normalize(eq)] = logo
+                for alias in eq.split("|"):
+                    alias = alias.strip()
+                    if alias:
+                        index[_normalize(alias)] = logo
                 index[_normalize(club_key)] = logo
     return index
 
@@ -570,9 +572,14 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     )
 
                     sprite    = get_sprite_style(match["img_class"])
-                    eq_lower  = _normalize(eq)
-                    dom_lower = _normalize(match["domicile"])
-                    situation = "dom" if any(w in dom_lower for w in eq_lower.split()) else "ext"
+                    # Gestion des aliases eq séparés par | (ex: "R. Sociedad|Real Sociedad")
+                    eq_aliases = [_normalize(a.strip()) for a in eq.split("|") if a.strip()]
+                    dom_lower  = _normalize(match["domicile"])
+                    ext_lower  = _normalize(match["exterieur"])
+                    situation  = "dom" if any(
+                        any(w in dom_lower for w in alias.split())
+                        for alias in eq_aliases
+                    ) else "ext"
 
                     logo_adv = logo_for(
                         match["exterieur"] if situation == "dom" else match["domicile"],
