@@ -80,8 +80,8 @@
     "Pise":          { "eq": "Pise",                "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2eso9w1579708309.png/small" },
     "Roma":          { "eq": "Roma",                "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jwro2s1760820674.png/small" },
     "Sassuolo":      { "eq": "Sassuolo",            "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xystvp1448806138.png/small" },
-    "Torino":        { "eq": "Torino",              "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xxprty1448806802.png/medium" },
-    "Udinese":       { "eq": "Udinese",             "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/medium" }
+    "Torino":        { "eq": "Torino",              "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xxprty1448806802.png/small" },
+    "Udinese":       { "eq": "Udinese",             "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/small" }
    },
   "Premier League": {
     "Arsenal":         { "eq": "Arsenal",                     "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uyhbfe1612467038.png/small" },
