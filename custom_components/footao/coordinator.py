@@ -56,7 +56,7 @@ COMPETITIONS_FALLBACK = [
     "Amical",
     "Bundesliga",
     "Premier League",
-    "Serie A"
+    "Serie A",
     "Liga",
 ]
 
