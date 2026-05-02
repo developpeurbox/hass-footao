@@ -224,7 +224,8 @@ class FootaoProgParser(HTMLParser):
             return
 
         dt_str = f"{self._cur_iso} {self._heure}:00"
-        try:    display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") > datetime.now()
+        try:
+    display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") + timedelta(hours=3) > datetime.now()
         except: display = True
 
         clean_name = re.sub(r"\s*(Fém\.?|U\d{2})\s*", " ", name).strip()
