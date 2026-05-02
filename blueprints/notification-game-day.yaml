@@ -51,7 +51,7 @@ variables:
     {% endfor %}
     {{ ns.result }}
 
-  message_rendered: >
+  message_rendered: |
     {% set ns = namespace(result=[]) %}
     {% for entity_id in input_sensors %}
       {% if state_attr(entity_id, 'date') in ["Aujourd'hui", "Aujourd\u2019hui"] %}
@@ -59,10 +59,7 @@ variables:
       {% endif %}
     {% endfor %}
     {% for s in ns.result %}
-    ⚽ {{ state_attr(s, 'game') }}
-    🕐 {{ state_attr(s, 'heure') }}
-    📺 {{ state_attr(s, 'chaine') }}
-    {% if not loop.last %}———————————————{% endif %}
+      ⚽ {{ state_attr(s, 'game') }} 🕐 {{ state_attr(s, 'heure') }} 📺 {{ state_attr(s, 'chaine') }}
     {% endfor %}
 
 condition:
