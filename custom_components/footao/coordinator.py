@@ -598,7 +598,13 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     logo_ext = logo_adv  if situation == "dom" else logo_team
 
                     competition = match.get("competition_label") or comp
-
+                    
+                    try:
+                        dt_debut = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
+                        datetime_fin = (dt_debut + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
+                    except (ValueError, KeyError):
+                        datetime_fin = ""
+                    
                     data[club_name] = {
                         "state": match["chaine"] or "Inconnu",
                         "attributes": {
@@ -612,6 +618,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
                             "competition":   competition,
                             "date":          match["date"],
                             "datetime":      match["datetime"],
+                            "datetime_fin":  datetime_fin,
                             "display":       match["display"],
                             "heure":         match["heure"],
                             "logo":          sprite,
