@@ -36,6 +36,7 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 | `competition` | Quelle ligue? |
 | `date` | Date du match (ex: Samedi 19 Avril 2026) |
 | `datetime` | Date/heure ISO (ex: 2026-04-19 20:45:00) |
+| `datetime_fin` | Date/heure ISO (ex: 2026-04-19 23:45:00) |
 | `display` | `true` si le match est dans le futur |
 | `heure` | Heure de diffusion (ex: 20:45) |
 | `chaine` | Nom de la chaîne TV |
