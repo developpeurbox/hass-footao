@@ -557,8 +557,16 @@ class FootaoCoordinator(DataUpdateCoordinator):
                         )
                         matches = await self._fetch_fallback(session, ssl_ctx, eq)
 
+                    # ── Aucun match trouvé nulle part ─────────────────────────
                     if not matches:
                         _LOGGER.debug("Footao: aucun match pour %s", club_name)
+                        data[club_name] = {
+                            "state": "Aucun match",
+                            "attributes": {
+                                "team":     club_name,
+                                "logoTeam": logo_team,
+                            },
+                        }
                         continue
 
                     # Trier et prendre le prochain match futur
@@ -595,6 +603,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
                         "state": match["chaine"] or "Inconnu",
                         "attributes": {
                             "team":          club_name,
+                            "logoTeam":      logo_team,   # ← toujours présent
                             "domicile":      match["domicile"],
                             "logoDomicile":  logo_dom,
                             "exterieur":     match["exterieur"],
