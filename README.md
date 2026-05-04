@@ -72,7 +72,7 @@ Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 ## 🔁 Rafraîchissement
 
-Les données sont mises à jour automatiquement **toutes les 24 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
+Les données sont mises à jour automatiquement **toutes les 6 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
 
 ## 🎨 Affichage & Notifications
 
