@@ -29,3 +29,4 @@ Fonctionnalités clés :
 
 
 ---
+![Footao ligues](/doc/images/ligues.png "Footao ligue").
