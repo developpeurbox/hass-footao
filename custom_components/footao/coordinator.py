@@ -536,7 +536,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self) -> dict:
         data: dict = {}
-        ssl_ctx = ssl.create_default_context()
+        ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
         ssl_ctx.check_hostname = False
         ssl_ctx.verify_mode    = ssl.CERT_NONE
 
