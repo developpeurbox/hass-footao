@@ -17,7 +17,8 @@ from homeassistant.helpers.selector import (
 from .const import DOMAIN
 
 
-def _load_clubs() -> dict:
+def _load_clubs_sync() -> dict:
+    """Lecture synchrone de clubs.json — à appeler via async_add_executor_job."""
     clubs_path = Path(__file__).parent / "clubs.json"
     with open(clubs_path, encoding="utf-8") as f:
         return json.load(f)
@@ -48,13 +49,18 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     def __init__(self):
-        self._clubs: dict        = _load_clubs()
+        self._clubs: dict        = {}
         self._sel_leagues: list  = []
 
     # ── Étape 1 : ligues ─────────────────────────────────────────────────────
 
     async def async_step_user(self, user_input=None):
-        errors  = {}
+        errors = {}
+
+        # Chargement non-bloquant du fichier clubs.json
+        if not self._clubs:
+            self._clubs = await self.hass.async_add_executor_job(_load_clubs_sync)
+
         leagues = list(self._clubs.keys())
 
         if user_input is not None:
@@ -123,13 +129,18 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
 
     def __init__(self, config_entry):
         self._config_entry  = config_entry
-        self._clubs: dict  = _load_clubs()
+        self._clubs: dict   = {}
         self._sel_leagues: list = []
 
     # ── Étape 1 : re-choisir les ligues ──────────────────────────────────────
 
     async def async_step_init(self, user_input=None):
-        errors  = {}
+        errors = {}
+
+        # Chargement non-bloquant du fichier clubs.json
+        if not self._clubs:
+            self._clubs = await self.hass.async_add_executor_job(_load_clubs_sync)
+
         leagues = list(self._clubs.keys())
 
         if user_input is not None:
