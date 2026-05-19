@@ -44,6 +44,9 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 F
 
 FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq={eq}"
 FOOTAO_CAL_URL  = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
+# URL du fichier clubs.json maintenu sur GitHub (pas de republication nécessaire)
+CLUBS_JSON_URL = "https://raw.githubusercontent.com/habox/hass-footao/main/custom_components/hass_footao/clubs.json"
+CLUBS_CACHE_TTL = 3600  # secondes — rechargement max 1x/heure
 
 # Compétitions utilisées en fallback (tv-calendrier.php)
 COMPETITIONS_FALLBACK = [
@@ -91,9 +94,40 @@ _RE_JS_REDIRECT = re.compile(
 )
 
 
-def load_clubs() -> dict:
-    with open(Path(__file__).parent / "clubs.json", encoding="utf-8") as f:
-        return json.load(f)
+_clubs_cache: dict | None = None
+_clubs_cache_ts: float = 0.0
+
+async def load_clubs_async(session: aiohttp.ClientSession) -> dict:
+    """Charge clubs.json depuis GitHub (cache 1h), fallback sur le fichier local."""
+    global _clubs_cache, _clubs_cache_ts
+    import time
+
+    now = time.monotonic()
+    if _clubs_cache and (now - _clubs_cache_ts) < CLUBS_CACHE_TTL:
+        return _clubs_cache
+
+    try:
+        async with session.get(
+            CLUBS_JSON_URL, timeout=aiohttp.ClientTimeout(total=10)
+        ) as resp:
+            if resp.status == 200:
+                data = await resp.json(content_type=None)
+                _clubs_cache    = data
+                _clubs_cache_ts = now
+                _LOGGER.debug("clubs.json chargé depuis GitHub (%d ligues)", len(data))
+                return data
+            _LOGGER.warning("clubs.json GitHub → HTTP %s, fallback local", resp.status)
+    except Exception as err:
+        _LOGGER.warning("clubs.json GitHub inaccessible (%s), fallback local", err)
+
+    # Fallback : fichier embarqué dans le package
+    local = Path(__file__).parent / "clubs.json"
+    with open(local, encoding="utf-8") as f:
+        data = json.load(f)
+    if not _clubs_cache:          # on met en cache pour éviter de relire à chaque poll
+        _clubs_cache    = data
+        _clubs_cache_ts = now
+    return data
 
 
 def _normalize(s: str) -> str:
@@ -477,10 +511,20 @@ class FootaoCoordinator(DataUpdateCoordinator):
         self._logo_index: dict[str, str] = {}
         super().__init__(hass, _LOGGER, name=DOMAIN,
                          update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
-
+"""
     async def async_initialize(self) -> None:
         clubs = await self.hass.async_add_executor_job(load_clubs)
         self._logo_index = build_logo_index(clubs)
+"""
+    async def async_initialize(self) -> None:
+    ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
+    ssl_ctx.check_hostname = False
+    ssl_ctx.verify_mode    = ssl.CERT_NONE
+
+    async with aiohttp.ClientSession(headers=HEADERS) as session:
+        clubs = await load_clubs_async(session)
+
+    self._logo_index = build_logo_index(clubs)
 
     async def _fetch_html(
         self, session: aiohttp.ClientSession, ssl_ctx, url: str
