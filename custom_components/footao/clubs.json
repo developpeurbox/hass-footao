@@ -127,7 +127,7 @@
   },
   "Equipe Nationale": {
     "France":          { "eq": "France",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/p3n0z51726166851.png/small" },
-    "Côte d'Ivoire":   { "eq": "Côte d\u2019Ivoire",    "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwxuuu1455465643.png/small" },
+    "Côte d'Ivoire":   { "eq": "Côte d\u2019Ivoire|Cote d'Ivoire|Côte d'Ivoire",    "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwxuuu1455465643.png/small" },
     "Italie":          { "eq": "Italie",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/fxijcp1726167035.png/small" },
     "Espagne":         { "eq": "Espagne",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ncgqyr1726166942.png/small" },
     "Bresil":          { "eq": "Bresil",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jl6dip1726167280.png/small" },
