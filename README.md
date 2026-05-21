@@ -19,7 +19,8 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 🔔 Prêt pour les automatisations : Idéal pour créer des notifications avant les matchs.
 
 
-## 🔧 Attributs disponibles par sensor
+<details>
+<summary><h2>🔧 Attributs disponibles par sensor</h2></summary>
 
 | Attribut | Description |
 |---|---|
@@ -42,6 +43,8 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 | `game` | Texte brut du match (ex: France · Côte d'Ivoire) |
 | `clubs_updated_at` | Date de dernière mise à jour du fichier clubs |
 | `clubs_source` | Source du fichier clubs (ex: `github`) |
+
+</details>
 
 ## 🏗️ Installation via HACS
 
