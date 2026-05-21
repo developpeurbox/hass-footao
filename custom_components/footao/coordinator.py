@@ -102,12 +102,12 @@ _clubs_last_updated: str = ""   # date/heure lisible de la dernière mise à jou
 _clubs_source: str = ""         # "github" ou "local"
 
 
-async def load_clubs_async(session: aiohttp.ClientSession) -> dict:
+async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False) -> dict:
     """Charge clubs.json depuis GitHub (cache 1h), fallback sur le fichier local."""
     global _clubs_cache, _clubs_cache_ts, _clubs_last_updated, _clubs_source
 
     now = time.monotonic()
-    if _clubs_cache and (now - _clubs_cache_ts) < CLUBS_CACHE_TTL:
+    if not force and _clubs_cache and (now - _clubs_cache_ts) < CLUBS_CACHE_TTL:
         return _clubs_cache
 
     try:
@@ -516,7 +516,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         ssl_ctx.verify_mode    = ssl.CERT_NONE
 
         async with aiohttp.ClientSession(headers=HEADERS) as session:
-            clubs = await load_clubs_async(session)
+            clubs = await load_clubs_async(session, force=True)
 
         self._logo_index = build_logo_index(clubs)
 
