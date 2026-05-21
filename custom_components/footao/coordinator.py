@@ -102,7 +102,7 @@ _clubs_last_updated: str = ""   # date/heure lisible de la dernière mise à jou
 _clubs_source: str = ""         # "github" ou "local"
 
 
-async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False) -> dict:
+async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, ssl_ctx=None) -> dict:
     """Charge clubs.json depuis GitHub (cache 1h), fallback sur le fichier local."""
     global _clubs_cache, _clubs_cache_ts, _clubs_last_updated, _clubs_source
 
@@ -111,8 +111,9 @@ async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False) 
         return _clubs_cache
 
     try:
+        _LOGGER.debug("clubs.json : tentative chargement GitHub → %s", CLUBS_JSON_URL)
         async with session.get(
-            CLUBS_JSON_URL, timeout=aiohttp.ClientTimeout(total=10)
+            CLUBS_JSON_URL, ssl=ssl_ctx, timeout=aiohttp.ClientTimeout(total=10)
         ) as resp:
             if resp.status == 200:
                 data = await resp.json(content_type=None)
@@ -124,7 +125,7 @@ async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False) 
                 return data
             _LOGGER.warning("clubs.json GitHub → HTTP %s, fallback local", resp.status)
     except Exception as err:
-        _LOGGER.warning("clubs.json GitHub inaccessible (%s), fallback local", err)
+        _LOGGER.warning("clubs.json GitHub inaccessible : %s — fallback local", err)
 
     # Fallback : fichier embarqué dans le package
     local = Path(__file__).parent / "clubs.json"
@@ -516,9 +517,10 @@ class FootaoCoordinator(DataUpdateCoordinator):
         ssl_ctx.verify_mode    = ssl.CERT_NONE
 
         async with aiohttp.ClientSession(headers=HEADERS) as session:
-            clubs = await load_clubs_async(session, force=True)
+            clubs = await load_clubs_async(session, force=True, ssl_ctx=ssl_ctx)
 
         self._logo_index = build_logo_index(clubs)
+        _LOGGER.debug("clubs.json initialisé — source: %s, màj: %s", _clubs_source, _clubs_last_updated)
 
     async def _fetch_html(
         self, session: aiohttp.ClientSession, ssl_ctx, url: str
@@ -581,7 +583,10 @@ class FootaoCoordinator(DataUpdateCoordinator):
         try:
             async with aiohttp.ClientSession(headers=HEADERS) as session:
                 for club_name, cfg in self.selected.items():
-                    eq        = cfg.get("eq", club_name)
+                    eq_raw    = cfg.get("eq", club_name)
+                    # Le champ eq peut contenir plusieurs alias séparés par |
+                    # On utilise le premier alias pour les requêtes URL footao
+                    eq        = eq_raw.split("|")[0].strip()
                     comp      = cfg.get("comp", "")
                     logo_team = cfg.get("logo", "")
 
@@ -620,7 +625,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
                     )
 
                     sprite     = get_sprite_style(match["img_class"])
-                    eq_aliases = [_normalize(a.strip()) for a in eq.split("|") if a.strip()]
+                    eq_aliases = [_normalize(a.strip()) for a in eq_raw.split("|") if a.strip()]
                     dom_lower  = _normalize(match["domicile"])
                     situation  = "dom" if any(
                         any(w in dom_lower for w in alias.split())
