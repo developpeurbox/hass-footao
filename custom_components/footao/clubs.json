@@ -37,6 +37,7 @@
     "Reims":           { "eq": "Reims",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xcrw1b1592925946.png/small" },
     "Rodez":           { "eq": "Rodez",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/e8rjka1576848094.png/small" },
     "Saint-Etienne":   { "eq": "Saint-Etienne",      "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/m4ej831656423694.png/small" },
+    "Sochaux":         { "eq": "Sochaux",            "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ymsdjh1766618296.png/small" },
     "Troyes":          { "eq": "Troyes",             "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sl5kzg1766617559.png/small" }
     },
   "Liga": {
