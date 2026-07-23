@@ -1,167 +1,766 @@
 {
   "Ligue 1": {
-    "Angers":      { "eq": "Angers",       "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ix6q4w1678808069.png/small" },
-    "Auxerre":     { "eq": "Auxerre",      "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/lzdtbf1658753355.png/small" },
-    "Brest":       { "eq": "Brest",        "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/z69be41598797026.png/small" },
-    "Le Havre":    { "eq": "Le Havre",     "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/aikowk1546475003.png/small" },
-    "Le Mans":         { "eq": "Le Mans",            "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wjhziv1700145026.png/small" },  
-    "Lens":        { "eq": "Lens",         "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3pxoum1598797195.png/small" },
-    "Lille":       { "eq": "Lille",        "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2giize1534005340.png/small" },
-    "Lorient":     { "eq": "Lorient",      "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sxsttw1473504748.png/small" },
-    "Lyon":        { "eq": "Lyon OL",      "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/blk9771656932845.png/small" },
-    "Marseille":   { "eq": "Marseille OM", "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uutsyt1473504764.png/small" },
-    "Monaco":      { "eq": "Monaco",       "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/exjf5l1678808044.png/small" },
-    "Nice":        { "eq": "Nice",         "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/msy7ly1621593859.png/small" },
-    "Paris FC":    { "eq": "Paris FC",     "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/yuvtsy1447594254.png/small" },
-    "PSG":         { "eq": "Paris PSG",    "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwqrrq1473504808.png/small" },
-    "Rennes":      { "eq": "Rennes",       "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ypturx1473504818.png/small" },
-    "Strasbourg":  { "eq": "Strasbourg",   "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/b8k77w1766625501.png/small" },
-    "Toulouse":    { "eq": "Toulouse",     "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/17eqox1688449282.png/small" }
-    "Troyes":          { "eq": "Troyes",             "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sl5kzg1766617559.png/small" }
+    "Angers": {
+      "eq": "Angers",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ix6q4w1678808069.png/small"
+    },
+    "Auxerre": {
+      "eq": "Auxerre",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/lzdtbf1658753355.png/small"
+    },
+    "Brest": {
+      "eq": "Brest",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/z69be41598797026.png/small"
+    },
+    "Le Havre": {
+      "eq": "Le Havre",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/aikowk1546475003.png/small"
+    },
+    "Le Mans": {
+      "eq": "Le Mans",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wjhziv1700145026.png/small"
+    },
+    "Lens": {
+      "eq": "Lens",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/3pxoum1598797195.png/small"
+    },
+    "Lille": {
+      "eq": "Lille",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/2giize1534005340.png/small"
+    },
+    "Lorient": {
+      "eq": "Lorient",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/sxsttw1473504748.png/small"
+    },
+    "Lyon": {
+      "eq": "Lyon OL",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/blk9771656932845.png/small"
+    },
+    "Marseille": {
+      "eq": "Marseille OM",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uutsyt1473504764.png/small"
+    },
+    "Monaco": {
+      "eq": "Monaco",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/exjf5l1678808044.png/small"
+    },
+    "Nice": {
+      "eq": "Nice",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/msy7ly1621593859.png/small"
+    },
+    "Paris FC": {
+      "eq": "Paris FC",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/yuvtsy1447594254.png/small"
+    },
+    "PSG": {
+      "eq": "Paris PSG",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwqrrq1473504808.png/small"
+    },
+    "Rennes": {
+      "eq": "Rennes",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ypturx1473504818.png/small"
+    },
+    "Strasbourg": {
+      "eq": "Strasbourg",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/b8k77w1766625501.png/small"
+    },
+    "Toulouse": {
+      "eq": "Toulouse",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/17eqox1688449282.png/small"
+    },
+    "Troyes": {
+      "eq": "Troyes",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/sl5kzg1766617559.png/small"
+    }
   },
   "Ligue 2": {
-    "Amiens":          { "eq": "Amiens SC",          "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/nwgget1656423507.png/small" },
-    "Annecy":          { "eq": "Annecy",             "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/h6981f1655120883.png/small" },
-    "Bastia":          { "eq": "Bastia SC",          "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/mv09b91754278549.png/small" },
-    "Boulogne":        { "eq": "Boulogne",           "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/c7p39l1754278109.png/small" },
-    "Clermont":        { "eq": "Clermont",           "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wrytst1426871249.png/small" },
-    "Dijon":           { "eq": "Dijon",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/viin5f1547898121.png/small" },
-    "Dunkerque":       { "eq": "Dunkerque",          "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3s4ne51750879372.png/small" },
-    "Grenoble":        { "eq": "Grenoble",           "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/x2hcpg1488227785.png/small" },
-    "Guingamp":        { "eq": "Guingamp",           "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/5iihrp1590259631.png/small" },
-    "Laval":           { "eq": "Laval",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/s6g8y81580152463.png/small" },
-    "Metz":            { "eq": "Metz",               "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1iuew61688452857.png/small" },
-    "Montpellier":     { "eq": "Montpellier",        "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/8wn9x31750879448.png/small" },
-    "Nancy":           { "eq": "Nancy",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ve39pj1547899643.png/small" },
-    "Nantes":          { "eq": "Nantes",             "comp": "Ligue 1", "logo": "https://r2.thesportsdb.com/images/media/team/badge/mla9x61678808018.png/small" },
-    "Pau":             { "eq": "Pau",                "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/g1p2l71653308318.png/small" },
-    "Red Star":        { "eq": "Red Star",           "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/so4unb1658758422.png/small" },
-    "Reims":           { "eq": "Reims",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xcrw1b1592925946.png/small" },
-    "Rodez":           { "eq": "Rodez",              "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/e8rjka1576848094.png/small" },
-    "Saint-Etienne":   { "eq": "Saint-Etienne",      "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/m4ej831656423694.png/small" },
-    "Sochaux":         { "eq": "Sochaux",            "comp": "Ligue 2", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ymsdjh1766618296.png/small" },
- },
+    "Amiens": {
+      "eq": "Amiens SC",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/nwgget1656423507.png/small"
+    },
+    "Annecy": {
+      "eq": "Annecy",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/h6981f1655120883.png/small"
+    },
+    "Bastia": {
+      "eq": "Bastia SC",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/mv09b91754278549.png/small"
+    },
+    "Boulogne": {
+      "eq": "Boulogne",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/c7p39l1754278109.png/small"
+    },
+    "Clermont": {
+      "eq": "Clermont",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wrytst1426871249.png/small"
+    },
+    "Dijon": {
+      "eq": "Dijon",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/viin5f1547898121.png/small"
+    },
+    "Dunkerque": {
+      "eq": "Dunkerque",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/3s4ne51750879372.png/small"
+    },
+    "Grenoble": {
+      "eq": "Grenoble",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/x2hcpg1488227785.png/small"
+    },
+    "Guingamp": {
+      "eq": "Guingamp",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/5iihrp1590259631.png/small"
+    },
+    "Laval": {
+      "eq": "Laval",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/s6g8y81580152463.png/small"
+    },
+    "Metz": {
+      "eq": "Metz",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/1iuew61688452857.png/small"
+    },
+    "Montpellier": {
+      "eq": "Montpellier",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/8wn9x31750879448.png/small"
+    },
+    "Nancy": {
+      "eq": "Nancy",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ve39pj1547899643.png/small"
+    },
+    "Nantes": {
+      "eq": "Nantes",
+      "comp": "Ligue 1",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/mla9x61678808018.png/small"
+    },
+    "Pau": {
+      "eq": "Pau",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/g1p2l71653308318.png/small"
+    },
+    "Red Star": {
+      "eq": "Red Star",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/so4unb1658758422.png/small"
+    },
+    "Reims": {
+      "eq": "Reims",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xcrw1b1592925946.png/small"
+    },
+    "Rodez": {
+      "eq": "Rodez",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/e8rjka1576848094.png/small"
+    },
+    "Saint-Etienne": {
+      "eq": "Saint-Etienne",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/m4ej831656423694.png/small"
+    },
+    "Sochaux": {
+      "eq": "Sochaux",
+      "comp": "Ligue 2",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ymsdjh1766618296.png/small"
+    }
+  },
   "Liga": {
-    "Alaves":          { "eq": "Alaves",                        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/mfn99h1734673842.png/small" },
-    "Athletic Bilbao": { "eq": "Bilbao|Athletic Bilbao",        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/68w7fe1639408210.png/small" },
-    "Atletico Madrid": { "eq": "Atlético",                      "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/0ulh3q1719984315.png/small" },
-    "Barcelona":       { "eq": "Barcelone",                     "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png/small" },
-    "Bétis":           { "eq": "Bétis",                         "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vpsqqx1473502977.png/small" },
-    "Celta Vigo":      { "eq": "Celta Vigo",                    "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xfjtku1690436219.png/small" },
-    "Elche":           { "eq": "Elche",                         "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/e4vaw51655594332.png/small" },
-    "Espanyol":        { "eq": "Espanyol B.|Espanyol Barcelone", "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/867nzz1681703222.png/small" },
-    "Getafe":          { "eq": "Getafe",                        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/eyh2891655594452.png/small" },
-    "Girona":          { "eq": "Gérône",                        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/kfu7zu1659897499.png/small" },
-    "Levante":         { "eq": "Levante UD",                    "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xwtxsx1473503739.png/small" },
-    "Mallorca":        { "eq": "Majorque",                      "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ssptsx1473503730.png/small" },
-    "Osasuna":         { "eq": "Osasuna",                       "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rvspvt1473502960.png/small" },
-    "Oviedo":          { "eq": "Oviedo",                        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/yuwqus1447590681.png/small" },
-    "Rayo Vallecano":  { "eq": "Rayo V.|Rayo Vallecano",        "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/nzhu941655595465.png/small" },
-    "Real Madrid":     { "eq": "Real Madrid",                   "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvwrw1473502969.png/small" },
-    "Real Sociedad":   { "eq": "R. Sociedad|Real Sociedad",     "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vptvpr1473502986.png/small" },
-    "Séville":         { "eq": "Séville FC",                    "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vpsqqx1473502977.png/small" },
-    "Valencia":        { "eq": "Valence CF",                    "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/dm8l6o1655594864.png/small" },
-    "Villarreal":      { "eq": "Villarreal",                    "comp": "Liga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vrypqy1473503073.png/small" }
+    "Alaves": {
+      "eq": "Alaves",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/mfn99h1734673842.png/small"
+    },
+    "Athletic Bilbao": {
+      "eq": "Bilbao|Athletic Bilbao",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/68w7fe1639408210.png/small"
+    },
+    "Atletico Madrid": {
+      "eq": "Atlético",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/0ulh3q1719984315.png/small"
+    },
+    "Barcelona": {
+      "eq": "Barcelone",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png/small"
+    },
+    "Bétis": {
+      "eq": "Bétis",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vpsqqx1473502977.png/small"
+    },
+    "Celta Vigo": {
+      "eq": "Celta Vigo",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xfjtku1690436219.png/small"
+    },
+    "Deportivo": {
+      "eq": "Deportivo La Corogne|Deportivo de A Coruña",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/62bvwv1783013156.png/small"
+    },
+    "Elche": {
+      "eq": "Elche",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/e4vaw51655594332.png/small"
+    },
+    "Espanyol": {
+      "eq": "Espanyol B.|Espanyol Barcelone",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/867nzz1681703222.png/small"
+    },
+    "Getafe": {
+      "eq": "Getafe",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/eyh2891655594452.png/small"
+    },
+    "Levante": {
+      "eq": "Levante UD",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xwtxsx1473503739.png/small"
+    },
+    "Malaga": {
+      "eq": "Malaga",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/upqyvr1473502952.png/small"
+    },
+    "Osasuna": {
+      "eq": "Osasuna",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rvspvt1473502960.png/small"
+    },
+    "Racing Santander": {
+      "eq": "Racing Santander|Racing de Santander",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/97kkiq1536575158.png/small"
+    },
+    "Rayo Vallecano": {
+      "eq": "Rayo V.|Rayo Vallecano",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/nzhu941655595465.png/small"
+    },
+    "Real Madrid": {
+      "eq": "Real Madrid",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvwrw1473502969.png/small"
+    },
+    "Real Sociedad": {
+      "eq": "R. Sociedad|Real Sociedad",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vptvpr1473502986.png/small"
+    },
+    "Séville": {
+      "eq": "Séville FC",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vpsqqx1473502977.png/small"
+    },
+    "Valencia": {
+      "eq": "Valence CF",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/dm8l6o1655594864.png/small"
+    },
+    "Villarreal": {
+      "eq": "Villarreal",
+      "comp": "Liga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vrypqy1473503073.png/small"
+    }
   },
   "Serie A": {
-    "AC Milan":      { "eq": "Milan",               "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wvspur1448806617.png/small" },
-    "Atalanta":      { "eq": "Atalanta",            "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/lrvxg71534873930.png/small" },
-    "Bologna":       { "eq": "Bologne",             "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2qi1u31655592366.png/small" },
-    "Cagliari":      { "eq": "Cagliari",            "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wvsvxt1447534471.png/small" },
-    "Como":          { "eq": "Como",                "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/small" },
-    "Cremonese":     { "eq": "Cremonese",           "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/6ng2vy1579708291.png/small" },
-    "Fiorentina":    { "eq": "Fiorentina",          "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/hc8nhu1656098030.png/small" },
-    "Genoa":         { "eq": "Genoa||G&ecirc;nes",  "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/52s8dn1655553600.png/small" },
-    "Hellas Verona": { "eq": "Hellas",              "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/p6camf1593457737.png/small" },
-    "Inter Milan":   { "eq": "Inter",               "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ryhu6d1617113103.png/small" },
-    "Juventus":      { "eq": "Juventus",            "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uxf0gr1742983727.png/small" },
-    "Lazio":         { "eq": "Lazio",               "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwqyvs1448806608.png/small" },
-    "Lecce":         { "eq": "Lecce",               "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/j4vznr1567365249.png/small" },
-    "Naples":        { "eq": "Naples",              "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/l8qyxv1742982541.png/small" },
-    "Parme":         { "eq": "Parme",               "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/6yiaxs1627406063.png/small" },
-    "Pise":          { "eq": "Pise",                "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2eso9w1579708309.png/small" },
-    "Roma":          { "eq": "Roma",                "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jwro2s1760820674.png/small" },
-    "Sassuolo":      { "eq": "Sassuolo",            "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xystvp1448806138.png/small" },
-    "Torino":        { "eq": "Torino",              "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xxprty1448806802.png/small" },
-    "Udinese":       { "eq": "Udinese",             "comp": "Serie A", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/small" }
-   },
+    "AC Milan": {
+      "eq": "Milan",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wvspur1448806617.png/small"
+    },
+    "Atalanta": {
+      "eq": "Atalanta",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/lrvxg71534873930.png/small"
+    },
+    "Bologna": {
+      "eq": "Bologne",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/2qi1u31655592366.png/small"
+    },
+    "Cagliari": {
+      "eq": "Cagliari",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wvsvxt1447534471.png/small"
+    },
+    "Como": {
+      "eq": "Como",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/small"
+    },
+    "Fiorentina": {
+      "eq": "Fiorentina",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/hc8nhu1656098030.png/small"
+    },
+    "Frosinone": {
+      "eq": "Frosinone",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/a7xa151603170120.png/small"
+    },
+    "Genoa": {
+      "eq": "Genoa||G&ecirc;nes",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/52s8dn1655553600.png/small"
+    },
+    "Inter Milan": {
+      "eq": "Inter",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ryhu6d1617113103.png/small"
+    },
+    "Juventus": {
+      "eq": "Juventus",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uxf0gr1742983727.png/small"
+    },
+    "Lazio": {
+      "eq": "Lazio",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwqyvs1448806608.png/small"
+    },
+    "Lecce": {
+      "eq": "Lecce",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/j4vznr1567365249.png/small"
+    },
+    "Monza": {
+      "eq": "Monza",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/bxearg1603170113.png/small"
+    },
+    "Naples": {
+      "eq": "Naples",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/l8qyxv1742982541.png/small"
+    },
+    "Parme": {
+      "eq": "Parme",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/6yiaxs1627406063.png/small"
+    },
+    "Roma": {
+      "eq": "Roma",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/jwro2s1760820674.png/small"
+    },
+    "Sassuolo": {
+      "eq": "Sassuolo",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xystvp1448806138.png/small"
+    },
+    "Torino": {
+      "eq": "Torino",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xxprty1448806802.png/small"
+    },
+    "Udinese": {
+      "eq": "Udinese",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwvstr1448806811.png/small"
+    },
+    "Venezia": {
+      "eq": "Venezia",
+      "comp": "Serie A",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vbiget1781026964.png/small"
+    }
+  },
   "Premier League": {
-    "Arsenal":         { "eq": "Arsenal",                     "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uyhbfe1612467038.png/small" },
-    "Aston Villa":     { "eq": "Aston Villa",                 "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jykrpv1717309891.png/small" },
-    "Bournemouth":     { "eq": "Bournemouth",                 "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/y08nak1534071116.png/small" },
-    "Brentford":       { "eq": "Brentford",                   "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/grv1aw1546453779.png/small" },
-    "Brighton":        { "eq": "Brighton",                    "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ywypts1448810904.png/small" },
-    "Burnley":         { "eq": "Burnley",                     "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ql7nl31686893820.png/small" },
-    "Chelsea":         { "eq": "Chelsea",                     "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/yvwvtu1448813215.png/small" },
-    "Crystal Palace":  { "eq": "Crystal P.|Crystal Palace",   "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ia6i3m1656014992.png/small" },
-    "Everton":         { "eq": "Everton",                     "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/eqayrf1523184794.png/small" },
-    "Fulham":          { "eq": "Fulham",                      "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xwwvyt1448811086.png/small" },
-    "Leeds":           { "eq": "Leeds",                       "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jcgrml1756649030.png/small" },
-    "Liverpool":       { "eq": "Liverpool",                   "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/kfaher1737969724.png/small" },
-    "Manchester City": { "eq": "Manchester C.",               "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwpvry1467462651.png/small" },
-    "Manchester Utd":  { "eq": "Manchester U.",               "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xzqdr11517660252.png/small" },
-    "Newcastle":       { "eq": "Newcastle",                   "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/lhwuiz1621593302.png/small" },
-    "Nottingham":      { "eq": "Nottingham",                  "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/bk4qjs1546440351.png/small" },
-    "Sunderland":      { "eq": "Sunderland",                  "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/tprtus1448813498.png/small" },
-    "Tottenham":       { "eq": "Tottenham",                   "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/dfyfhl1604094109.png/small" },
-    "West Ham":        { "eq": "West Ham",                    "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/yutyxs1467459956.png/small" },
-    "Wolverhampton":   { "eq": "Wolverhampton",               "comp": "Premier League", "logo": "https://r2.thesportsdb.com/images/media/team/badge/u9qr031621593327.png/small" }
+    "Arsenal": {
+      "eq": "Arsenal",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uyhbfe1612467038.png/small"
+    },
+    "Aston Villa": {
+      "eq": "Aston Villa",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/jykrpv1717309891.png/small"
+    },
+    "Bournemouth": {
+      "eq": "Bournemouth",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/y08nak1534071116.png/small"
+    },
+    "Brentford": {
+      "eq": "Brentford",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/grv1aw1546453779.png/small"
+    },
+    "Brighton": {
+      "eq": "Brighton",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ywypts1448810904.png/small"
+    },
+    "Chelsea": {
+      "eq": "Chelsea",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/yvwvtu1448813215.png/small"
+    },
+    "Crystal Palace": {
+      "eq": "Crystal P.|Crystal Palace",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ia6i3m1656014992.png/small"
+    },
+    "Everton": {
+      "eq": "Everton",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/eqayrf1523184794.png/small"
+    },
+    "Fulham": {
+      "eq": "Fulham",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xwwvyt1448811086.png/small"
+    },
+    "Leeds": {
+      "eq": "Leeds",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/jcgrml1756649030.png/small"
+    },
+    "Liverpool": {
+      "eq": "Liverpool",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/kfaher1737969724.png/small"
+    },
+    "Manchester City": {
+      "eq": "Manchester C.",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vwpvry1467462651.png/small"
+    },
+    "Manchester Utd": {
+      "eq": "Manchester U.",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xzqdr11517660252.png/small"
+    },
+    "Newcastle": {
+      "eq": "Newcastle",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/lhwuiz1621593302.png/small"
+    },
+    "Nottingham": {
+      "eq": "Nottingham",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/bk4qjs1546440351.png/small"
+    },
+    "Sunderland": {
+      "eq": "Sunderland",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/tprtus1448813498.png/small"
+    },
+    "Tottenham": {
+      "eq": "Tottenham",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/dfyfhl1604094109.png/small"
+    },
+    "Coventry": {
+      "eq": "Coventry City",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uxyqys1424033798.png/small"
+    },
+    "Ipswich": {
+      "eq": "Ipswich Town",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/mdj1ey1634670785.png/small"
+    },
+    "Hull City": {
+      "eq": "Hull City",
+      "comp": "Premier League",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/fbqqda1601726113.png/small"
+    }
   },
   "Bundesliga": {
-    "Augsbourg":       { "eq": "Augsbourg",                        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/xqyyvq1473453233.png/small" },
-    "Bayern Munich":   { "eq": "Bayern",                           "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/01ogkh1716960412.png/small" },
-    "Cologne":         { "eq": "Cologne",                          "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2j1sc91566049407.png/small" },
-    "Dortmund":        { "eq": "Dortmund",                         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/tqo8ge1716960353.png/small" },
-    "Francfort":       { "eq": "Francfort E.|Eintracht Francfort", "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rurwpy1473453269.png/small" },
-    "Fribourg":        { "eq": "Fribourg",                         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/urwtup1473453288.png/small" },
-    "Hamburg":         { "eq": "Hambourg",                         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/tvtppt1473453296.png/small" },
-    "Heidenheim":      { "eq": "Heidenheim",                       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/lbj7g01608236988.png/small" },
-    "Hoffenheim":      { "eq": "Hoffenheim",                       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/9hwvb21621593919.png/small" },
-    "Leverkusen":      { "eq": "Leverkusen|Bayer Leverkusen",      "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3x9k851726760113.png/small" },
-    "Leipzig":         { "eq": "Leipzig",                          "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/zjgapo1594244951.png/small" },
-    "Mayence":         { "eq": "Mayence FSV",                      "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/fhm9v51552134916.png/small" },
-    "Monchengladbach": { "eq": "Monchengladbach",                  "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/sysurw1473453380.png/small" },
-    "Stuttgart":       { "eq": "Stuttgart",                        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/yppyux1473454085.png/small" },
-    "St. Pauli":       { "eq": "St-Pauli",                         "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/5qupxa1608237013.png/small" },
-    "Union Berlin":    { "eq": "Union B.|Union Berlin",            "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/q0o5001599679795.png/small" },
-    "Werder Brême":    { "eq": "Werder|Werder Br&ecirc;me",        "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/tkvqan1716960454.png/small" },
-    "Wolfsbourg":      { "eq": "Wolfsbourg",                       "comp": "Bundesliga", "logo": "https://r2.thesportsdb.com/images/media/team/badge/07kp421599680274.png/small" }
+    "Augsbourg": {
+      "eq": "Augsbourg",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/xqyyvq1473453233.png/small"
+    },
+    "Bayern Munich": {
+      "eq": "Bayern",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/01ogkh1716960412.png/small"
+    },
+    "Cologne": {
+      "eq": "Cologne",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/2j1sc91566049407.png/small"
+    },
+    "Dortmund": {
+      "eq": "Dortmund",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/tqo8ge1716960353.png/small"
+    },
+    "Elversberg": {
+      "eq": "Elversberg",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/z079go1677573926.png/small"
+    },
+    "Francfort": {
+      "eq": "Francfort E.|Eintracht Francfort",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rurwpy1473453269.png/small"
+    },
+    "Fribourg": {
+      "eq": "Fribourg",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/urwtup1473453288.png/small"
+    },
+    "Hamburg": {
+      "eq": "Hambourg",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/tvtppt1473453296.png/small"
+    },
+    "Hoffenheim": {
+      "eq": "Hoffenheim",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/9hwvb21621593919.png/small"
+    },
+    "Leipzig": {
+      "eq": "Leipzig",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/zjgapo1594244951.png/small"
+    },
+    "Leverkusen": {
+      "eq": "Leverkusen|Bayer Leverkusen",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/3x9k851726760113.png/small"
+    },
+    "Mayence": {
+      "eq": "Mayence FSV",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/fhm9v51552134916.png/small"
+    },
+    "Monchengladbach": {
+      "eq": "Monchengladbach",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/sysurw1473453380.png/small"
+    },
+    "Paderborn": {
+      "eq": "Paderborn",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/kddvva1566048058.png/small"
+    },
+    "Schalke 04": {
+      "eq": "Schalke 04",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/hnci291621593978.png/small"
+    },
+    "Stuttgart": {
+      "eq": "Stuttgart",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/yppyux1473454085.png/small"
+    },
+    "Union Berlin": {
+      "eq": "Union B.|Union Berlin",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/q0o5001599679795.png/small"
+    },
+    "Werder Brême": {
+      "eq": "Werder|Werder Br&ecirc;me",
+      "comp": "Bundesliga",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/tkvqan1716960454.png/small"
+    }
   },
   "Equipe Nationale": {
-    "France":          { "eq": "France",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/p3n0z51726166851.png/small" },
-    "Côte d'Ivoire":   { "eq": "Côte d\u2019Ivoire|Cote d'Ivoire|Côte d'Ivoire",    "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwxuuu1455465643.png/small" },
-    "Italie":          { "eq": "Italie",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/fxijcp1726167035.png/small" },
-    "Espagne":         { "eq": "Espagne",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ncgqyr1726166942.png/small" },
-    "Bresil":          { "eq": "Bresil",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/jl6dip1726167280.png/small" },
-    "Allemagne":       { "eq": "Allemagne",     "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1xysi51726167152.png/small" },
-    "Belgique":        { "eq": "Belgique",      "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/8xlvxv1592062265.png/small" },
-    "Argentine":       { "eq": "Argentine",     "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3zplhu1726167477.png/small" },
-    "Portugal":        { "eq": "Portugal",      "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/swqvpy1455466083.png/small" },
-    "Angleterre":      { "eq": "Angleterre",    "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vf5ttc1726166739.png/small" },
-    "Algérie":         { "eq": "Algerie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/rrwpry1455460218.png/small" },
-    "Australie":       { "eq": "Australie",     "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/lark6k1661780848.png/small" },
-    "Autriche":        { "eq": "Autriche",      "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/874p631628721400.png/small" },
-    "Bosnie":          { "eq": "Bosnie",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wtqqst1455463120.png/small" },
-    "Canada":          { "eq": "Canada",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/2t631f1595154867.png/small" },
-    "CapVert":         { "eq": "CapVert",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/5jn0o71593280376.png/small" },
-    "Colombie":        { "eq": "Colombie",      "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/4ymyku1691180081.png/small" },
-    "Croatie":         { "eq": "Croatie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/vvtsyu1455465317.png/small" },
-    "Curacao":         { "eq": "Curacao",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/itygvb1600955363.png/small" },
-    "Tchéquie":        { "eq": "Tchequie",      "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1o0cx31654205806.png/small" },
-    "Égypte":          { "eq": "Egypte",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uheyzo1742102234.png/small" },
-    "Ghana":           { "eq": "Ghana",         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/j589xw1751526124.png/small" },
-    "Iran":            { "eq": "Iran",          "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/uttpvw1455465617.png/small" },
-    "Japon":           { "eq": "Japon",         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/ffsyxz1591989843.png/small" },
-    "Maroc":           { "eq": "Maroc",         "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/hbmwkj1731791275.png/small" },
-    "Mexique":         { "eq": "Mexique",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/3rmosi1748525208.png/small" },
-    "Norvège":         { "eq": "Norvege",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/gyfn811591973155.png/small" },
-    "Pays-Bas":         { "eq": "Pays-Bas%7C%7CHollande",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/1p0hr41593787110.png/small" },
-    "Sénégal":         { "eq": "Senegal",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/wh8dya1526727459.png/small" },
-    "Suisse":          { "eq": "Suisse",        "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/mb7yqe1717365808.png/small" },
-    "Tunisie":         { "eq": "Tunisie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/7r89rg1526727277.png/small" },
-    "Turquie":         { "eq": "Turquie",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/70c4oo1591982459.png/small" },
-    "Uruguay":         { "eq": "Uruguay",       "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/6vjbr11726167756.png/small" },
-    "États-Unis":      { "eq": "Etats-Unis%7C%7CUSA%20Am%26eacute%3Brique",           "comp": "Pays", "logo": "https://r2.thesportsdb.com/images/media/team/badge/21f0oi1597948195.png/small" }
-}
-
+    "France": {
+      "eq": "France",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/p3n0z51726166851.png/small"
+    },
+    "Côte d'Ivoire": {
+      "eq": "Côte d’Ivoire|Cote d'Ivoire|Côte d'Ivoire",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rwxuuu1455465643.png/small"
+    },
+    "Italie": {
+      "eq": "Italie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/fxijcp1726167035.png/small"
+    },
+    "Espagne": {
+      "eq": "Espagne",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ncgqyr1726166942.png/small"
+    },
+    "Bresil": {
+      "eq": "Bresil",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/jl6dip1726167280.png/small"
+    },
+    "Allemagne": {
+      "eq": "Allemagne",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/1xysi51726167152.png/small"
+    },
+    "Belgique": {
+      "eq": "Belgique",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/8xlvxv1592062265.png/small"
+    },
+    "Argentine": {
+      "eq": "Argentine",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/3zplhu1726167477.png/small"
+    },
+    "Portugal": {
+      "eq": "Portugal",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/swqvpy1455466083.png/small"
+    },
+    "Angleterre": {
+      "eq": "Angleterre",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vf5ttc1726166739.png/small"
+    },
+    "Algérie": {
+      "eq": "Algerie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/rrwpry1455460218.png/small"
+    },
+    "Australie": {
+      "eq": "Australie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/lark6k1661780848.png/small"
+    },
+    "Autriche": {
+      "eq": "Autriche",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/874p631628721400.png/small"
+    },
+    "Bosnie": {
+      "eq": "Bosnie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wtqqst1455463120.png/small"
+    },
+    "Canada": {
+      "eq": "Canada",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/2t631f1595154867.png/small"
+    },
+    "CapVert": {
+      "eq": "CapVert",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/5jn0o71593280376.png/small"
+    },
+    "Colombie": {
+      "eq": "Colombie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/4ymyku1691180081.png/small"
+    },
+    "Croatie": {
+      "eq": "Croatie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/vvtsyu1455465317.png/small"
+    },
+    "Curacao": {
+      "eq": "Curacao",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/itygvb1600955363.png/small"
+    },
+    "Tchéquie": {
+      "eq": "Tchequie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/1o0cx31654205806.png/small"
+    },
+    "Égypte": {
+      "eq": "Egypte",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uheyzo1742102234.png/small"
+    },
+    "Ghana": {
+      "eq": "Ghana",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/j589xw1751526124.png/small"
+    },
+    "Iran": {
+      "eq": "Iran",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/uttpvw1455465617.png/small"
+    },
+    "Japon": {
+      "eq": "Japon",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/ffsyxz1591989843.png/small"
+    },
+    "Maroc": {
+      "eq": "Maroc",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/hbmwkj1731791275.png/small"
+    },
+    "Mexique": {
+      "eq": "Mexique",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/3rmosi1748525208.png/small"
+    },
+    "Norvège": {
+      "eq": "Norvege",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/gyfn811591973155.png/small"
+    },
+    "Pays-Bas": {
+      "eq": "Pays-Bas%7C%7CHollande",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/1p0hr41593787110.png/small"
+    },
+    "Sénégal": {
+      "eq": "Senegal",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/wh8dya1526727459.png/small"
+    },
+    "Suisse": {
+      "eq": "Suisse",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/mb7yqe1717365808.png/small"
+    },
+    "Tunisie": {
+      "eq": "Tunisie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/7r89rg1526727277.png/small"
+    },
+    "Turquie": {
+      "eq": "Turquie",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/70c4oo1591982459.png/small"
+    },
+    "Uruguay": {
+      "eq": "Uruguay",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/6vjbr11726167756.png/small"
+    },
+    "États-Unis": {
+      "eq": "Etats-Unis%7C%7CUSA%20Am%26eacute%3Brique",
+      "comp": "Pays",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/21f0oi1597948195.png/small"
+    }
+  }
 }
