@@ -1,13 +1,11 @@
 """Config flow Footao TV — listes déroulantes multi-choix par ligue."""
 from __future__ import annotations
 
-import json
-from pathlib import Path
-
 import voluptuous as vol
 
 from homeassistant import config_entries
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
@@ -15,13 +13,19 @@ from homeassistant.helpers.selector import (
 )
 
 from .const import DOMAIN
+from .coordinator import load_clubs_async
 
 
-def _load_clubs_sync() -> dict:
-    """Lecture synchrone de clubs.json — à appeler via async_add_executor_job."""
-    clubs_path = Path(__file__).parent / "clubs.json"
-    with open(clubs_path, encoding="utf-8") as f:
-        return json.load(f)
+async def _load_clubs(hass: HomeAssistant) -> dict:
+    """Charge clubs.json via GitHub (fallback local automatique).
+
+    force=True : on veut toujours la liste la plus fraîche possible quand
+    l'utilisateur ouvre l'écran d'ajout/modification de clubs, même si le
+    cache mémoire du coordinator (1h) contient encore une version plus
+    ancienne récupérée entre-temps par une autre entrée.
+    """
+    session = async_get_clientsession(hass)
+    return await load_clubs_async(session, force=True)
 
 
 def _multi_select(options: list[str], default: list[str] | None = None) -> vol.Schema:
@@ -57,9 +61,9 @@ class FootaoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         errors = {}
 
-        # Chargement non-bloquant du fichier clubs.json
+        # Chargement de clubs.json (GitHub, fallback local automatique)
         if not self._clubs:
-            self._clubs = await self.hass.async_add_executor_job(_load_clubs_sync)
+            self._clubs = await _load_clubs(self.hass)
 
         leagues = list(self._clubs.keys())
 
@@ -137,9 +141,9 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
     async def async_step_init(self, user_input=None):
         errors = {}
 
-        # Chargement non-bloquant du fichier clubs.json
+        # Chargement de clubs.json (GitHub, fallback local automatique)
         if not self._clubs:
-            self._clubs = await self.hass.async_add_executor_job(_load_clubs_sync)
+            self._clubs = await _load_clubs(self.hass)
 
         leagues = list(self._clubs.keys())
 
