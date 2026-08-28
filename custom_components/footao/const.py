@@ -1,27 +1,6 @@
 """Constantes pour l'intégration Footao TV."""
-from pathlib import Path
-import json
-from typing import Final
 
-# Lire la version depuis manifest.json
-MANIFEST_PATH = Path(__file__).parent / "manifest.json"
-with open(MANIFEST_PATH, encoding="utf-8") as f:
-    INTEGRATION_VERSION: Final[str] = json.load(f).get("version", "0.0.0")
-
-DOMAIN: Final[str] = "footao"
-
-# URL de base pour les ressources frontend
-URL_BASE: Final[str] = "/footao"
-
-# Liste des modules JavaScript à enregistrer
-JSMODULES: Final[list[dict[str, str]]] = [
-    {
-        "name": "Footao card",
-        "filename": "footao-game-card.js",
-        "version": INTEGRATION_VERSION,
-    },
-]
-
+DOMAIN              = "footao"
 SCAN_INTERVAL_HOURS = 8
 
 SPRITE_POSITIONS = {
