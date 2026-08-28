@@ -2,22 +2,10 @@
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-"from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant
 
-"from .const import DOMAIN
+from .const import DOMAIN
 from .coordinator import FootaoCoordinator
-
-from homeassistant.core import (
-    HomeAssistant,
-    CoreState,
-    EVENT_HOMEASSISTANT_STARTED,
-)
-from homeassistant.components import websocket_api
-from homeassistant.helpers import config_validation as cv
-import voluptuous as vol
-
-from .frontend import JSModuleRegistration
-from .const import DOMAIN, INTEGRATION_VERSION
 
 PLATFORMS = ["sensor"]
 
