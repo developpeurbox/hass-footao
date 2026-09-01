@@ -3,10 +3,6 @@
 DOMAIN              = "footao"
 SCAN_INTERVAL_HOURS = 8
 
-CARD_JS_FILENAME = "footao-game-card.js"
-CARD_VERSION     = "0.0.16"
-CARD_URL         = f"/footao_files/{CARD_JS_FILENAME}"
-
 SPRITE_POSITIONS = {
     "b2":"0 -15px","b3":"0 -30px","b4":"0 -45px","b5":"0 -60px",
     "b6":"0 -75px","b7":"0 -90px","b8":"0 -105px","b9":"0 -120px",
