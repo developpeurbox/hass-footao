@@ -6,9 +6,7 @@
 
 # Footao TV — Intégration HACS pour Home Assistant
 
-Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv, avec sa carte Lovelace dédiée **incluse**.
-
-![Exemple Footao Game Card](/doc/images/example.png "Exemple d'affichage")
+Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv.
 
 ## ✨ Caractéristiques
 
@@ -17,8 +15,6 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 📺 Infos complètes : Chaîne de diffusion, logos des clubs, date et heure précises.
 
 ⚙️ Configuration simple : Tout se passe via l'interface utilisateur de Home Assistant.
-
-🎴 Carte Lovelace intégrée : Aucune installation séparée, la carte est prête à l'emploi dès l'installation de l'intégration.
 
 🔔 Prêt pour les automatisations : Idéal pour créer des notifications avant les matchs.
 
@@ -59,13 +55,12 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 5. Redémarrer Home Assistant
 6. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
 
-> 🎴 La carte Lovelace `footao-game-card` est automatiquement enregistrée par l'intégration au démarrage — pas besoin d'installer un dépôt séparé ni d'ajouter une ressource manuellement.
-
 ## 🏗️ Installation manuelle
 
 1. Téléchargez le dossier `custom_components/footao/` de ce dépôt.
-2. Copiez-le dans le dossier `custom_components/footao/` de votre instance Home Assistant.
+2. Copiez-le dans le dossier `custom_components/footao/`  de votre instance Home Assistant.
 3. Redémarrez Home Assistant
+
 
 ## 🌟 Configuration
 
@@ -132,72 +127,20 @@ Si tu n'es pas sûr du nom exact utilisé par footao.tv, tu peux le retrouver da
 
 ---
 
-## 🎨 Footao Game Card
+## 🎨 Affichage & Notifications
 
-La carte Lovelace `footao-game-card` est fournie avec l'intégration : elle apparaît directement dans le sélecteur **Ajouter une carte** de l'éditeur de tableau de bord une fois l'intégration installée.
+### 🎴 Carte dédiée
 
-### 🎯 Utilisation
+Pour un rendu visuel optimal, utilisez la carte compagnon :
+👉 [**Footao Game Card**](https://github.com/developpeurbox/footao-game-card)
 
-Ajoutez simplement ce code dans votre configuration :
 
-```yaml
-type: custom:footao-game-card
-entity: sensor.footao_lorient  # Remplacez par votre entité de capteur
-footer_bg: "rgba(0,0,0,0.6)"   # Couleur d'arrière-plan du pied de page
-footer_color: "#ffffff"        # Couleur du texte du pied de page
-```
+### 🔔 Notification
 
-Pour avoir tous vos matchs :
+Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
-```yaml
-type: custom:auto-entities
-card:
-  type: entities
-  colum: 2
-  square: false
-filter:
-  include:
-    - options:
-        type: custom:footao-game-card
-      entity_id: sensor.footao*
-      sort:
-        method: attribute
-        attribute: date
-grid_options:
-  columns: 12
-  rows: auto
-```
 
-![Exemple Footao Game Card](/doc/images/all.png "Tous les matchs")
 
-### 🎨 Personnalisation
-
-Vous pouvez personnaliser l'apparence du pied de page (*footer*) directement via les options de la carte :
-
-* **Arrière-plan :** Modifiez `footer_bg` (accepte les formats **HEX**, **RGB** ou **RGBA**).
-* **Couleur du texte :** Ajustez `footer_color` pour assurer une visibilité optimale selon votre fond.
-
-### 📭 Aucun match prévu
-
-Lorsque aucun match n'est trouvé pour l'équipe configurée (match passé ou calendrier vide), la carte affiche automatiquement un état simplifié : le logo de l'équipe, son nom, et un message d'information.
-
-![Carte aucun match](/doc/images/example_no_game.png "Affichage sans match prévu")
-
-> **Aucun match prévu prochainement** s'affiche à la place des informations de diffusion habituelles. Dès qu'un prochain match est disponible dans le capteur, la carte reprend son affichage normal automatiquement.
-
----
-
-## 🔔 Notifications
-
-Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00.
-
----
-
-## 💬 Communauté & Support
-
-🗣️ **Forum Home Assistant** : [Discuter ici](https://community.home-assistant.io/)
-
----
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
 [commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
