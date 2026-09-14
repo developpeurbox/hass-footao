@@ -123,6 +123,13 @@ Si tu n'es pas sûr du nom exact utilisé par footao.tv, tu peux le retrouver da
 - L'attribut `domicile` ou `exterieur` contient le nom brut tel que scrapé depuis footao.tv.
 - C'est cette valeur qui doit être utilisée comme clé dans `clubs.json`.
 
+### 🔍 Recharcher l'application
+
+Pour voir le nouveau club, recharger l'application
+
+![Footao ligues](/doc/images/Rechargement.png "Rechargement").
+
+
 ---
 
 ## 🎨 Affichage & Notifications
@@ -144,7 +151,6 @@ Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/b
 [commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
 [hacs]: https://github.com/hacs/integration
 [hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
-[exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [releases-shield]: https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge
