@@ -591,6 +591,13 @@
       "logo": "https://r2.thesportsdb.com/images/media/team/badge/tkvqan1716960454.png/small"
     }
   },
+  "Autre ligue": {
+    "Besiktas ": {
+      "eq": "Besiktas",
+      "comp": "Europe",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/svo05k1776827439.png/small"
+    },
+  },
   "Equipe Nationale": {
     "France": {
       "eq": "France",
