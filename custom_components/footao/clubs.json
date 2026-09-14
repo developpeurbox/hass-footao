@@ -596,7 +596,12 @@
       "eq": "Besiktas",
       "comp": "Europe",
       "logo": "https://r2.thesportsdb.com/images/media/team/badge/svo05k1776827439.png/small"
-    }
+    },
+    "Anderlecht": {
+      "eq": "Anderlecht",
+      "comp": "Europe",
+      "logo": "https://r2.thesportsdb.com/images/media/team/badge/auindn1771129464.png/small"
+    }   
   },
   "Equipe Nationale": {
     "France": {
