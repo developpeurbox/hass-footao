@@ -127,7 +127,7 @@ Si tu n'es pas sûr du nom exact utilisé par footao.tv, tu peux le retrouver da
 
 Pour voir le nouveau club, recharger l'application
 
-![Footao ligues](/doc/images/Rechargement.png "Rechargement").
+![rechargement](/doc/images/rechargement.png "rechargement")
 
 
 ---
@@ -149,6 +149,7 @@ Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/b
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
 [commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
+[exemple]:
 [hacs]: https://github.com/hacs/integration
 [hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
