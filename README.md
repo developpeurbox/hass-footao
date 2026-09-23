@@ -1,12 +1,14 @@
 # Footao TV — Intégration HACS pour Home Assistant
 
-[![GitHub Release]( https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/releases)
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-[![Community Forum]( https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge)](https://community.home-assistant.io)
+[![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2hlaissus)](https://paypal.me/hlaissus)
+[![GitHub Release]( https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge&color=blue)](https://github.com/developpeurbox/hass-footao/releases)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge&color=blue)](https://github.com/hacs/integration)
+[![Community Forum]( https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge&color=pink)](https://community.home-assistant.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/blob/main/LICENSE)
 
 [![HACS Action](https://github.com/developpeurbox/hass-footao/actions/workflows/hacs.yml/badge.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/actions/workflows/hacs.yml)
 [![HACS Action](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml/badge.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml)
+
 
 Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv.
 
