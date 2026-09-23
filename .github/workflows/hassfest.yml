@@ -3,7 +3,7 @@ name: Hassfests
 on:
   push:
   pull_request:
-  scedule:
+  schedule:
     - cron: "0 0 * * *"
 
 jobs:
