@@ -19,7 +19,7 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 
 
 <details>
-<summary><h2>🔧 Attributs disponibles par sensor</h2></summary>
+<summary><h2>🔧 Attributs disponibles par sensor </h2></summary>
 
 | Attribut | Description |
 |---|---|
