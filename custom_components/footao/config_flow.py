@@ -143,6 +143,7 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
                 selected = {n: flat[n] for n in chosen_names if n in flat}
                 self.hass.config_entries.async_update_entry(
                     self.config_entry,
+                    title=", ".join(sorted(selected.keys())),
                     data={**self.config_entry.data, "selected": selected},
                 )
                 return self.async_create_entry(title="", data={})
