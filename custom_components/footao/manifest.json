@@ -4,9 +4,9 @@
   "codeowners": ["@developpeurbox"],
   "config_flow": true,
   "dependencies": ["frontend", "http"],
-  "documentation": "https://github.com/developpeurbox/ha-footao",
+  "documentation": "https://github.com/developpeurbox/hass-footao",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/developpeurbox/ha-footao/issues",
+  "issue_tracker": "https://github.com/developpeurbox/hass-footao/issues",
   "loggers": ["footao"],
   "requirements": [],
   "version": "0.1.6"
