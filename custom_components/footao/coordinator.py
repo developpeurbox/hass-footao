@@ -2,17 +2,19 @@
 
 Stratégie de résolution d'URL par club :
  1. GET programmetv.php?eq=<eq>
-   - Si la réponse contient une redirection JS (window.location.replace),
-    on suit l'URL cible (page dédiée du club, même format HTML).
-   - Sinon on parse directement.
+    - Si la réponse contient une redirection JS (window.location.replace),
+      on suit l'URL cible (page dédiée du club, même format HTML).
+    - Sinon on parse directement.
  2. Si le parse donne 0 match (club sans page dédiée et programmetv KO),
-   fallback : tv-calendrier.php?e=<eq>&c=<comp> pour chaque compétition
-   de la liste COMPETITIONS_FALLBACK. On fusionne et on prend le plus proche.
+    fallback : tv-calendrier.php?e=<eq>&c=<comp> pour chaque compétition
+    de la liste COMPETITIONS_FALLBACK. On fusionne et on prend le plus proche.
 
 Deux structures HTML coexistent sur footao :
  - Matchs "riches" (schema.org) : <a class="rc"><span itemprop="name">Nom</span></a>
  - Matchs "simples" (amicaux...) : <a class="rc">Nom directement</a>
-Le parser gère les deux cas.
+
+Le parser gère les deux cas. Si plusieurs chaînes sont proposées pour un même
+match, on conserve les deux premières (chaine1/logo1 et chaine2/logo2).
 """
 from __future__ import annotations
 
@@ -44,8 +46,8 @@ _LOGGER = logging.getLogger(__name__)
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 Firefox/19.0"}
 
-FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq="
-FOOTAO_CAL_URL  = "https://www.footao.tv/tv-calendrier.php?e=&c="
+FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq={}"
+FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={}&c={}"
 
 # URL du fichier clubs.json maintenu sur GitHub (pas de republication nécessaire)
 CLUBS_JSON_URL = "https://raw.githubusercontent.com/developpeurbox/hass-footao/refs/heads/main/custom_components/footao/clubs.json"
@@ -95,11 +97,10 @@ _RE_JS_REDIRECT = re.compile(
 )
 
 # ─── Cache mémoire pour clubs.json ───────────────────────────────────────────
-
 _clubs_cache: dict | None = None
 _clubs_cache_ts: float = 0.0
 _clubs_last_updated: str = ""  # date/heure lisible de la dernière mise à jour du cache
-_clubs_source: str = ""        # "github" ou "local"
+_clubs_source: str = ""  # "github" ou "local"
 
 
 async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, ssl_ctx=None) -> dict:
@@ -117,10 +118,10 @@ async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, 
         ) as resp:
             if resp.status == 200:
                 data = await resp.json(content_type=None)
-                _clubs_cache        = data
-                _clubs_cache_ts     = now
+                _clubs_cache = data
+                _clubs_cache_ts = now
                 _clubs_last_updated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                _clubs_source       = "github"
+                _clubs_source = "github"
                 _LOGGER.debug("clubs.json chargé depuis GitHub (%d ligues)", len(data))
                 return data
             _LOGGER.warning("clubs.json GitHub → HTTP %s, fallback local", resp.status)
@@ -132,15 +133,14 @@ async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, 
     with open(local, encoding="utf-8") as f:
         data = json.load(f)
     if not _clubs_cache:
-        _clubs_cache        = data
-        _clubs_cache_ts     = now
+        _clubs_cache = data
+        _clubs_cache_ts = now
         _clubs_last_updated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        _clubs_source       = "local"
+        _clubs_source = "local"
     return data
 
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
-
 def _normalize(s: str) -> str:
     """Minuscules + suppression des accents pour comparaison insensible aux diacritiques."""
     return unicodedata.normalize("NFD", s.lower()).encode("ascii", "ignore").decode("ascii")
@@ -151,7 +151,7 @@ def build_logo_index(clubs: dict) -> dict[str, str]:
     index: dict[str, str] = {}
     for league_clubs in clubs.values():
         for club_key, cfg in league_clubs.items():
-            eq   = cfg.get("eq", "")
+            eq = cfg.get("eq", "")
             logo = cfg.get("logo", "")
             if logo:
                 for alias in eq.split("|"):
@@ -179,7 +179,7 @@ def logo_for(name: str, index: dict[str, str]) -> str:
 
 def get_sprite_style(css_class: str) -> str:
     parts = css_class.split() if css_class else []
-    key   = parts[1] if len(parts) > 1 else ""
+    key = parts[1] if len(parts) > 1 else ""
     return SPRITE_BASE_STYLE.format(pos=SPRITE_POSITIONS.get(key, SPRITE_DEFAULT))
 
 
@@ -196,17 +196,20 @@ def detect_js_redirect(html: str) -> str | None:
 
 
 # ─── Parser HTML ─────────────────────────────────────────────────────────────
-
 class FootaoProgParser(HTMLParser):
     """
     Parse programmetv.php?eq= et les pages dédiées.
 
     Deux structures de match coexistent :
-     [Riche]  <a class="rc"><span itemprop="name">Nom <span class="agen">cat</span></span></a>
-     [Simple] <a class="rc">Nom directement</a>  ← amicaux, certaines pages dédiées
+      [Riche]  <a class="rc"><span itemprop="name">Nom <span class="agen">cat</span></span></a>
+      [Simple] <a class="rc">Nom directement</a>  ← amicaux, certaines pages dédiées
 
     Dans les deux cas, <span class="ap"> suit et contient la compétition.
     Le flush est déclenché à la fermeture du span.ap.
+
+    Si plusieurs <img class="im..."> précèdent le flush (plusieurs chaînes
+    diffusant le même match), on conserve les deux premières : chaine1/img_class1
+    et chaine2/img_class2.
     """
 
     def __init__(self):
@@ -214,33 +217,36 @@ class FootaoProgParser(HTMLParser):
         self.matches: list[dict] = []
 
         self._cur_date = ""
-        self._cur_iso  = ""
+        self._cur_iso = ""
 
-        self._in_h2    = False
-        self._in_h2_a  = False
-        self._h2_href  = ""
+        self._in_h2 = False
+        self._in_h2_a = False
+        self._h2_href = ""
 
-        self._in_time   = False
-        self._heure     = ""
+        self._in_time = False
+        self._heure = ""
 
-        self._channels: list[dict[str, str]] = []
+        self._img_alt1 = ""
+        self._img_class1 = ""
+        self._img_alt2 = ""
+        self._img_class2 = ""
 
-        self._in_rc        = False  # dans <a class="rc">
+        self._in_rc = False  # dans <a class="rc">
         self._in_name_span = False  # dans <span itemprop="name"> (structure riche)
-        self._in_agen      = False  # dans <span class="agen"> (catégorie)
-        self._match_name   = ""
-        self._match_href   = ""
+        self._in_agen = False  # dans <span class="agen"> (catégorie)
+        self._match_name = ""
+        self._match_href = ""
 
-        self._in_ap      = False  # dans <span class="ap"> (compétition)
+        self._in_ap = False  # dans <span class="ap"> (compétition)
         self._comp_label = ""
 
     def _parse_date_from_href(self, href: str) -> tuple[str, str]:
         jr = re.search(r"jr=(\d+)", href)
         ms = re.search(r"ms=(\d+)", href)
         an = re.search(r"an=(\d+)", href)
-        v  = re.search(r"\?v=([^&]+)", href)
+        v = re.search(r"[?&]v=([^&]+)", href)
         if jr and ms and an:
-            iso   = f"{an.group(1)}-{ms.group(1).zfill(2)}-{jr.group(1).zfill(2)}"
+            iso = f"{an.group(1)}-{ms.group(1).zfill(2)}-{jr.group(1).zfill(2)}"
             label = v.group(1).replace("-", " ").capitalize() if v else iso
             return iso, label
         return "", ""
@@ -271,47 +277,45 @@ class FootaoProgParser(HTMLParser):
         dt_str = f"{self._cur_iso} {self._heure}:00"
         try:
             display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") + timedelta(hours=3) > datetime.now()
-        except:
+        except ValueError:
             display = True
 
-        clean_name = re.sub(r"\s*(Fém\.?|U\d)\s*", " ", name).strip()
+        clean_name = re.sub(r"\s*(Fém\.?|U\d{2})\s*", " ", name).strip()
         parts = [p.strip() for p in clean_name.split("·")]
 
-        chaine1 = self._channels[0]["alt"] if len(self._channels) > 0 else ""
-        img_class1 = self._channels[0]["class"] if len(self._channels) > 0 else ""
-        chaine2 = self._channels[1]["alt"] if len(self._channels) > 1 else ""
-        img_class2 = self._channels[1]["class"] if len(self._channels) > 1 else ""
-
         self.matches.append({
-            "date":              self._cur_date,
-            "date_iso":          self._cur_iso,
-            "datetime":          dt_str,
-            "display":           display,
-            "heure":             self._heure,
-            "chaine1":           chaine1,
-            "img_class1":        img_class1,
-            "chaine2":           chaine2,
-            "img_class2":        img_class2,
-            "game":              clean_name,
+            "date": self._cur_date,
+            "date_iso": self._cur_iso,
+            "datetime": dt_str,
+            "display": display,
+            "heure": self._heure,
+            "chaine1": self._img_alt1,
+            "img_class1": self._img_class1,
+            "chaine2": self._img_alt2,
+            "img_class2": self._img_class2,
+            "game": clean_name,
             "competition_label": comp,
-            "domicile":          parts[0] if parts else clean_name,
-            "exterieur":         parts[1] if len(parts) >= 2 else "",
+            "domicile": parts[0] if parts else clean_name,
+            "exterieur": parts[1] if len(parts) >= 2 else "",
         })
         self._reset_match()
 
     def _reset_match(self) -> None:
-        self._heure      = ""
-        self._channels   = []
+        self._heure = ""
+        self._img_alt1 = ""
+        self._img_class1 = ""
+        self._img_alt2 = ""
+        self._img_class2 = ""
         self._match_name = ""
         self._match_href = ""
         self._comp_label = ""
 
     def handle_starttag(self, tag, attrs):
-        d   = dict(attrs)
+        d = dict(attrs)
         css = d.get("class", "")
 
         if tag == "h2":
-            self._in_h2   = True
+            self._in_h2 = True
             self._h2_href = ""
 
         elif tag == "a" and self._in_h2:
@@ -322,21 +326,25 @@ class FootaoProgParser(HTMLParser):
             if self._match_name and not self._comp_label:
                 self._reset_match()
             self._in_time = True
-            self._heure   = ""
+            self._heure = ""
 
         elif tag == "img" and "im" in css:
             alt = d.get("alt", "")
             for w in ["tv direct match", "match programme foot soir",
                       "foot programme soir", "match"]:
                 alt = alt.replace(w, "")
-            alt_clean = alt.strip()
-            css_clean = css if isinstance(css, str) else " ".join(css)
-            chan_entry = {"alt": alt_clean, "class": css_clean}
-            if chan_entry not in self._channels:
-                self._channels.append(chan_entry)
+            alt = alt.strip()
+            css_str = css if isinstance(css, str) else " ".join(css)
+            if not self._img_alt1:
+                self._img_alt1 = alt
+                self._img_class1 = css_str
+            elif not self._img_alt2:
+                self._img_alt2 = alt
+                self._img_class2 = css_str
+            # au-delà de deux chaînes, on ignore les suivantes
 
         elif tag == "a" and "rc" in css:
-            self._in_rc      = True
+            self._in_rc = True
             self._match_href = d.get("href", "")
             self._match_name = ""
 
@@ -347,7 +355,7 @@ class FootaoProgParser(HTMLParser):
             self._in_agen = True
 
         elif tag == "span" and "ap" in css:
-            self._in_ap      = True
+            self._in_ap = True
             self._comp_label = ""
 
     def handle_endtag(self, tag):
@@ -379,20 +387,20 @@ class FootaoProgParser(HTMLParser):
 
         if self._in_h2 and self._in_h2_a:
             if "aujourd" in text.lower():
-                self._cur_iso  = datetime.now().strftime("%Y-%m-%d")
+                self._cur_iso = datetime.now().strftime("%Y-%m-%d")
                 self._cur_date = "Aujourd'hui"
             elif "demain" in text.lower():
-                self._cur_iso  = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+                self._cur_iso = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
                 self._cur_date = "Demain"
             else:
                 iso, _ = self._parse_date_from_href(self._h2_href)
                 if iso:
-                    self._cur_iso  = iso
+                    self._cur_iso = iso
                     self._cur_date = text
             return
 
         if self._in_time:
-            if re.match(r"^\d:\d$", text) or re.match(r"^\d+[:h]\d+$", text):
+            if re.match(r"^\d{1,2}:\d{2}$", text):
                 self._heure = text
             return
 
@@ -414,11 +422,13 @@ class FootaoProgParser(HTMLParser):
 
 
 # ─── Parser fallback (tv-calendrier.php) ─────────────────────────────────────
-
 class FootaoCalParser(HTMLParser):
     """
     Fallback : parse tv-calendrier.php?e=&c=.
     La compétition est injectée via competition_label (connue à l'avance).
+
+    Comme pour FootaoProgParser, on conserve jusqu'à deux chaînes par match
+    (chaine1/img_class1 et chaine2/img_class2).
     """
 
     def __init__(self, competition_label: str = ""):
@@ -426,8 +436,9 @@ class FootaoCalParser(HTMLParser):
         self.matches: list[dict] = []
         self._competition_label = competition_label
         self._cur_date = self._cur_iso = self._heure = ""
-        self._channels: list[dict[str, str]] = []
-        self._in_h2  = self._cap_h2 = self._in_link = False
+        self._img_alt1 = self._img_class1 = ""
+        self._img_alt2 = self._img_class2 = ""
+        self._in_h2 = self._cap_h2 = self._in_link = False
         self._h2_href = ""
 
     def _parse_url(self, href):
@@ -438,9 +449,9 @@ class FootaoCalParser(HTMLParser):
         jr = re.search(r"jr=(\d+)", href)
         ms = re.search(r"ms=(\d+)", href)
         an = re.search(r"an=(\d+)", href)
-        v  = re.search(r"\?v=([^&]+)", href)
+        v = re.search(r"[?&]v=([^&]+)", href)
         if jr and ms and an:
-            iso   = f"{an.group(1)}-{ms.group(1).zfill(2)}-{jr.group(1).zfill(2)}"
+            iso = f"{an.group(1)}-{ms.group(1).zfill(2)}-{jr.group(1).zfill(2)}"
             label = v.group(1).replace("-", " ").capitalize() if v else iso
             return iso, label
         return "", ""
@@ -448,28 +459,35 @@ class FootaoCalParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         d = dict(attrs)
         if tag == "h2":
-            self._in_h2 = True; self._h2_href = ""; self._cap_h2 = False
+            self._in_h2 = True
+            self._h2_href = ""
+            self._cap_h2 = False
         elif self._in_h2 and tag == "a":
-            self._h2_href = d.get("href", ""); self._cap_h2 = True
+            self._h2_href = d.get("href", "")
+            self._cap_h2 = True
         elif tag == "img":
             alt = d.get("alt", "")
             for w in ["tv direct match", "match programme foot soir",
                       "foot programme soir", "match"]:
                 alt = alt.replace(w, "")
+            alt = alt.strip()
             css = d.get("class", "")
-            chan_entry = {
-                "alt": alt.strip(),
-                "class": css if isinstance(css, str) else " ".join(css)
-            }
-            if chan_entry not in self._channels:
-                self._channels.append(chan_entry)
+            css_str = css if isinstance(css, str) else " ".join(css)
+            if not self._img_alt1:
+                self._img_alt1 = alt
+                self._img_class1 = css_str
+            elif not self._img_alt2:
+                self._img_alt2 = alt
+                self._img_class2 = css_str
         elif tag == "a" and not self._in_h2:
             if "-chaine-tv-diffusion-heure" in d.get("href", ""):
                 self._in_link = True
 
     def handle_endtag(self, tag):
-        if tag == "h2": self._in_h2 = self._cap_h2 = False
-        if tag == "a":  self._in_link = self._cap_h2 = False
+        if tag == "h2":
+            self._in_h2 = self._cap_h2 = False
+        if tag == "a":
+            self._in_link = self._cap_h2 = False
 
     def handle_data(self, data):
         text = data.strip()
@@ -479,69 +497,66 @@ class FootaoCalParser(HTMLParser):
             self._cur_date = text
             iso, label = self._parse_url(self._h2_href)
             if iso:
-                self._cur_iso = iso; self._cur_date = label; self._heure = ""
+                self._cur_iso = iso
+                self._cur_date = label
+                self._heure = ""
             return
-        if (re.match(r"^\d:\d$", text) or re.match(r"^\d+[:h]\d+$", text)) and not self._in_link:
+        if re.match(r"^\d{1,2}:\d{2}$", text) and not self._in_link:
             self._heure = text
-            self._channels = []
             return
         if self._in_link and text and self._cur_iso and self._heure:
             if any(f in text for f in FILTRES_EXCLUS):
-                self._channels = []
                 return
             dt_str = f"{self._cur_iso} {self._heure}:00"
             try:
                 display = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S") > datetime.now()
-            except:
+            except ValueError:
                 display = True
             parts = [p.strip() for p in text.split("·")]
-
-            chaine1 = self._channels[0]["alt"] if len(self._channels) > 0 else ""
-            img_class1 = self._channels[0]["class"] if len(self._channels) > 0 else ""
-            chaine2 = self._channels[1]["alt"] if len(self._channels) > 1 else ""
-            img_class2 = self._channels[1]["class"] if len(self._channels) > 1 else ""
-
             self.matches.append({
-                "date":              self._cur_date,
-                "date_iso":          self._cur_iso,
-                "datetime":          dt_str,
-                "display":           display,
-                "heure":             self._heure,
-                "chaine1":           chaine1,
-                "img_class1":        img_class1,
-                "chaine2":           chaine2,
-                "img_class2":        img_class2,
-                "game":              text,
+                "date": self._cur_date,
+                "date_iso": self._cur_iso,
+                "datetime": dt_str,
+                "display": display,
+                "heure": self._heure,
+                "chaine1": self._img_alt1,
+                "img_class1": self._img_class1,
+                "chaine2": self._img_alt2,
+                "img_class2": self._img_class2,
+                "game": text,
                 "competition_label": self._competition_label,
-                "domicile":          parts[0] if parts else text,
-                "exterieur":         parts[1] if len(parts) >= 2 else "",
+                "domicile": parts[0] if parts else text,
+                "exterieur": parts[1] if len(parts) >= 2 else "",
             })
-            self._channels = []
+            # on repart de zéro pour le prochain match de la liste
+            self._img_alt1 = self._img_class1 = ""
+            self._img_alt2 = self._img_class2 = ""
+            return
 
 
 # ─── Coordinator ─────────────────────────────────────────────────────────────
-
 class FootaoCoordinator(DataUpdateCoordinator):
     """
     selected = {
-     "France": {"eq":"France","comp":"Amical","logo":"https://..."},
-     ...
+        "France": {"eq":"France","comp":"Amical","logo":"https://..."},
+        ...
     }
+
     Résolution :
      1. GET programmetv.php?eq= → suivi redirection JS éventuelle → FootaoProgParser
      2. Si 0 match → fallback tv-calendrier.php × COMPETITIONS_FALLBACK → FootaoCalParser
     """
 
     def __init__(self, hass: HomeAssistant, selected: dict) -> None:
-        self.selected  = selected
+        self.selected = selected
         self._logo_index: dict[str, str] = {}
         super().__init__(hass, _LOGGER, name=DOMAIN,
-                         update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
+                          update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
 
     async def async_initialize(self) -> None:
         ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
         ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode  = ssl.CERT_NONE
+        ssl_ctx.verify_mode = ssl.CERT_NONE
 
         async with aiohttp.ClientSession(headers=HEADERS) as session:
             clubs = await load_clubs_async(session, force=True, ssl_ctx=ssl_ctx)
@@ -568,7 +583,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         self, session: aiohttp.ClientSession, ssl_ctx, eq: str
     ) -> list[dict]:
         """programmetv.php?eq= avec suivi de redirection JS."""
-        url  = FOOTAO_PROG_URL.format(eq=quote(eq, safe=""))
+        url = FOOTAO_PROG_URL.format(eq=quote(eq, safe=""))
         html = await self._fetch_html(session, ssl_ctx, url)
         if not html:
             return []
@@ -591,7 +606,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         """Fallback tv-calendrier.php pour chaque compétition de COMPETITIONS_FALLBACK."""
         all_matches: list[dict] = []
         for comp in COMPETITIONS_FALLBACK:
-            url  = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
+            url = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
             html = await self._fetch_html(session, ssl_ctx, url)
             if not html:
                 continue
@@ -605,16 +620,16 @@ class FootaoCoordinator(DataUpdateCoordinator):
         data: dict = {}
         ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
         ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode  = ssl.CERT_NONE
+        ssl_ctx.verify_mode = ssl.CERT_NONE
 
         try:
             async with aiohttp.ClientSession(headers=HEADERS) as session:
                 for club_name, cfg in self.selected.items():
-                    eq_raw    = cfg.get("eq", club_name)
+                    eq_raw = cfg.get("eq", club_name)
                     # Le champ eq peut contenir plusieurs alias séparés par |
                     # On utilise le premier alias pour les requêtes URL footao
-                    eq        = eq_raw.split("|")[0].strip()
-                    comp      = cfg.get("comp", "")
+                    eq = eq_raw.split("|")[0].strip()
+                    comp = cfg.get("comp", "")
                     logo_team = cfg.get("logo", "")
 
                     # 1) Tentative programmetv.php (+ suivi redirection JS)
@@ -633,10 +648,10 @@ class FootaoCoordinator(DataUpdateCoordinator):
                         data[club_name] = {
                             "state": "Aucun match",
                             "attributes": {
-                                "team":             club_name,
-                                "logoTeam":         logo_team,
+                                "team": club_name,
+                                "logoTeam": logo_team,
                                 "clubs_updated_at": _clubs_last_updated,
-                                "clubs_source":     _clubs_source,
+                                "clubs_source": _clubs_source,
                             },
                         }
                         continue
@@ -651,15 +666,12 @@ class FootaoCoordinator(DataUpdateCoordinator):
                         match["competition_label"], match["datetime"],
                     )
 
-                    chaine1 = match.get("chaine1", "")
-                    chaine2 = match.get("chaine2", "")
-
-                    sprite1 = get_sprite_style(match.get("img_class1", "")) if (match.get("img_class1") or chaine1) else ""
-                    sprite2 = get_sprite_style(match.get("img_class2", "")) if (match.get("img_class2") or chaine2) else ""
+                    sprite1 = get_sprite_style(match["img_class1"])
+                    sprite2 = get_sprite_style(match["img_class2"]) if match.get("img_class2") else ""
 
                     eq_aliases = [_normalize(a.strip()) for a in eq_raw.split("|") if a.strip()]
-                    dom_lower  = _normalize(match["domicile"])
-                    situation  = "dom" if any(
+                    dom_lower = _normalize(match["domicile"])
+                    situation = "dom" if any(
                         any(w in dom_lower for w in alias.split())
                         for alias in eq_aliases
                     ) else "ext"
@@ -668,45 +680,43 @@ class FootaoCoordinator(DataUpdateCoordinator):
                         match["exterieur"] if situation == "dom" else match["domicile"],
                         self._logo_index,
                     )
-
                     logo_dom = logo_team if situation == "dom" else logo_adv
-                    logo_ext = logo_adv  if situation == "dom" else logo_team
+                    logo_ext = logo_adv if situation == "dom" else logo_team
 
                     competition = match.get("competition_label") or comp
 
                     try:
-                        dt_debut     = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
+                        dt_debut = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
                         datetime_fin = (dt_debut + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
                     except (ValueError, KeyError):
                         datetime_fin = ""
 
                     data[club_name] = {
-                        "state": chaine1 or "Inconnu",
+                        "state": match["chaine1"] or "Inconnu",
                         "attributes": {
-                            "team":             club_name,
-                            "logoTeam":         logo_team,
-                            "domicile":         match["domicile"],
-                            "logoDomicile":     logo_dom,
-                            "exterieur":        match["exterieur"],
-                            "logoExterieur":    logo_ext,
-                            "situation":        situation,
-                            "competition":      competition,
-                            "date":             match["date"],
-                            "datetime":         match["datetime"],
-                            "datetime_fin":     datetime_fin,
-                            "display":          match["display"],
-                            "heure":            match["heure"],
-                            "logo1":            sprite1,
-                            "chaine1":          chaine1,
-                            "logo2":            sprite2,
-                            "chaine2":          chaine2,
-                            "game":             match["game"],
+                            "team": club_name,
+                            "logoTeam": logo_team,
+                            "domicile": match["domicile"],
+                            "logoDomicile": logo_dom,
+                            "exterieur": match["exterieur"],
+                            "logoExterieur": logo_ext,
+                            "situation": situation,
+                            "competition": competition,
+                            "date": match["date"],
+                            "datetime": match["datetime"],
+                            "datetime_fin": datetime_fin,
+                            "display": match["display"],
+                            "heure": match["heure"],
+                            "logo1": sprite1,
+                            "chaine1": match["chaine1"],
+                            "logo2": sprite2,
+                            "chaine2": match.get("chaine2", ""),
+                            "game": match["game"],
                             "clubs_updated_at": _clubs_last_updated,
-                            "clubs_source":     _clubs_source,
+                            "clubs_source": _clubs_source,
                         },
                     }
-
         except Exception as err:
-            raise UpdateFailed(f"Erreur scraping Footao : {}") from err
+            raise UpdateFailed(f"Erreur scraping Footao : {err}") from err
 
         return data
