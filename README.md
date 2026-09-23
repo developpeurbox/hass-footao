@@ -1,6 +1,6 @@
 # Footao TV — Intégration HACS pour Home Assistant
 
-[![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2hlaissus)](https://paypal.me/hlaissus)
+[![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2hlaissus/5)](https://paypal.me/hlaissus/5)
 [![GitHub Release]( https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge&color=blue)](https://github.com/developpeurbox/hass-footao/releases)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge&color=blue)](https://github.com/hacs/integration)
 [![Community Forum]( https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge&color=pink)](https://community.home-assistant.io)
