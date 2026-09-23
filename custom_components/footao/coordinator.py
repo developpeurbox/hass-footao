@@ -46,8 +46,8 @@ _LOGGER = logging.getLogger(__name__)
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 Firefox/19.0"}
 
-FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq={}"
-FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={}&c={}"
+FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq={eq}"
+FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
 
 # URL du fichier clubs.json maintenu sur GitHub (pas de republication nécessaire)
 CLUBS_JSON_URL = "https://raw.githubusercontent.com/developpeurbox/hass-footao/refs/heads/main/custom_components/footao/clubs.json"
