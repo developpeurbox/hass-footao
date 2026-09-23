@@ -1,9 +1,9 @@
-name: Hassfest
+name: Hassfests
 
 on:
   push:
   pull_request:
-  schedule:
+  scedule:
     - cron: "0 0 * * *"
 
 jobs:
