@@ -110,22 +110,14 @@
         }
     },
     "Ligue 2": {
-        "Amiens": {
-            "eq": "Amiens SC",
-            "comp": "Ligue 2",
-            "logo": "https://r2.thesportsdb.com/images/media/team/badge/nwgget1656423507.png/small"
-        },
+    
         "Annecy": {
             "eq": "Annecy",
             "comp": "Ligue 2",
             "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/18066.png",
             "espn_id": "18066"
         },
-        "Bastia": {
-            "eq": "Bastia SC",
-            "comp": "Ligue 2",
-            "logo": "https://r2.thesportsdb.com/images/media/team/badge/mv09b91754278549.png/small"
-        },
+    
         "Boulogne": {
             "eq": "Boulogne",
             "comp": "Ligue 2",
