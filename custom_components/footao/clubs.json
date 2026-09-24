@@ -431,7 +431,8 @@
         "Parme": {
             "eq": "Parme",
             "comp": "Serie A",
-            "logo": "https://r2.thesportsdb.com/images/media/team/badge/6yiaxs1627406063.png/small"
+            "logo": "https://a.espncdn.com/combiner/i/teamlogos/soccer/500/115.png",
+            "espn_id": "115"
         },
         "Roma": {
             "eq": "Roma",
@@ -590,7 +591,8 @@
         "Augsbourg": {
             "eq": "Augsbourg",
             "comp": "Bundesliga",
-            "logo": "https://r2.thesportsdb.com/images/media/team/badge/xqyyvq1473453233.png/small"
+            "logo": "https://a.espncdn.com/combiner/i/teamlogos/soccer/500/3841.png",
+            "espn_id": "3841"
         },
         "Bayern Munich": {
             "eq": "Bayern",
