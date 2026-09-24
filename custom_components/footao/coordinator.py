@@ -582,7 +582,13 @@ class FootaoCoordinator(DataUpdateCoordinator):
     async def _fetch_and_parse_prog(
         self, session: aiohttp.ClientSession, ssl_ctx, eq: str
     ) -> list[dict]:
-        """programmetv.php?eq= avec suivi de redirection JS."""
+        """programmetv.php?eq= avec suivi de redirection JS.
+
+        eq peut contenir plusieurs alias combinés séparés par '|'
+        (ex: "Francfort E.|Eintracht Francfort") : footao.tv accepte
+        cette syntaxe directement dans le paramètre eq et matche le club
+        quel que soit le nom affiché sur le site.
+        """
         url = FOOTAO_PROG_URL.format(eq=quote(eq, safe=""))
         html = await self._fetch_html(session, ssl_ctx, url)
         if not html:
@@ -603,7 +609,11 @@ class FootaoCoordinator(DataUpdateCoordinator):
     async def _fetch_fallback(
         self, session: aiohttp.ClientSession, ssl_ctx, eq: str
     ) -> list[dict]:
-        """Fallback tv-calendrier.php pour chaque compétition de COMPETITIONS_FALLBACK."""
+        """Fallback tv-calendrier.php pour chaque compétition de COMPETITIONS_FALLBACK.
+
+        Comme pour _fetch_and_parse_prog, eq peut contenir plusieurs alias
+        combinés séparés par '|'.
+        """
         all_matches: list[dict] = []
         for comp in COMPETITIONS_FALLBACK:
             url = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
@@ -626,21 +636,22 @@ class FootaoCoordinator(DataUpdateCoordinator):
             async with aiohttp.ClientSession(headers=HEADERS) as session:
                 for club_name, cfg in self.selected.items():
                     eq_raw = cfg.get("eq", club_name)
-                    # Le champ eq peut contenir plusieurs alias séparés par |
-                    # On utilise le premier alias pour les requêtes URL footao
-                    eq = eq_raw.split("|")[0].strip()
+                    # Le champ eq peut contenir plusieurs alias séparés par |.
+                    # footao.tv accepte directement les alias combinés dans le
+                    # paramètre eq (ex: "eq=Francfort%20E.%7CEintracht%20Francfort") :
+                    # on envoie donc eq_raw tel quel, sans se limiter au premier alias.
                     comp = cfg.get("comp", "")
                     logo_team = cfg.get("logo", "")
 
                     # 1) Tentative programmetv.php (+ suivi redirection JS)
-                    matches = await self._fetch_and_parse_prog(session, ssl_ctx, eq)
+                    matches = await self._fetch_and_parse_prog(session, ssl_ctx, eq_raw)
 
                     # 2) Fallback si aucun match
                     if not matches:
                         _LOGGER.debug(
                             "Footao: %s → 0 match via programmetv, bascule fallback", club_name
                         )
-                        matches = await self._fetch_fallback(session, ssl_ctx, eq)
+                        matches = await self._fetch_fallback(session, ssl_ctx, eq_raw)
 
                     # ── Aucun match trouvé nulle part ─────────────────────────
                     if not matches:
