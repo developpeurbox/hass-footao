@@ -71,7 +71,7 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 
 Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
-![Footao clubs](/doc/images/clubs.png "Footao clubs").
+![Footao clubs](/doc/images/clubs.png "Footao clubs")
 
 Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
