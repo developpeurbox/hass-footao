@@ -89,7 +89,7 @@ COMPETITIONS_AUTORISEES = [
     "serie a",
 ]
 
-FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U19", " U17", " U21", "-19", "-17"]
+FILTRES_EXCLUS = [" Fém.", " Fém", "Féminin", " U20", " Espoirs", " U19", " U17", " U21", "-19", "-17"]
 
 _RE_JS_REDIRECT = re.compile(
     r'window\.location\.(?:replace|href)\s*[=(]\s*["\']([^"\']+)["\']',
