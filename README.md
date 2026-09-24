@@ -55,6 +55,7 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 1. Dans HACS → **Intégrations** → menu ⋮ → **Dépôts personnalisés**
 2. Ajouter l'URL de ce dépôt GitHub, catégorie **Integration**
    https://github.com/developpeurbox/hass-footao.git
+   
 4. Installer **Footao TV**
 5. Redémarrer Home Assistant
 6. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
@@ -74,7 +75,7 @@ Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
 Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
-![Footao resultat](/doc/images/resultat.png "Footao resultat").
+![Footao resultat](/doc/images/resultat.png "Footao resultat")
 
 ## 🔁 Rafraîchissement
 
