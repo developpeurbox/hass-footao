@@ -85,7 +85,7 @@ Les données sont mises à jour automatiquement **toutes les 6 heures**. Tu peux
 
 ## 🏟️ Fichier des clubs — `clubs.json`
 
-L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de club (tel qu'il apparaît sur footao.tv) à un logo provenant de [TheSportsDB](https://www.thesportsdb.com/).
+L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de club (tel qu'il apparaît sur footao.tv) à un logo provenant de [Espn](https://www.espn.co.uk/).
 
 ### 📄 Structure du fichier
 
@@ -99,7 +99,7 @@ L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de 
 
 Chaque entrée est une paire **clé → valeur** :
 - **Clé** : le nom exact du club tel qu'il apparaît dans les données de footao.tv (sensible à la casse et aux accents).
-- **Valeur** : l'URL du logo du club, de préférence issu de TheSportsDB.
+- **Valeur** : l'URL du logo du club, de préférence issu de Espn ou TheSportDb.
 
 ### 🤝 Contribuer — Ajouter ou corriger un club
 
@@ -111,15 +111,10 @@ Le fichier `clubs.json` est **ouvert aux contributions**. Si un club n'est pas r
 2. Ouvrir le fichier [`custom_components/footao/clubs.json`](custom_components/footao/clubs.json).
 3. Ajouter ou corriger l'entrée du club concerné :
    - Trouver le **nom exact** du club sur [footao.tv](https://footao.tv) (ex: depuis le texte d'un match affiché).
-   - Trouver l'**URL du logo** correspondant sur [TheSportsDB](https://www.thesportsdb.com/).
-     > 💡 Chercher le club sur `https://www.thesportsdb.com/`, ouvrir sa fiche et copier l'URL du badge.
+   - Trouver l'**URL du logo** correspondant sur [Espn](https://www.espn.co.uk/).
+     > 💡 Chercher le club sur `https://www.espn.co.uk/`, ouvrir sa fiche et copier l'URL du badge.
 4. Soumettre une **Pull Request** avec une description claire (club ajouté, ligue, pays).
 
-**Exemple de PR :**
-
-```
-Ajout : Brest (Stade Brestois 29) — Ligue 1
-```
 
 > ⚠️ Le nom de la clé doit correspondre **exactement** à ce que retourne footao.tv, sinon le logo ne sera pas affiché.
 
@@ -131,7 +126,7 @@ Si tu n'es pas sûr du nom exact utilisé par footao.tv, tu peux le retrouver da
 
 ### 🔍 Recharcher l'application
 
-Pour voir le nouveau club, recharger l'application
+Pour voir le nouveau club, recharger l'appareil ou pour être plus sûr, supprimer l'appareil 
 
 ![rechargement](/doc/images/rechargement.png "rechargement")
 
