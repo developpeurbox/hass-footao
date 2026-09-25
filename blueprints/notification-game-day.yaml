@@ -8,18 +8,19 @@ blueprint:
   input:
     match_sensors:
       name: Capteurs de matchs FOOTAO
-      description: Sélectionner les capteurs sensor.footao*
+      description: Uniquement les capteurs de l'intégration Footao (sensor.footao*)
       selector:
         entity:
-          domain: sensor
           multiple: true
+          filter:
+            - integration: footao
+              domain: sensor
 
     notification_service:
       name: Service de notification
-      description: "Ex: notify.mobiles_famille"
-      default: notify.mobile
+      description: Choisissez le service de notification à utiliser (ex. notify.mobile_app_...)
       selector:
-        text:
+        action: {}
 
     notify_time:
       name: Heure de vérification
@@ -59,7 +60,10 @@ variables:
       {% endif %}
     {% endfor %}
     {% for s in ns.result %}
-      ⚽ {{ state_attr(s, 'game') }} 🕐 {{ state_attr(s, 'heure') }} 📺 {{ state_attr(s, 'chaine') }}
+      {% set c1 = state_attr(s, 'chaine1') %}
+      {% set c2 = state_attr(s, 'chaine2') %}
+      {% set chaines = [c1, c2] | select('!=', '') | select('!=', none) | list | join(' / ') %}
+      ⚽ {{ state_attr(s, 'game') }} 🕐 {{ state_attr(s, 'heure') }}{% if chaines %} 📺 {{ chaines }}{% endif %}
     {% endfor %}
 
 condition:
