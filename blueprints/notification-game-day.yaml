@@ -20,7 +20,7 @@ blueprint:
       name: Service de notification
       description: Choisissez le service de notification à utiliser (ex. notify.mobile_app_...)
       selector:
-        action: {}
+        text:
 
     notify_time:
       name: Heure de vérification
