@@ -145,15 +145,8 @@ Pour un rendu visuel optimal, utilisez la carte compagnon :
 
 Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
+---
+### 💬 **Communauté & Support**
+🗣️ **Forum Home Assistant** : [Discuter ici](https://forum.hacf.fr/t/carte-lovelace-integration-footao-le-programme-tv-foot-arrive-dans-home-assistant/84145)
 
 
-
-[commits-shield]: https://img.shields.io/github/commit-activity/y/custom-components/readme.svg?style=for-the-badge
-[commits]: https://github.com/developpeurbox/hass-footao/readme/commits/main
-[exampleimg]: example.png
-[hacs]: https://github.com/hacs/integration
-[hacsbadge]: https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge
-[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
-[forum]: https://community.home-assistant.io/
-[releases-shield]: https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge
-[releases]: https://github.com/developpeurbox/hass-footao/releases
