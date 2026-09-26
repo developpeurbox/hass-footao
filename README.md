@@ -12,6 +12,8 @@
 
 Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv.
 
+![Exemple Footao Game Card](/doc/images/example.png "Exemple d'affichage")
+
 ## ✨ Caractéristiques
 
 📅 Suivi multi-équipes : Créez un capteur (sensor) par équipe.
