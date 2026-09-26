@@ -81,7 +81,7 @@
         "PSG": {
             "eq": "Paris PSG",
             "comp": "Ligue 1",
-            "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/160.pn",
+            "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/160.png",
             "espn_id": "169"
         },
         "Rennes": {
