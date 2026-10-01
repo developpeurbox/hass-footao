@@ -1,4 +1,8 @@
-# Footao TV — Intégration HACS pour Home Assistant
+<p align="center">
+  <img src="/doc/images/example.png" alt="Exemple d'affichage" width="400"/>
+</p>
+
+# Footao.tv Intégration pour Home Assistant.
 
 [![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2hlaissus/5)](https://paypal.me/hlaissus/5)
 [![GitHub Release]( https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge&color=blue)](https://github.com/developpeurbox/hass-footao/releases)
@@ -10,10 +14,6 @@
 [![HACS Action](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml/badge.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml)
 
 
-Intégration personnalisée pour Home Assistant permettant de suivre les diffusions TV de vos équipes de football préférées via le site Footao.tv.
-
-![Exemple Footao Game Card](/doc/images/example.png "Exemple d'affichage")
-
 ## ✨ Caractéristiques
 
 📅 Suivi multi-équipes : Créez un capteur (sensor) par équipe.
@@ -24,60 +24,56 @@ Intégration personnalisée pour Home Assistant permettant de suivre les diffusi
 
 🔔 Prêt pour les automatisations : Idéal pour créer des notifications avant les matchs.
 
+## 📦 Installation
 
-<details>
-<summary><h2>🔧 Attributs disponibles par sensor </h2></summary>
+> [!TIP]
+> ### Installation Rapide via HACS
+> Cliquez sur le bouton ci-dessous pour ajouter automatiquement le dépôt dans HACS :
+>
+> [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=developpeurbox3y&repository=hass-footao&category=integration)
 
-| Attribut | Description |
-|---|---|
-| `state` | Nom de la chaîne TV (ex: TF1) |
-| `team` | Nom de l'équipe suivie |
-| `logoTeam` | URL du logo de l'équipe suivie |
-| `domicile` | Équipe à domicile |
-| `logoDomicile` | URL du logo de l'équipe à domicile |
-| `exterieur` | Équipe à l'extérieur |
-| `logoExterieur` | URL du logo de l'équipe à l'extérieur |
-| `situation` | `dom` ou `ext` selon le rôle de l'équipe suivie |
-| `competition` | Nom de la compétition (ex: Ligue 1, Amical) |
-| `date` | Date du match (ex: jeudi 4 juin) |
-| `datetime` | Date/heure ISO (ex: 2026-06-04 21:10:00) |
-| `datetime_fin` | Fin estimée ISO (ex: 2026-06-05 00:10:00) |
-| `display` | `true` si le match est dans le futur |
-| `heure` | Heure de diffusion (ex: 21:10) |
-| `chaine` | Nom de la chaîne TV |
-| `logo` | Style CSS du sprite chaîne (footao.tv) |
-| `game` | Texte brut du match (ex: France · Côte d'Ivoire) |
-| `clubs_updated_at` | Date de dernière mise à jour du fichier clubs |
-| `clubs_source` | Source du fichier clubs (ex: `github`) |
+### 🏗️ Méthode 1 : HACS (Recommandée)
 
-</details>
-
-## 🏗️ Installation via HACS
-
-1. Dans HACS → **Intégrations** → menu ⋮ → **Dépôts personnalisés**
-2. Ajouter l'URL de ce dépôt GitHub, catégorie **Integration**
-   https://github.com/developpeurbox/hass-footao.git
+   1. Ouvrez **HACS** dans Home Assistant
+   2. Allez dans **Intégrations**
+   3. Cliquez sur les **3 points** en haut à droite → **Dépôts personnalisés**
+   4. Ajouter: https://github.com/developpeurbox/hass-footao.git
+   5. Catégorie **Integration**
+   6. Cherchez "**footao**" et cliquez sur **Télécharger**
+   7. **Redémarrez Home Assistant**
    
-4. Installer **Footao TV**
-5. Redémarrer Home Assistant
-6. **Paramètres → Appareils & services → Ajouter une intégration → Footao TV**
-
-## 🏗️ Installation manuelle
-
-1. Téléchargez le dossier `custom_components/footao/` de ce dépôt.
-2. Copiez-le dans le dossier `custom_components/footao/`  de votre instance Home Assistant.
-3. Redémarrez Home Assistant
+### 🏗️ Méthode 2 : Manuelle
+   1. Téléchargez le dossier `custom_components/footao/` de ce dépôt.
+   2. Copiez-le dans le dossier `custom_components/footao/`  de votre instance Home Assistant.
+   3. **Redémarrez Home Assistant**
 
 
-## 🌟 Configuration
+---
+
+## ⚙️ Configuration
+
+> [!IMPORTANT]
+> ### Configuration Rapide
+> Cliquez sur le bouton ci-dessous pour démarrer la configuration automatiquement :
+>
+> [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=footao)
+
+### Configuration Manuelle
+
+1. Allez dans **Configuration** → **Appareils et Services**
+2. Cliquez sur **+ Ajouter une intégration**
+3. Cherchez "**Footao**"
+4. Renseignez les informations :
 
 Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
-![Footao clubs](/doc/images/clubs.png "Footao clubs")
+<p align="center">
+  <img src="/doc/images/clubs.png" alt="Footao clubs" width="400"/>
+</p>
+
 
 Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
-![Footao resultat](/doc/images/resultat.png "Footao resultat")
 
 ## 🔁 Rafraîchissement
 
@@ -132,9 +128,6 @@ Pour voir le nouveau club, recharger l'appareil ou pour être plus sûr, supprim
 
 ![rechargement](/doc/images/rechargement.png "rechargement")
 
-
----
-
 ## 🎨 Affichage & Notifications
 
 ### 🎴 Carte dédiée
@@ -147,8 +140,34 @@ Pour un rendu visuel optimal, utilisez la carte compagnon :
 
 Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
 
----
-### 💬 **Communauté & Support**
+
+## 💬 **Communauté & Support**
 🗣️ **Forum Home Assistant** : [Discuter ici](https://forum.hacf.fr/t/carte-lovelace-integration-footao-le-programme-tv-foot-arrive-dans-home-assistant/84145)
 
+---
+<details>
+<summary><h2>🔧 Attributs disponibles par sensor </h2></summary>
 
+| Attribut | Description |
+|---|---|
+| `state` | Nom de la chaîne TV (ex: TF1) |
+| `team` | Nom de l'équipe suivie |
+| `logoTeam` | URL du logo de l'équipe suivie |
+| `domicile` | Équipe à domicile |
+| `logoDomicile` | URL du logo de l'équipe à domicile |
+| `exterieur` | Équipe à l'extérieur |
+| `logoExterieur` | URL du logo de l'équipe à l'extérieur |
+| `situation` | `dom` ou `ext` selon le rôle de l'équipe suivie |
+| `competition` | Nom de la compétition (ex: Ligue 1, Amical) |
+| `date` | Date du match (ex: jeudi 4 juin) |
+| `datetime` | Date/heure ISO (ex: 2026-06-04 21:10:00) |
+| `datetime_fin` | Fin estimée ISO (ex: 2026-06-05 00:10:00) |
+| `display` | `true` si le match est dans le futur |
+| `heure` | Heure de diffusion (ex: 21:10) |
+| `chaine` | Nom de la chaîne TV |
+| `logo` | Style CSS du sprite chaîne (footao.tv) |
+| `game` | Texte brut du match (ex: France · Côte d'Ivoire) |
+| `clubs_updated_at` | Date de dernière mise à jour du fichier clubs |
+| `clubs_source` | Source du fichier clubs (ex: `github`) |
+
+</details>
