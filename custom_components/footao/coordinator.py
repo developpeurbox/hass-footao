@@ -85,7 +85,7 @@ COMPETITIONS_AUTORISEES = [
     "ligue des nations",
     "ligue europa",
     "nations league",
-    "Premier League",
+    "premier league",
     "serie a",
 ]
 
@@ -627,6 +627,8 @@ class FootaoCoordinator(DataUpdateCoordinator):
         return all_matches
 
     async def _async_update_data(self) -> dict:
+        _LOGGER.info("Footao: scan lancé à %s", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        scraped_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         data: dict = {}
         ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
         ssl_ctx.check_hostname = False
@@ -663,6 +665,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
                                 "logoTeam": logo_team,
                                 "clubs_updated_at": _clubs_last_updated,
                                 "clubs_source": _clubs_source,
+                                "scraped_at": scraped_at,
                             },
                         }
                         continue
@@ -725,6 +728,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
                             "game": match["game"],
                             "clubs_updated_at": _clubs_last_updated,
                             "clubs_source": _clubs_source,
+                            "scraped_at": scraped_at,
                         },
                     }
         except Exception as err:
