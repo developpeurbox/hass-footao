@@ -1,8 +1,8 @@
 blueprint:
   name: Footao Notification jour de match
   description: >
-    Envoie une notification si au moins un capteur FOOTAO indique
-    un match "Aujourd'hui".
+    Envoie une notification si au moins un capteur FOOTAO a un match
+    prévu aujourd'hui (basé sur l'attribut datetime, pas sur le libellé "Aujourd'hui").
   domain: automation
 
   input:
@@ -43,23 +43,20 @@ variables:
   notify_svc: !input notification_service
   title_rendered: !input title_template
 
+  # attribut datetime = "YYYY-MM-DD HH:MM:SS" (heure locale, sans fuseau)
   matches: >
+    {% set today = now().strftime('%Y-%m-%d') %}
     {% set ns = namespace(result=[]) %}
     {% for entity_id in input_sensors %}
-      {% if state_attr(entity_id, 'date') in ["Aujourd'hui", "Aujourd\u2019hui"] %}
+      {% set dt = state_attr(entity_id, 'datetime') %}
+      {% if dt is string and dt[:10] == today %}
         {% set ns.result = ns.result + [entity_id] %}
       {% endif %}
     {% endfor %}
     {{ ns.result }}
 
   message_rendered: |
-    {% set ns = namespace(result=[]) %}
-    {% for entity_id in input_sensors %}
-      {% if state_attr(entity_id, 'date') in ["Aujourd'hui", "Aujourd\u2019hui"] %}
-        {% set ns.result = ns.result + [entity_id] %}
-      {% endif %}
-    {% endfor %}
-    {% for s in ns.result %}
+    {% for s in matches %}
       {% set c1 = state_attr(s, 'chaine1') %}
       {% set c2 = state_attr(s, 'chaine2') %}
       {% set chaines = [c1, c2] | select('!=', '') | select('!=', none) | list | join(' / ') %}
