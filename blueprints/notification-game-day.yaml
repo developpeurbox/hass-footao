@@ -1,5 +1,7 @@
+# Version : 1.1.0
 blueprint:
-  name: Footao Notification jour de match
+  name: Footao Notification jour de match (v1.1.0)
+  source_url: https://github.com/developpeurbox/hass-footao/blob/main/blueprints/notification-game-day.yaml
   description: >
     Envoie une notification si au moins un capteur FOOTAO a un match
     prévu aujourd'hui (basé sur l'attribut datetime, pas sur le libellé "Aujourd'hui").
