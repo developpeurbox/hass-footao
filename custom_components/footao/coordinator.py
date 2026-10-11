@@ -14,7 +14,7 @@ Deux structures HTML coexistent sur footao :
  - Matchs "simples" (amicaux...) : <a class="rc">Nom directement</a>
 
 Le parser gère les deux cas. Si plusieurs chaînes sont proposées pour un même
-match, on conserve les deux premières (chaine1/logo1 et chaine2/logo2).
+match, on conserve les deux premières (diffuseur1/logo1 et diffuseur2/logo2).
 """
 from __future__ import annotations
 
@@ -208,8 +208,8 @@ class FootaoProgParser(HTMLParser):
     Le flush est déclenché à la fermeture du span.ap.
 
     Si plusieurs <img class="im..."> précèdent le flush (plusieurs chaînes
-    diffusant le même match), on conserve les deux premières : chaine1/img_class1
-    et chaine2/img_class2.
+    diffusant le même match), on conserve les deux premières : diffuseur1/img_class1
+    et diffuseur2/img_class2.
     """
 
     def __init__(self):
@@ -289,9 +289,9 @@ class FootaoProgParser(HTMLParser):
             "datetime": dt_str,
             "display": display,
             "heure": self._heure,
-            "chaine1": self._img_alt1,
+            "diffuseur1": self._img_alt1,
             "img_class1": self._img_class1,
-            "chaine2": self._img_alt2,
+            "diffuseur2": self._img_alt2,
             "img_class2": self._img_class2,
             "game": clean_name,
             "competition_label": comp,
@@ -428,7 +428,7 @@ class FootaoCalParser(HTMLParser):
     La compétition est injectée via competition_label (connue à l'avance).
 
     Comme pour FootaoProgParser, on conserve jusqu'à deux chaînes par match
-    (chaine1/img_class1 et chaine2/img_class2).
+    (diffuseur1/img_class1 et diffuseur2/img_class2).
     """
 
     def __init__(self, competition_label: str = ""):
@@ -519,9 +519,9 @@ class FootaoCalParser(HTMLParser):
                 "datetime": dt_str,
                 "display": display,
                 "heure": self._heure,
-                "chaine1": self._img_alt1,
+                "diffuseur1": self._img_alt1,
                 "img_class1": self._img_class1,
-                "chaine2": self._img_alt2,
+                "diffuseur2": self._img_alt2,
                 "img_class2": self._img_class2,
                 "game": text,
                 "competition_label": self._competition_label,
@@ -568,170 +568,4 @@ class FootaoCoordinator(DataUpdateCoordinator):
         self, session: aiohttp.ClientSession, ssl_ctx, url: str
     ) -> str | None:
         try:
-            async with session.get(
-                url, ssl=ssl_ctx, timeout=aiohttp.ClientTimeout(total=15)
-            ) as resp:
-                if resp.status != 200:
-                    _LOGGER.warning("footao %s → HTTP %s", url, resp.status)
-                    return None
-                return await resp.text()
-        except aiohttp.ClientError as err:
-            _LOGGER.warning("Erreur footao %s : %s", url, err)
-            return None
-
-    async def _fetch_and_parse_prog(
-        self, session: aiohttp.ClientSession, ssl_ctx, eq: str
-    ) -> list[dict]:
-        """programmetv.php?eq= avec suivi de redirection JS.
-
-        eq peut contenir plusieurs alias combinés séparés par '|'
-        (ex: "Francfort E.|Eintracht Francfort") : footao.tv accepte
-        cette syntaxe directement dans le paramètre eq et matche le club
-        quel que soit le nom affiché sur le site.
-        """
-        url = FOOTAO_PROG_URL.format(eq=quote(eq, safe=""))
-        html = await self._fetch_html(session, ssl_ctx, url)
-        if not html:
-            return []
-
-        redirect = detect_js_redirect(html)
-        if redirect:
-            _LOGGER.debug("Footao: redirection JS → %s", redirect)
-            html = await self._fetch_html(session, ssl_ctx, redirect)
-            if not html:
-                return []
-
-        parser = FootaoProgParser()
-        parser.feed(html)
-        _LOGGER.debug("Footao: programmetv '%s' → %d match(s)", eq, len(parser.matches))
-        return parser.matches
-
-    async def _fetch_fallback(
-        self, session: aiohttp.ClientSession, ssl_ctx, eq: str
-    ) -> list[dict]:
-        """Fallback tv-calendrier.php pour chaque compétition de COMPETITIONS_FALLBACK.
-
-        Comme pour _fetch_and_parse_prog, eq peut contenir plusieurs alias
-        combinés séparés par '|'.
-        """
-        all_matches: list[dict] = []
-        for comp in COMPETITIONS_FALLBACK:
-            url = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
-            html = await self._fetch_html(session, ssl_ctx, url)
-            if not html:
-                continue
-            p = FootaoCalParser(competition_label=comp)
-            p.feed(html)
-            _LOGGER.debug("Footao: fallback '%s' → %d match(s)", comp, len(p.matches))
-            all_matches.extend(p.matches)
-        return all_matches
-
-    async def _async_update_data(self) -> dict:
-        _LOGGER.info("Footao: scan lancé à %s", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        scraped_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        data: dict = {}
-        ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
-        ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode = ssl.CERT_NONE
-
-        try:
-            async with aiohttp.ClientSession(headers=HEADERS) as session:
-                for club_name, cfg in self.selected.items():
-                    eq_raw = cfg.get("eq", club_name)
-                    # Le champ eq peut contenir plusieurs alias séparés par |.
-                    # footao.tv accepte directement les alias combinés dans le
-                    # paramètre eq (ex: "eq=Francfort%20E.%7CEintracht%20Francfort") :
-                    # on envoie donc eq_raw tel quel, sans se limiter au premier alias.
-                    comp = cfg.get("comp", "")
-                    logo_team = cfg.get("logo", "")
-
-                    # 1) Tentative programmetv.php (+ suivi redirection JS)
-                    matches = await self._fetch_and_parse_prog(session, ssl_ctx, eq_raw)
-
-                    # 2) Fallback si aucun match
-                    if not matches:
-                        _LOGGER.debug(
-                            "Footao: %s → 0 match via programmetv, bascule fallback", club_name
-                        )
-                        matches = await self._fetch_fallback(session, ssl_ctx, eq_raw)
-
-                    # ── Aucun match trouvé nulle part ─────────────────────────
-                    if not matches:
-                        _LOGGER.debug("Footao: aucun match pour %s", club_name)
-                        data[club_name] = {
-                            "state": "Aucun match",
-                            "attributes": {
-                                "team": club_name,
-                                "logoTeam": logo_team,
-                                "clubs_updated_at": _clubs_last_updated,
-                                "clubs_source": _clubs_source,
-                                "scraped_at": scraped_at,
-                            },
-                        }
-                        continue
-
-                    # Trier et prendre le prochain match futur
-                    matches.sort(key=lambda m: m["datetime"])
-                    match = next((m for m in matches if m["display"]), matches[-1])
-
-                    _LOGGER.debug(
-                        "Footao: %s → retenu : '%s' [%s] %s",
-                        club_name, match["game"],
-                        match["competition_label"], match["datetime"],
-                    )
-
-                    sprite1 = get_sprite_style(match["img_class1"])
-                    sprite2 = get_sprite_style(match["img_class2"]) if match.get("img_class2") else ""
-
-                    eq_aliases = [_normalize(a.strip()) for a in eq_raw.split("|") if a.strip()]
-                    dom_lower = _normalize(match["domicile"])
-                    situation = "dom" if any(
-                        any(w in dom_lower for w in alias.split())
-                        for alias in eq_aliases
-                    ) else "ext"
-
-                    logo_adv = logo_for(
-                        match["exterieur"] if situation == "dom" else match["domicile"],
-                        self._logo_index,
-                    )
-                    logo_dom = logo_team if situation == "dom" else logo_adv
-                    logo_ext = logo_adv if situation == "dom" else logo_team
-
-                    competition = match.get("competition_label") or comp
-
-                    try:
-                        dt_debut = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
-                        datetime_fin = (dt_debut + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
-                    except (ValueError, KeyError):
-                        datetime_fin = ""
-
-                    data[club_name] = {
-                        "state": match["chaine1"] or "Inconnu",
-                        "attributes": {
-                            "team": club_name,
-                            "logoTeam": logo_team,
-                            "domicile": match["domicile"],
-                            "logoDomicile": logo_dom,
-                            "exterieur": match["exterieur"],
-                            "logoExterieur": logo_ext,
-                            "situation": situation,
-                            "competition": competition,
-                            "date": match["date"],
-                            "datetime": match["datetime"],
-                            "datetime_fin": datetime_fin,
-                            "display": match["display"],
-                            "heure": match["heure"],
-                            "logo1": sprite1,
-                            "chaine1": match["chaine1"],
-                            "logo2": sprite2,
-                            "chaine2": match.get("chaine2", ""),
-                            "game": match["game"],
-                            "clubs_updated_at": _clubs_last_updated,
-                            "clubs_source": _clubs_source,
-                            "scraped_at": scraped_at,
-                        },
-                    }
-        except Exception as err:
-            raise UpdateFailed(f"Erreur scraping Footao : {err}") from err
-
-        return data
+            async with se
