@@ -14,7 +14,7 @@ EMPTY_ATTRS = {
     "team": "", "domicile": "", "logoDomicile": "",
     "exterieur": "", "logoExterieur": "", "situation": "",
     "date": "", "datetime": "", "display": False,
-    "heure": "", "logo": "", "chaine": "", "game": "",
+    "heure": "", "logo": "", "diffuseur": "", "game": "",
 }
 
 
