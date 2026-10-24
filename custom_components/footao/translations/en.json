@@ -2,14 +2,22 @@
   "config": {
     "step": {
       "user": {
+        "title": "Footao TV — Leagues",
+        "description": "Select one or more leagues. Only the clubs from these leagues will be offered in the next step.",
+        "data": {
+          "leagues": "Leagues"
+        }
+      },
+      "clubs": {
         "title": "Footao TV — Clubs",
-        "description": "Select the clubs to follow (all leagues combined).",
+        "description": "Select the clubs to follow.",
         "data": {
           "clubs": "Clubs"
         }
       }
     },
     "error": {
+      "no_league": "Select at least one league.",
       "no_club": "Select at least one club."
     },
     "abort": {
@@ -19,14 +27,22 @@
   "options": {
     "step": {
       "init": {
+        "title": "Footao TV — Edit leagues",
+        "description": "Select the leagues to edit. Clubs followed in other leagues are kept as they are.",
+        "data": {
+          "leagues": "Leagues"
+        }
+      },
+      "clubs": {
         "title": "Footao TV — Edit clubs",
-        "description": "Choose the clubs to follow (all leagues combined).",
+        "description": "Choose the clubs to follow.",
         "data": {
           "clubs": "Clubs"
         }
       }
     },
     "error": {
+      "no_league": "Select at least one league.",
       "no_club": "Select at least one club."
     }
   }
