@@ -30,7 +30,7 @@ async def _load_clubs(hass: HomeAssistant) -> dict:
     ancienne récupérée entre-temps par une autre entrée.
     """
     session = async_get_clientsession(hass)
-    return await load_clubs_async(session, force=True)
+    return await load_clubs_async(hass, session, force=True)
 
 
 def _league_options(clubs: dict) -> list[dict]:
@@ -227,3 +227,4 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
             ),
             errors=errors,
         )
+        
