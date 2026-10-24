@@ -1,0 +1,33 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Footao TV — Clubs",
+        "description": "Select the clubs to follow (all leagues combined).",
+        "data": {
+          "clubs": "Clubs"
+        }
+      }
+    },
+    "error": {
+      "no_club": "Select at least one club."
+    },
+    "abort": {
+      "already_configured": "This configuration already exists."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Footao TV — Edit clubs",
+        "description": "Choose the clubs to follow (all leagues combined).",
+        "data": {
+          "clubs": "Clubs"
+        }
+      }
+    },
+    "error": {
+      "no_club": "Select at least one club."
+    }
+  }
+}
