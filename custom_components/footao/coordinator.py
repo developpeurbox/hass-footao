@@ -103,7 +103,18 @@ _clubs_last_updated: str = ""  # date/heure lisible de la dernière mise à jour
 _clubs_source: str = ""  # "github" ou "local"
 
 
-async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, ssl_ctx=None) -> dict:
+def _read_local_clubs(path: Path) -> dict:
+    """Lecture bloquante de clubs.json (à appeler dans l'executor)."""
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+async def load_clubs_async(
+    hass: HomeAssistant,
+    session: aiohttp.ClientSession,
+    force: bool = False,
+    ssl_ctx=None,
+) -> dict:
     """Charge clubs.json depuis GitHub (cache 1h), fallback sur le fichier local."""
     global _clubs_cache, _clubs_cache_ts, _clubs_last_updated, _clubs_source
 
@@ -130,8 +141,7 @@ async def load_clubs_async(session: aiohttp.ClientSession, force: bool = False, 
 
     # Fallback : fichier embarqué dans le package
     local = Path(__file__).parent / "clubs.json"
-    with open(local, encoding="utf-8") as f:
-        data = json.load(f)
+    data = await hass.async_add_executor_job(_read_local_clubs, local)
     if not _clubs_cache:
         _clubs_cache = data
         _clubs_cache_ts = now
@@ -559,7 +569,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         ssl_ctx.verify_mode = ssl.CERT_NONE
 
         async with aiohttp.ClientSession(headers=HEADERS) as session:
-            clubs = await load_clubs_async(session, force=True, ssl_ctx=ssl_ctx)
+            clubs = await load_clubs_async(self.hass, session, force=True, ssl_ctx=ssl_ctx)
 
         self._logo_index = build_logo_index(clubs)
         _LOGGER.debug("clubs.json initialisé — source: %s, màj: %s", _clubs_source, _clubs_last_updated)
