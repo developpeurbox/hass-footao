@@ -25,7 +25,7 @@ async def async_setup_entry(
 ) -> None:
     coordinator: FootaoCoordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities(
-        [FootaoSensor(coordinator, name) for name in coordinator.selected],
+        [FootaoSensor(coordinator, entry.entry_id, name) for name in coordinator.selected],
         update_before_add=True,
     )
 
@@ -33,11 +33,14 @@ async def async_setup_entry(
 class FootaoSensor(CoordinatorEntity, SensorEntity):
     """Un sensor = un club suivi."""
 
-    def __init__(self, coordinator: FootaoCoordinator, club_name: str) -> None:
+    def __init__(
+        self, coordinator: FootaoCoordinator, entry_id: str, club_name: str
+    ) -> None:
         super().__init__(coordinator)
         self._club   = club_name
         self._attr_name      = f"Footao {club_name}"
-        self._attr_unique_id = f"footao_{club_name.lower().replace(' ', '_').replace('-', '_')}"
+        slug = club_name.lower().replace(" ", "_").replace("-", "_")
+        self._attr_unique_id = f"footao_{entry_id}_{slug}"
         self._attr_icon      = "mdi:soccer"
 
     @property
