@@ -227,4 +227,3 @@ class FootaoOptionsFlow(config_entries.OptionsFlow):
             ),
             errors=errors,
         )
-        
