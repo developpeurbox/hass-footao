@@ -46,6 +46,15 @@ _LOGGER = logging.getLogger(__name__)
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 Firefox/19.0"}
 
+# Heure à laquelle footao passe au jour suivant : avant, « Aujourd'hui » = la veille
+FOOTAO_DAY_ROLLOVER_HOUR = 6
+
+
+def _footao_today() -> datetime:
+    """Date « Aujourd'hui » telle que footao l'affiche (bascule tardive après minuit)."""
+    now = datetime.now()
+    return now - timedelta(days=1) if now.hour < FOOTAO_DAY_ROLLOVER_HOUR else now
+
 FOOTAO_PROG_URL = "https://www.footao.tv/programmetv.php?eq={eq}"
 FOOTAO_CAL_URL = "https://www.footao.tv/tv-calendrier.php?e={eq}&c={comp}"
 
@@ -397,10 +406,10 @@ class FootaoProgParser(HTMLParser):
 
         if self._in_h2 and self._in_h2_a:
             if "aujourd" in text.lower():
-                self._cur_iso = datetime.now().strftime("%Y-%m-%d")
+                self._cur_iso = _footao_today().strftime("%Y-%m-%d")
                 self._cur_date = "Aujourd'hui"
             elif "demain" in text.lower():
-                self._cur_iso = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+                self._cur_iso = (_footao_today() + timedelta(days=1)).strftime("%Y-%m-%d")
                 self._cur_date = "Demain"
             else:
                 iso, _ = self._parse_date_from_href(self._h2_href)
@@ -453,9 +462,9 @@ class FootaoCalParser(HTMLParser):
 
     def _parse_url(self, href):
         if "Aujourd'hui" in self._cur_date:
-            return datetime.now().strftime("%Y-%m-%d"), "Aujourd'hui"
+            return _footao_today().strftime("%Y-%m-%d"), "Aujourd'hui"
         if "Demain" in self._cur_date:
-            return (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d"), "Demain"
+            return (_footao_today() + timedelta(days=1)).strftime("%Y-%m-%d"), "Demain"
         jr = re.search(r"jr=(\d+)", href)
         ms = re.search(r"ms=(\d+)", href)
         an = re.search(r"an=(\d+)", href)
