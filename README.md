@@ -2,17 +2,16 @@
   <img src="/doc/images/example.png" alt="Exemple d'affichage" width="400"/>
 </p>
 
-# Footao.tv Intégration pour Home Assistant.
+# Footao.tv — Intégration HACS pour Home Assistant
 
-[![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2hlaissus/5)](https://paypal.me/hlaissus/5)
-[![GitHub Release]( https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge&color=blue)](https://github.com/developpeurbox/hass-footao/releases)
+[![PayPal](https://img.shields.io/badge/paypal-me-blue.svg?style=for-the-badge&color=purple&logo=paypal&logoColor=ccc&link=https%3A%2F%2Fpaypal.me%2Fhlaissus%2F5)](https://paypal.me/hlaissus/5)
+[![GitHub Release](https://img.shields.io/github/v/release/developpeurbox/hass-footao?style=for-the-badge&color=blue)](https://github.com/developpeurbox/hass-footao/releases)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge&color=blue)](https://github.com/hacs/integration)
-[![Community Forum]( https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge&color=pink)](https://forum.hacf.fr/)
+[![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge&color=pink)](https://forum.hacf.fr/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/blob/main/LICENSE)
 
 [![HACS Action](https://github.com/developpeurbox/hass-footao/actions/workflows/hacs.yml/badge.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/actions/workflows/hacs.yml)
 [![HACS Action](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml/badge.svg?style=for-the-badge)](https://github.com/developpeurbox/hass-footao/actions/workflows/hassfest.yml)
-
 
 ## ✨ Caractéristiques
 
@@ -21,6 +20,8 @@
 📺 Infos complètes : Chaîne de diffusion, logos des clubs, date et heure précises.
 
 ⚙️ Configuration simple : Tout se passe via l'interface utilisateur de Home Assistant.
+
+🎴 Carte Lovelace incluse : Aucune installation séparée nécessaire.
 
 🔔 Prêt pour les automatisations : Idéal pour créer des notifications avant les matchs.
 
@@ -37,14 +38,14 @@
    1. Ouvrez **HACS** dans Home Assistant
    2. Allez dans **Intégrations**
    3. Cliquez sur les **3 points** en haut à droite → **Dépôts personnalisés**
-   4. Ajouter: https://github.com/developpeurbox/hass-footao.git
+   4. Ajoutez : [https://github.com/developpeurbox/hass-footao](https://github.com/developpeurbox/hass-footao)
    5. Catégorie **Integration**
    6. Cherchez "**footao**" et cliquez sur **Télécharger**
    7. **Redémarrez Home Assistant**
-   
+
 ### 🏗️ Méthode 2 : Manuelle
    1. Téléchargez le dossier `custom_components/footao/` de ce dépôt.
-   2. Copiez-le dans le dossier `custom_components/footao/`  de votre instance Home Assistant.
+   2. Copiez-le dans le dossier `custom_components/` de votre instance Home Assistant.
    3. **Redémarrez Home Assistant**
 
 
@@ -63,27 +64,25 @@
 1. Allez dans **Configuration** → **Appareils et Services**
 2. Cliquez sur **+ Ajouter une intégration**
 3. Cherchez "**Footao**"
-4. Renseignez les informations :
-
-Les équipes se saisissent depuis l'UI au moment de l'ajout de l'intégration :
+4. Choisissez vos équipes : elles se saisissent depuis l'UI au moment de l'ajout de l'intégration :
 
 <p align="center">
   <img src="/doc/images/clubs.png" alt="Footao clubs" width="400"/>
 </p>
 
 
-Tu peux les modifier ensuite via **Configurer** sur la carte de l'intégration.
+Vous pouvez les modifier ensuite via **Configurer** sur la carte de l'intégration.
 
 
 ## 🔁 Rafraîchissement
 
-Les données sont mises à jour automatiquement **toutes les 6 heures**. Tu peux forcer un rafraîchissement depuis l'UI de l'intégration.
+Les données sont mises à jour automatiquement **toutes les 6 heures**. Vous pouvez forcer un rafraîchissement depuis l'UI de l'intégration.
 
 ---
 
 ## 🏟️ Fichier des clubs — `clubs.json`
 
-L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de club (tel qu'il apparaît sur footao.tv) à un logo provenant de [Espn](https://www.espn.co.uk/).
+L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de club (tel qu'il apparaît sur footao.tv) à un logo provenant d'[Espn](https://www.espn.co.uk/).
 
 ### 📄 Structure du fichier
 
@@ -97,7 +96,7 @@ L'intégration s'appuie sur un fichier `clubs.json` pour associer chaque nom de 
 
 Chaque entrée est une paire **clé → valeur** :
 - **Clé** : le nom exact du club tel qu'il apparaît dans les données de footao.tv (sensible à la casse et aux accents).
-- **Valeur** : l'URL du logo du club, de préférence issu de Espn ou TheSportDb.
+- **Valeur** : l'URL du logo du club, de préférence issu d'Espn ou de TheSportsDB.
 
 ### 🤝 Contribuer — Ajouter ou corriger un club
 
@@ -118,27 +117,28 @@ Le fichier `clubs.json` est **ouvert aux contributions**. Si un club n'est pas r
 
 ### 🔍 Comment trouver le bon nom de club ?
 
-Si tu n'es pas sûr du nom exact utilisé par footao.tv, tu peux le retrouver dans les **attributs du sensor** Home Assistant :
+Si vous n'êtes pas sûr du nom exact utilisé par footao.tv, vous pouvez le retrouver dans les **attributs du sensor** Home Assistant :
 - L'attribut `domicile` ou `exterieur` contient le nom brut tel que scrapé depuis footao.tv.
 - C'est cette valeur qui doit être utilisée comme clé dans `clubs.json`.
 
-### 🔍 Recharcher l'application
+### 🔍 Recharger l'application
 
-Pour voir le nouveau club, recharger l'appareil ou pour être plus sûr, supprimer l'appareil 
+Pour voir le nouveau club, rechargez l'appareil ou, pour être plus sûr, supprimez-le.
 
 ![rechargement](/doc/images/rechargement.png "rechargement")
 
 ## 🎨 Affichage & Notifications
 
-### 🎴 Carte dédiée
+### 🎴 Carte Lovelace
 
-Pour un rendu visuel optimal, utilisez la carte compagnon :
-👉 [**Footao Game Card**](https://github.com/developpeurbox/footao-game-card)
+La carte **Footao Game Card** est **incluse** dans l'intégration : aucune installation séparée n'est nécessaire.
+
+> **Vous aviez installé la carte séparément ?** Désinstallez-la dans HACS (Frontend) et supprimez l'ancienne ressource Lovelace pour éviter un doublon.
 
 
 ### 🔔 Notification
 
-Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00 :
+Voir les [**Footao blueprints**](https://github.com/developpeurbox/hass-footao/blob/main/blueprints/readme.md) pour recevoir un rappel sur votre téléphone le matin du match à 08:00.
 
 
 ## 💬 **Communauté & Support**
