@@ -21,7 +21,6 @@ from __future__ import annotations
 import json
 import logging
 import re
-import ssl
 import time
 import unicodedata
 from datetime import datetime, timedelta
@@ -32,6 +31,7 @@ from urllib.parse import quote
 import aiohttp
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
@@ -122,7 +122,6 @@ async def load_clubs_async(
     hass: HomeAssistant,
     session: aiohttp.ClientSession,
     force: bool = False,
-    ssl_ctx=None,
 ) -> dict:
     """Charge clubs.json depuis GitHub (cache 1h), fallback sur le fichier local."""
     global _clubs_cache, _clubs_cache_ts, _clubs_last_updated, _clubs_source
@@ -134,7 +133,7 @@ async def load_clubs_async(
     try:
         _LOGGER.debug("clubs.json : tentative chargement GitHub → %s", CLUBS_JSON_URL)
         async with session.get(
-            CLUBS_JSON_URL, ssl=ssl_ctx, timeout=aiohttp.ClientTimeout(total=10)
+            CLUBS_JSON_URL, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=10)
         ) as resp:
             if resp.status == 200:
                 data = await resp.json(content_type=None)
@@ -573,22 +572,18 @@ class FootaoCoordinator(DataUpdateCoordinator):
                           update_interval=timedelta(hours=SCAN_INTERVAL_HOURS))
 
     async def async_initialize(self) -> None:
-        ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
-        ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode = ssl.CERT_NONE
-
-        async with aiohttp.ClientSession(headers=HEADERS) as session:
-            clubs = await load_clubs_async(self.hass, session, force=True, ssl_ctx=ssl_ctx)
+        session = async_get_clientsession(self.hass)
+        clubs = await load_clubs_async(self.hass, session, force=True)
 
         self._logo_index = build_logo_index(clubs)
         _LOGGER.debug("clubs.json initialisé — source: %s, màj: %s", _clubs_source, _clubs_last_updated)
 
     async def _fetch_html(
-        self, session: aiohttp.ClientSession, ssl_ctx, url: str
+        self, session: aiohttp.ClientSession, url: str
     ) -> str | None:
         try:
             async with session.get(
-                url, ssl=ssl_ctx, timeout=aiohttp.ClientTimeout(total=15)
+                url, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=15)
             ) as resp:
                 if resp.status != 200:
                     _LOGGER.warning("footao %s → HTTP %s", url, resp.status)
@@ -599,7 +594,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
             return None
 
     async def _fetch_and_parse_prog(
-        self, session: aiohttp.ClientSession, ssl_ctx, eq: str
+        self, session: aiohttp.ClientSession, eq: str
     ) -> list[dict]:
         """programmetv.php?eq= avec suivi de redirection JS.
 
@@ -609,14 +604,14 @@ class FootaoCoordinator(DataUpdateCoordinator):
         quel que soit le nom affiché sur le site.
         """
         url = FOOTAO_PROG_URL.format(eq=quote(eq, safe=""))
-        html = await self._fetch_html(session, ssl_ctx, url)
+        html = await self._fetch_html(session, url)
         if not html:
             return []
 
         redirect = detect_js_redirect(html)
         if redirect:
             _LOGGER.debug("Footao: redirection JS → %s", redirect)
-            html = await self._fetch_html(session, ssl_ctx, redirect)
+            html = await self._fetch_html(session, redirect)
             if not html:
                 return []
 
@@ -626,7 +621,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         return parser.matches
 
     async def _fetch_fallback(
-        self, session: aiohttp.ClientSession, ssl_ctx, eq: str
+        self, session: aiohttp.ClientSession, eq: str
     ) -> list[dict]:
         """Fallback tv-calendrier.php pour chaque compétition de COMPETITIONS_FALLBACK.
 
@@ -636,7 +631,7 @@ class FootaoCoordinator(DataUpdateCoordinator):
         all_matches: list[dict] = []
         for comp in COMPETITIONS_FALLBACK:
             url = FOOTAO_CAL_URL.format(eq=quote(eq, safe=""), comp=quote(comp, safe=""))
-            html = await self._fetch_html(session, ssl_ctx, url)
+            html = await self._fetch_html(session, url)
             if not html:
                 continue
             p = FootaoCalParser(competition_label=comp)
@@ -649,107 +644,104 @@ class FootaoCoordinator(DataUpdateCoordinator):
         _LOGGER.info("Footao: scan lancé à %s", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         scraped_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         data: dict = {}
-        ssl_ctx = await self.hass.async_add_executor_job(ssl.create_default_context)
-        ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode = ssl.CERT_NONE
+        session = async_get_clientsession(self.hass)
 
         try:
-            async with aiohttp.ClientSession(headers=HEADERS) as session:
-                for club_name, cfg in self.selected.items():
-                    eq_raw = cfg.get("eq", club_name)
-                    # Le champ eq peut contenir plusieurs alias séparés par |.
-                    # footao.tv accepte directement les alias combinés dans le
-                    # paramètre eq (ex: "eq=Francfort%20E.%7CEintracht%20Francfort") :
-                    # on envoie donc eq_raw tel quel, sans se limiter au premier alias.
-                    comp = cfg.get("comp", "")
-                    logo_team = cfg.get("logo", "")
+            for club_name, cfg in self.selected.items():
+                eq_raw = cfg.get("eq", club_name)
+                # Le champ eq peut contenir plusieurs alias séparés par |.
+                # footao.tv accepte directement les alias combinés dans le
+                # paramètre eq (ex: "eq=Francfort%20E.%7CEintracht%20Francfort") :
+                # on envoie donc eq_raw tel quel, sans se limiter au premier alias.
+                comp = cfg.get("comp", "")
+                logo_team = cfg.get("logo", "")
 
-                    # 1) Tentative programmetv.php (+ suivi redirection JS)
-                    matches = await self._fetch_and_parse_prog(session, ssl_ctx, eq_raw)
+                # 1) Tentative programmetv.php (+ suivi redirection JS)
+                matches = await self._fetch_and_parse_prog(session, eq_raw)
 
-                    # 2) Fallback si aucun match
-                    if not matches:
-                        _LOGGER.debug(
-                            "Footao: %s → 0 match via programmetv, bascule fallback", club_name
-                        )
-                        matches = await self._fetch_fallback(session, ssl_ctx, eq_raw)
-
-                    # ── Aucun match trouvé nulle part ─────────────────────────
-                    if not matches:
-                        _LOGGER.debug("Footao: aucun match pour %s", club_name)
-                        data[club_name] = {
-                            "state": "Aucun match",
-                            "attributes": {
-                                "team": club_name,
-                                "logoTeam": logo_team,
-                                "clubs_updated_at": _clubs_last_updated,
-                                "clubs_source": _clubs_source,
-                                "scraped_at": scraped_at,
-                            },
-                        }
-                        continue
-
-                    # Trier et prendre le prochain match futur
-                    matches.sort(key=lambda m: m["datetime"])
-                    match = next((m for m in matches if m["display"]), matches[-1])
-
+                # 2) Fallback si aucun match
+                if not matches:
                     _LOGGER.debug(
-                        "Footao: %s → retenu : '%s' [%s] %s",
-                        club_name, match["game"],
-                        match["competition_label"], match["datetime"],
+                        "Footao: %s → 0 match via programmetv, bascule fallback", club_name
                     )
+                    matches = await self._fetch_fallback(session, eq_raw)
 
-                    sprite1 = get_sprite_style(match["img_class1"])
-                    sprite2 = get_sprite_style(match["img_class2"]) if match.get("img_class2") else ""
-
-                    eq_aliases = [_normalize(a.strip()) for a in eq_raw.split("|") if a.strip()]
-                    dom_lower = _normalize(match["domicile"])
-                    situation = "dom" if any(
-                        any(w in dom_lower for w in alias.split())
-                        for alias in eq_aliases
-                    ) else "ext"
-
-                    logo_adv = logo_for(
-                        match["exterieur"] if situation == "dom" else match["domicile"],
-                        self._logo_index,
-                    )
-                    logo_dom = logo_team if situation == "dom" else logo_adv
-                    logo_ext = logo_adv if situation == "dom" else logo_team
-
-                    competition = match.get("competition_label") or comp
-
-                    try:
-                        dt_debut = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
-                        datetime_fin = (dt_debut + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
-                    except (ValueError, KeyError):
-                        datetime_fin = ""
-
+                # ── Aucun match trouvé nulle part ─────────────────────────
+                if not matches:
+                    _LOGGER.debug("Footao: aucun match pour %s", club_name)
                     data[club_name] = {
-                        "state": match["diffuseur1"] or "Inconnu",
+                        "state": "Aucun match",
                         "attributes": {
                             "team": club_name,
                             "logoTeam": logo_team,
-                            "domicile": match["domicile"],
-                            "logoDomicile": logo_dom,
-                            "exterieur": match["exterieur"],
-                            "logoExterieur": logo_ext,
-                            "situation": situation,
-                            "competition": competition,
-                            "date": match["date"],
-                            "datetime": match["datetime"],
-                            "datetime_fin": datetime_fin,
-                            "display": match["display"],
-                            "heure": match["heure"],
-                            "logo1": sprite1,
-                            "diffuseur1": match["diffuseur1"],
-                            "logo2": sprite2,
-                            "diffuseur2": match.get("diffuseur2", ""),
-                            "game": match["game"],
                             "clubs_updated_at": _clubs_last_updated,
                             "clubs_source": _clubs_source,
                             "scraped_at": scraped_at,
                         },
                     }
+                    continue
+
+                # Trier et prendre le prochain match futur
+                matches.sort(key=lambda m: m["datetime"])
+                match = next((m for m in matches if m["display"]), matches[-1])
+
+                _LOGGER.debug(
+                    "Footao: %s → retenu : '%s' [%s] %s",
+                    club_name, match["game"],
+                    match["competition_label"], match["datetime"],
+                )
+
+                sprite1 = get_sprite_style(match["img_class1"])
+                sprite2 = get_sprite_style(match["img_class2"]) if match.get("img_class2") else ""
+
+                eq_aliases = [_normalize(a.strip()) for a in eq_raw.split("|") if a.strip()]
+                dom_lower = _normalize(match["domicile"])
+                situation = "dom" if any(
+                    any(w in dom_lower for w in alias.split())
+                    for alias in eq_aliases
+                ) else "ext"
+
+                logo_adv = logo_for(
+                    match["exterieur"] if situation == "dom" else match["domicile"],
+                    self._logo_index,
+                )
+                logo_dom = logo_team if situation == "dom" else logo_adv
+                logo_ext = logo_adv if situation == "dom" else logo_team
+
+                competition = match.get("competition_label") or comp
+
+                try:
+                    dt_debut = datetime.strptime(match["datetime"], "%Y-%m-%d %H:%M:%S")
+                    datetime_fin = (dt_debut + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
+                except (ValueError, KeyError):
+                    datetime_fin = ""
+
+                data[club_name] = {
+                    "state": match["diffuseur1"] or "Inconnu",
+                    "attributes": {
+                        "team": club_name,
+                        "logoTeam": logo_team,
+                        "domicile": match["domicile"],
+                        "logoDomicile": logo_dom,
+                        "exterieur": match["exterieur"],
+                        "logoExterieur": logo_ext,
+                        "situation": situation,
+                        "competition": competition,
+                        "date": match["date"],
+                        "datetime": match["datetime"],
+                        "datetime_fin": datetime_fin,
+                        "display": match["display"],
+                        "heure": match["heure"],
+                        "logo1": sprite1,
+                        "diffuseur1": match["diffuseur1"],
+                        "logo2": sprite2,
+                        "diffuseur2": match.get("diffuseur2", ""),
+                        "game": match["game"],
+                        "clubs_updated_at": _clubs_last_updated,
+                        "clubs_source": _clubs_source,
+                        "scraped_at": scraped_at,
+                    },
+                }
         except Exception as err:
             raise UpdateFailed(f"Erreur scraping Footao : {err}") from err
 
