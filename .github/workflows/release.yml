@@ -35,10 +35,22 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Texte de la release (message du dernier commit sur manifest.json)
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          git log -1 --pretty=%B -- custom_components/footao/manifest.json > release_notes.md
+
+      - name: Créer le zip de l'intégration
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          cd custom_components/footao
+          zip -r ../../footao.zip .
+
       - name: Créer le tag + la release
         if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}
-          generate_release_notes: true
+          body_path: release_notes.md
+          files: footao.zip
