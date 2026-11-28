@@ -83,6 +83,7 @@ COMPETITIONS_AUTORISEES = [
     "bundesliga",
     "champions league",
     "conference league",
+    "coupe de france",
     "coupe du monde",
     "europa league",
     "liga",
